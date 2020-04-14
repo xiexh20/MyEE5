@@ -19,7 +19,10 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 /**
- *
+ * virtual controller running at PC. Main tasks:
+ * 1. Decode UDP packet from Pi
+ * 2. Simulate key press/release based on received UDP packet. Software optimization is very important to reduce latency
+ * and improve user experience 
  * @author 25691
  */
 public class VirtualController {
@@ -45,14 +48,10 @@ public class VirtualController {
             ds.bind(address);
 
             DatagramPacket DpReceive = null;
+            boolean leftPressed = false;    // left key pressed or not
+            boolean rightPressed = false;   // right key pressed or not
             while (true) {
 
-                //test robot class
-                // Simulate a mouse click
-//            robot.mousePress(InputEvent.BUTTON1_MASK);
-//            robot.mouseRelease(InputEvent.BUTTON1_MASK);
-                // Simulate a key press
-                // Step 2 : create a DatgramPacket to receive the decodePacket. 
                 DpReceive = new DatagramPacket(receive, receive.length);
 
                 // Step 3 : revieve the decodePacket in byte buffer. 
@@ -60,15 +59,48 @@ public class VirtualController {
 
                 String data = decodePacket(receive).toString();
 
-                System.out.println("Client:-" + data);
-
-                if (data.equals("LEFT")) {
-                    virtualRobot.keyPress(KeyEvent.VK_LEFT);
-                    virtualRobot.keyRelease(KeyEvent.VK_LEFT);
-                } else if (data.equals("RIGHT")) {
-                    virtualRobot.keyPress(KeyEvent.VK_RIGHT);
-                    virtualRobot.keyRelease(KeyEvent.VK_RIGHT);
+//                System.out.println("Client:-" + data);
+                
+                // TODO: optimize the simulation algorithm
+                if (data.equals("PRESS_LEFT")) {
+//                    virtualRobot.keyPress(KeyEvent.VK_LEFT);
+//                    if(leftPressed==false){
+                        virtualRobot.keyPress(KeyEvent.VK_LEFT);
+                        System.out.println("LEFT pressed");
+                        leftPressed = true;
+//                    }
+                    
+                    
+                    
+//                    virtualRobot.keyRelease(KeyEvent.VK_LEFT);
                 }
+                else if(data.equals("RELEASE")){
+                    if(leftPressed){
+                        virtualRobot.keyRelease(KeyEvent.VK_LEFT);
+                        leftPressed = false;
+                        System.out.println("release LEFT");
+                    }
+                    
+                    if(rightPressed){
+                         virtualRobot.keyRelease(KeyEvent.VK_RIGHT);
+                         rightPressed = false;
+                         System.out.println("release RIGHT");
+                    }
+                        
+                    
+                }
+                else if (data.equals("PRESS_RIGHT")) {
+                    virtualRobot.keyPress(KeyEvent.VK_RIGHT);
+//                    if(rightPressed==false){
+//                        virtualRobot.keyPress(KeyEvent.VK_RIGHT);
+                        System.out.println("RIGHT pressed");
+                        rightPressed = true;
+//                    }
+                    
+                            
+
+                }
+                
 
                 // Exit the server if the client sends "bye" 
                 if (decodePacket(receive).toString().equals("bye")) {
