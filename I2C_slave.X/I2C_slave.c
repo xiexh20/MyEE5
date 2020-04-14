@@ -15,7 +15,7 @@
 #define IDLE 0
 #define I2CTxing 1      // the I2C module is sending data out
 #define I2CRxing 2      // the I2C module is receiving data in
-#define FRAME_LEN 10    // the length of the data frame
+#define FRAME_LEN 2    // the length of the data frame
 
 #define BIT0 0x01
 #define BIT1 0x02
@@ -39,6 +39,8 @@ typedef struct buffer{
 void init_Chip();
 void init_I2C();
 void init_ADC();
+void init_TM2();        // used for ADC sampling rate
+void init_TM0();        // to light speed LED
 void writePortB(unsigned char data);
 
 unsigned char data = 0;
@@ -46,6 +48,8 @@ unsigned char addr = 0;
 unsigned char sent = 0x11;
 unsigned char data_past = 0;
 unsigned char RxStatus = IDLE; // receiving status
+unsigned char T0Thres = 10;
+unsigned char T0count = 0;
 
 buffer_t Txbuf;      // store data to be sent out (fill ADC and other data in this buffer)
 buffer_t Rxbuf;     // store received data frame
@@ -56,6 +60,8 @@ void main(void)
     init_Chip();
     init_I2C();
     init_ADC();
+    init_TM2();
+    init_TM0();
     
     // init buffer
     Txbuf.idx = 0;
@@ -64,17 +70,23 @@ void main(void)
     INTCONbits.GIE = 1;	// Turn on global interrupt
     LATB = 0;
     LATA = 0;
+    T2CONbits.TMR2ON = 1;
+    T0CONbits.TMR0ON = 1;   // start TMR0
     while(1)
     {
         __delay_us(100); 
         ADCON0bits.GODONE = 1;      // start ADC
     }
+//    while(1){
+////        NOP();      // test Fosc
+//        LATBbits.LATB6 ^= 1;
+//    }
 }
 
 void init_Chip()
 {
     LATA = 0x00; //Initial PORTA
-    TRISA = 0x01; // set PORTA as input
+    TRISA = 0xFF; // set port A as input
     ADCON1 = 0x00; //AD voltage reference
     ANSELA = 0x00; // define analog or digital
     CM1CON0 = 0x00; //Turn off Comparator
@@ -112,6 +124,27 @@ void init_ADC()
     ADCON0 = 0x01;  // select channel 0 for AN0 and enable ADC
     ADCON1 = 0x00;  // select reference voltage 0V and 5V, enable AN0
     ADCON2 = 0x08;  // left justified, 8-bit result in ADRESH, 2-bit in ADSREL
+}
+
+void init_TM2()
+{
+    // question: the interrupt interval does not change no matter change PR2, prescale or postscale
+    PR2 = 0xff;
+//    T2CON = 0x7A;   // 1:8 postscale, 1:16 prescale
+    T2CON = 0x79;   // 1:8 postscale, 1:4 prescale
+    PIE1bits.TMR2IE = 1;        // enable TM2 interrupt
+    TMR2 = 0;
+    T2CONbits.T2OUTPS = 0x0f;
+    
+}
+
+void init_TM0()
+{
+    T0CON = 0x43;     // 16 bit, 1:16 prescale, T08BIT must be set to 1!
+    TMR0H = 0x4C;   
+    TMR0L = 0xB0;           // set to 200Hz
+    INTCONbits.TMR0IF = 0;    // clear interrupt flag
+    INTCONbits.TMR0IE = 1;        // enable TM0 interrupt 
 }
 
 
@@ -178,6 +211,30 @@ void __interrupt (high_priority) high_ISR(void)
         // ADC interrupt
         PIR1bits.ADIF = 0;    // clear flag
         Txbuf.data[0] = ADRESH;        // read the result: high byte
-        Txbuf.data[1] = ADRESL;         // read the result: low byte
+//        Txbuf.data[1] = ADRESL;         // read the result: low byte--not needed
+        Txbuf.data[1] = PORTA;      // read PORTA status
+        
     }
+    if(PIR1bits.TMR2IF==1)
+    {
+        // TM2 interrupt
+        PIR1bits.TMR2IF==0;
+        LATBbits.LATB2 ^= 1;
+        TMR2 = 0;       // reload TMR2
+        PR2 = 0xff;
+        //        ADCON0bits.GODONE = 1;      // start ADC
+        
+    }
+    if(INTCONbits.TMR0IF == 1){
+        TMR0H = 0x4C;   
+        TMR0L = 0xB0;           // set to 200Hz
+        INTCONbits.TMR0IF=0;     //CLEAR interrupt flag when you are done!!!
+        ADCON0bits.GODONE = 1;      // start ADC
+        T0count++;
+        if(T0count==T0Thres){
+            LATBbits.LATB7 ^= 1;    // blink at 20Hz
+            T0count = 0;
+        }
+        
+     }
 }
