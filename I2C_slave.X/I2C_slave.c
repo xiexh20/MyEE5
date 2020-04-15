@@ -48,7 +48,7 @@ unsigned char addr = 0;
 unsigned char sent = 0x11;
 unsigned char data_past = 0;
 unsigned char RxStatus = IDLE; // receiving status
-unsigned char T0Thres = 10;
+unsigned char T0Thres = 1;
 unsigned char T0count = 0;
 
 buffer_t Txbuf;      // store data to be sent out (fill ADC and other data in this buffer)
@@ -60,7 +60,7 @@ void main(void)
     init_Chip();
     init_I2C();
     init_ADC();
-    init_TM2();
+//    init_TM2();
     init_TM0();
     
     // init buffer
@@ -74,19 +74,23 @@ void main(void)
     T0CONbits.TMR0ON = 1;   // start TMR0
     while(1)
     {
-        __delay_us(100); 
+//        __delay_us(100); 
         ADCON0bits.GODONE = 1;      // start ADC
+        Txbuf.data[1] = PORTA;      // read PORTA status
+        T0Thres = Rxbuf.data[0];   
+        if(Rxbuf.data[1]==1){
+            LATBbits.LATB6 = 1;
+        }
+        else{
+            LATBbits.LATB6 = 0;
+        }
     }
-//    while(1){
-////        NOP();      // test Fosc
-//        LATBbits.LATB6 ^= 1;
-//    }
 }
 
 void init_Chip()
 {
     LATA = 0x00; //Initial PORTA
-    TRISA = 0xFF; // set port A as input
+    TRISA = 0x83; // set RA0,1,7 as input
     ADCON1 = 0x00; //AD voltage reference
     ANSELA = 0x00; // define analog or digital
     CM1CON0 = 0x00; //Turn off Comparator
@@ -188,7 +192,7 @@ void __interrupt (high_priority) high_ISR(void)
             if((I2Cstatus==I2CRxing)&&(Rxbuf.idx<FRAME_LEN)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
 //                writePortB(Rxbuf.data[Rxbuf.idx]);
-                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
+//                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
                 Rxbuf.idx++;
                 if(Rxbuf.idx==FRAME_LEN){
                     Rxbuf.idx = 0;  // a frame has been transmitted
@@ -211,24 +215,15 @@ void __interrupt (high_priority) high_ISR(void)
         // ADC interrupt
         PIR1bits.ADIF = 0;    // clear flag
         Txbuf.data[0] = ADRESH;        // read the result: high byte
-//        Txbuf.data[1] = ADRESL;         // read the result: low byte--not needed
-        Txbuf.data[1] = PORTA;      // read PORTA status
-        
-    }
-    if(PIR1bits.TMR2IF==1)
-    {
-        // TM2 interrupt
-        PIR1bits.TMR2IF==0;
-        LATBbits.LATB2 ^= 1;
-        TMR2 = 0;       // reload TMR2
-        PR2 = 0xff;
-        //        ADCON0bits.GODONE = 1;      // start ADC
+//        LATBbits.LATB2 = 0;
+//        Txbuf.data[1] = ADRESL;         // read the result: low byte--not needed        
         
     }
     if(INTCONbits.TMR0IF == 1){
         TMR0H = 0x4C;   
         TMR0L = 0xB0;           // set to 200Hz
         INTCONbits.TMR0IF=0;     //CLEAR interrupt flag when you are done!!!
+        LATBbits.LATB2 ^= 1;
         ADCON0bits.GODONE = 1;      // start ADC
         T0count++;
         if(T0count==T0Thres){

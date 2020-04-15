@@ -7599,7 +7599,7 @@ unsigned char addr = 0;
 unsigned char sent = 0x11;
 unsigned char data_past = 0;
 unsigned char RxStatus = 0;
-unsigned char T0Thres = 10;
+unsigned char T0Thres = 1;
 unsigned char T0count = 0;
 
 buffer_t Txbuf;
@@ -7611,7 +7611,7 @@ void main(void)
     init_Chip();
     init_I2C();
     init_ADC();
-    init_TM2();
+
     init_TM0();
 
 
@@ -7625,19 +7625,23 @@ void main(void)
     T0CONbits.TMR0ON = 1;
     while(1)
     {
-        _delay((unsigned long)((100)*(48000000/4000000.0)));
+
         ADCON0bits.GODONE = 1;
+        Txbuf.data[1] = PORTA;
+        T0Thres = Rxbuf.data[0];
+        if(Rxbuf.data[1]==1){
+            LATBbits.LATB6 = 1;
+        }
+        else{
+            LATBbits.LATB6 = 0;
+        }
     }
-
-
-
-
 }
 
 void init_Chip()
 {
     LATA = 0x00;
-    TRISA = 0xFF;
+    TRISA = 0x83;
     ADCON1 = 0x00;
     ANSELA = 0x00;
     CM1CON0 = 0x00;
@@ -7739,7 +7743,7 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
             if((I2Cstatus==2)&&(Rxbuf.idx<2)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
 
-                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];
+
                 Rxbuf.idx++;
                 if(Rxbuf.idx==2){
                     Rxbuf.idx = 0;
@@ -7763,16 +7767,6 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         PIR1bits.ADIF = 0;
         Txbuf.data[0] = ADRESH;
 
-        Txbuf.data[1] = PORTA;
-
-    }
-    if(PIR1bits.TMR2IF==1)
-    {
-
-        PIR1bits.TMR2IF==0;
-        LATBbits.LATB2 ^= 1;
-        TMR2 = 0;
-        PR2 = 0xff;
 
 
     }
@@ -7780,6 +7774,7 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         TMR0H = 0x4C;
         TMR0L = 0xB0;
         INTCONbits.TMR0IF=0;
+        LATBbits.LATB2 ^= 1;
         ADCON0bits.GODONE = 1;
         T0count++;
         if(T0count==T0Thres){

@@ -29,6 +29,11 @@ public class VirtualController {
 
     static final String LOCAL_IP = "192.168.1.10";
     static final int LOCAL_PORT = 5200;
+    static final int ADCidx = 1;
+    static final int PORTAidx = 3;
+    static final char BITF = 0x80;
+    static final char BIT1 = 0x02;
+    
 
     /**
      * @param args the command line arguments
@@ -50,63 +55,80 @@ public class VirtualController {
             DatagramPacket DpReceive = null;
             boolean leftPressed = false;    // left key pressed or not
             boolean rightPressed = false;   // right key pressed or not
+            boolean spacePressed = false;   
+            boolean ctrlPressed = false;
             while (true) {
 
                 DpReceive = new DatagramPacket(receive, receive.length);
 
                 // Step 3 : revieve the decodePacket in byte buffer. 
                 ds.receive(DpReceive);
+                
+                // release all buttons;
+                virtualRobot.keyRelease(KeyEvent.VK_LEFT);
+                virtualRobot.keyRelease(KeyEvent.VK_RIGHT);
+                virtualRobot.keyRelease(KeyEvent.VK_CONTROL);                                                                                                                                                                                                                                                                                                                           
+                virtualRobot.keyRelease(KeyEvent.VK_SPACE);
+                
 
                 String data = decodePacket(receive).toString();
 
-//                System.out.println("Client:-" + data);
+//                System.out.prin                                                                                  tln("Client:-" + data);
+                // extract data from the string
+                String [] strSlices = data.split(":");
+                int ADCresult = Integer.parseInt(strSlices[ADCidx]);
+                int portA = Integer.parseInt(strSlices[PORTAidx]);
                 
-                // TODO: optimize the simulation algorithm
-                if (data.equals("PRESS_LEFT")) {
-//                    virtualRobot.keyPress(KeyEvent.VK_LEFT);
-//                    if(leftPressed==false){
-                        virtualRobot.keyPress(KeyEvent.VK_LEFT);
-                        System.out.println("LEFT pressed");
-                        leftPressed = true;
-//                    }
-                    
-                    
-                    
-//                    virtualRobot.keyRelease(KeyEvent.VK_LEFT);
+                
+                System.out.println("ADC="+ADCresult+" PORTA="+portA);
+                
+                if(ADCresult<110){
+                    virtualRobot.keyPress(KeyEvent.VK_LEFT);
+                    leftPressed = true;
                 }
-                else if(data.equals("RELEASE")){
+                else if(ADCresult>134){
+                    virtualRobot.keyPress(KeyEvent.VK_RIGHT);
+                    rightPressed = true;
+                
+                }
+                else{
                     if(leftPressed){
                         virtualRobot.keyRelease(KeyEvent.VK_LEFT);
                         leftPressed = false;
-                        System.out.println("release LEFT");
                     }
                     
                     if(rightPressed){
-                         virtualRobot.keyRelease(KeyEvent.VK_RIGHT);
-                         rightPressed = false;
-                         System.out.println("release RIGHT");
+                        virtualRobot.keyRelease(KeyEvent.VK_RIGHT);
+                        rightPressed = false;
                     }
-                        
-                    
-                }
-                else if (data.equals("PRESS_RIGHT")) {
-                    virtualRobot.keyPress(KeyEvent.VK_RIGHT);
-//                    if(rightPressed==false){
-//                        virtualRobot.keyPress(KeyEvent.VK_RIGHT);
-                        System.out.println("RIGHT pressed");
-                        rightPressed = true;
-//                    }
-                    
-                            
-
                 }
                 
-
-                // Exit the server if the client sends "bye" 
-                if (decodePacket(receive).toString().equals("bye")) {
-                    System.out.println("Client sent bye.....EXITING");
-                    break;
+                if((portA&BITF)==BITF){
+                    // speed up
+                    virtualRobot.keyPress(KeyEvent.VK_SPACE);
+                    spacePressed = true;
                 }
+                else{
+                    if(spacePressed){
+                        virtualRobot.keyRelease(KeyEvent.VK_SPACE);
+                        spacePressed = false;
+                    }
+                }
+                
+                if((portA&BIT1)==BIT1){
+                    virtualRobot.keyPress(KeyEvent.VK_CONTROL);
+                    ctrlPressed = true;
+                }
+                else{
+                    if(ctrlPressed){
+                        virtualRobot.keyRelease(KeyEvent.VK_CONTROL);
+                        ctrlPressed = false;
+                    }
+                }
+                
+                
+
+                
 
                 // Clear the buffer after every message. 
                 receive = new byte[65535];
