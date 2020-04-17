@@ -7578,12 +7578,12 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 9 "I2C_slave.c" 2
-# 31 "I2C_slave.c"
+# 37 "I2C_slave.c"
 typedef unsigned char uchar;
 
 
 typedef struct buffer{
-    uchar data[2];
+    uchar data[3];
     uchar idx;
 }buffer_t;
 
@@ -7623,30 +7623,38 @@ void main(void)
     LATA = 0;
     T2CONbits.TMR2ON = 1;
     T0CONbits.TMR0ON = 1;
+
     while(1)
     {
+        LATA = Rxbuf.data[2];
 
-        ADCON0bits.GODONE = 1;
+
+
         Txbuf.data[1] = PORTA;
+        Txbuf.data[2] = PORTB;
         T0Thres = Rxbuf.data[0];
+
         if(Rxbuf.data[1]==1){
-            LATBbits.LATB6 = 1;
+            LATCbits.LATC6 = 1;
         }
         else{
-            LATBbits.LATB6 = 0;
+            LATCbits.LATC6 = 0;
         }
+# 106 "I2C_slave.c"
     }
 }
 
 void init_Chip()
 {
     LATA = 0x00;
-    TRISA = 0x83;
+    TRISA = 0xFF;
+
+
     ADCON1 = 0x00;
     ANSELA = 0x00;
     CM1CON0 = 0x00;
     LATB = 0x00;
-    TRISB = 0x00;
+    TRISB = 0xF0;
     LATC = 0x00;
     TRISC = 0x00;
  INTCONbits.GIE = 0;
@@ -7714,18 +7722,18 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         if((SSPSTAT&0x20)==0){
 
             addr = SSPBUF;
-            LATCbits.LATC7 ^= 1;
+
 
 
             if(SSPSTATbits.R_nW){
                 I2Cstatus = 1;
 
-                if((I2Cstatus==1)&&(Txbuf.idx<2))
+                if((I2Cstatus==1)&&(Txbuf.idx<3))
                 {
                     SSPBUF = Txbuf.data[Txbuf.idx];
 
                     Txbuf.idx++;
-                    if(Txbuf.idx==2){
+                    if(Txbuf.idx==3){
 
                         I2Cstatus = 0;
                         Txbuf.idx = 0;
@@ -7740,12 +7748,12 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         }
         else{
 
-            if((I2Cstatus==2)&&(Rxbuf.idx<2)){
+            if((I2Cstatus==2)&&(Rxbuf.idx<3)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
 
 
                 Rxbuf.idx++;
-                if(Rxbuf.idx==2){
+                if(Rxbuf.idx==3){
                     Rxbuf.idx = 0;
                     I2Cstatus = 0;
                 }
@@ -7767,8 +7775,6 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         PIR1bits.ADIF = 0;
         Txbuf.data[0] = ADRESH;
 
-
-
     }
     if(INTCONbits.TMR0IF == 1){
         TMR0H = 0x4C;
@@ -7778,7 +7784,7 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         ADCON0bits.GODONE = 1;
         T0count++;
         if(T0count==T0Thres){
-            LATBbits.LATB7 ^= 1;
+            LATCbits.LATC7 ^= 1;
             T0count = 0;
         }
 

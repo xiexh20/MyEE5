@@ -36,7 +36,29 @@ public class UDPClient {
     static final int SERVER_PORT = 5200;
 
     private static final byte PICADDR = 0x18;       // address of the PIC
-    private static final int FRAME_LEN = 2;      // the length of a frame
+    private static final int FRAME_LEN = 3;      // the length of a frame
+    
+    // index definition for received data
+    private static final int ADCRESHidx = 0;
+    private static final int PORTAidx = 1;
+    private static final int PORTBidx = 2;
+    
+    // index definition for data to be transmitted
+    private static final int SPEEDidx = 0;
+    private static final int BACKidx = 1;   // back light
+    
+    // bit definition for different input buttons
+    private static final char BITctrl = 0x80;   // RB7 is ctrl pin
+    private static final char BIT120 = 0x40;     // RB6, button with an emergency car, undefined function
+    
+    private static final char BITtruck = 0x04;        // RA2, button with a truck pattern, undefined function
+    private static final char BITear = 0x08;        //RA3, button with an ear pattern, undefined function
+    private static final char BITgreen = 0x10;      // RA4, unstable input, button with G
+    private static final char BITyellow = 0x20;     // RA5, button with Y
+    private static final char BITred = 0x80;        // RA7, button with R
+    private static final char BITSPACE = 0x40;        // RA6, space button function
+    
+    
 
     /**
      * Program Main Entry Point
@@ -94,62 +116,29 @@ public class UDPClient {
 
         // create an I2C device for an individual device on the bus that you want to communicate with
         I2CDevice device = i2c.getDevice(PICADDR);
-        int[] recv_last = new int[FRAME_LEN];
 
-        // use interrupt to send/receive data
-        // create gpio controller
-        final GpioController gpio = GpioFactory.getInstance();
-
-        // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
-        final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_DOWN);
-
-        // set shutdown state for this input pin
-        myButton.setShutdownOptions(true);
-
-        
-
-        // create and register gpio pin listener
-//        myButton.addListener(new GpioPinListenerDigital() {
-//            @Override
-//            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-//                // display pin state on console
-//                PinState state = event.getState();
-////                System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + state);
-//
-//                for (int i = 0; i < FRAME_LEN; i++) {
-//                    try {
-//                        recvBuf[i] = device.read();
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//                console.println("ADC result=" + String.format("0x%02x", recvBuf[0]));
-//                console.println("PORTA=" + String.format("0x%02x", recvBuf[1]));
-//
-//                for (int i = 0; i < FRAME_LEN; i++) {
-//                    try {
-//                        device.write(sendBuf[i]);
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//
-//            }
-//
-//        });
         int[] recvBuf = new int[FRAME_LEN];
         byte[] sendBuf = new byte[FRAME_LEN];
         sendBuf[0] = 0b00001010;
         sendBuf[1] = 0b00000001;
+        sendBuf[2] = 0b00000001;
+        
+        int count = 0;
         while (true) {
+            
+            
 
             // read a frame of data from microcontroller
-//            console.println("##################");
-//            for(int i=0;i<FRAME_LEN;i++){
-//                recvBuf[i] = device.read();
-//            }
-//            console.println("ADC result=" + String.format("0x%02x", recvBuf[0]));
-//            console.println("PORTA=" + String.format("0x%02x", recvBuf[1]));
+            console.println("##################");
+            for(int i=0;i<FRAME_LEN;i++){
+                recvBuf[i] = device.read();
+            }
+            console.println("ADC result=" + String.format("0x%02x", recvBuf[0]));
+            // print binary code
+            console.println("PORTA=" + String.format("%8s", Integer.toBinaryString(recvBuf[1] & 0xFF)).replace(' ', '0'));
+            
+            console.println("PORTB=" + String.format("%8s", Integer.toBinaryString(recvBuf[2] & 0xFF)).replace(' ', '0'));
+            
 
 //            if((recvBuf[1]&0x80)==0){
 //                sendBuf[1] = 0b00000000;;
@@ -157,19 +146,39 @@ public class UDPClient {
 //            else{
 //                sendBuf[1] = 0b00000001;;
 //            }
-            
-            // send a frame data
-//            for(int i = 1;i<FRAME_LEN; i++){
-//                device.write(sendBuf[i]);
-//                
-//            }
-//            console.println("-----------------");
-//            console.println("T0Thres=" + sendBuf[0]);
-//            console.println("LED=" + sendBuf[1]);
-            
-            for(int i=0;i<FRAME_LEN;i++){
-                recvBuf[i] = device.read();
+
+            // prepare data to be sent
+            count ++;
+            if(count == 50){
+                count = 0;
+                sendBuf[SPEEDidx]--;
+                if(sendBuf[SPEEDidx]==1){
+                    sendBuf[SPEEDidx] = 20;
+                }
             }
+            if((recvBuf[PORTBidx]&BITctrl)==BITctrl){
+                sendBuf[BACKidx] = 1;
+            }
+            else{
+                sendBuf[BACKidx] = 0;
+            }
+            
+            
+//             send a frame data
+            for(int i = 0;i<FRAME_LEN; i++){
+                device.write(sendBuf[i]);
+                
+            }
+            console.println("-----------------");
+            console.println("T0Thres=" + sendBuf[0]);
+            console.println("Back LED=" + sendBuf[1]);
+//            console.println("LED2=" + sendBuf[2]);
+            
+            
+            
+//            for(int i=0;i<FRAME_LEN;i++){
+//                recvBuf[i] = device.read();
+//            }
 //            console.println("ADC result=" + String.format("0x%02x", recvBuf[0]));
 //            console.println("PORTA=" + String.format("0x%02x", recvBuf[1]));
             
@@ -178,12 +187,13 @@ public class UDPClient {
 //            DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT); 
 //            ds.send(DpSend); 
 //            System.out.println("UDP Data sent: "+command);
-            String UDPData = "ADRSH:"+recvBuf[0]+":"+"PORTA:"+recvBuf[1]+":";
-            buf = UDPData.getBytes();
-            DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT); 
-            ds.send(DpSend); 
+//            String UDPData = "ADRSH:"+recvBuf[0]+":"+"PORTA:"+recvBuf[1]+":";
+//            buf = UDPData.getBytes();
+//            DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT); 
+//            ds.send(DpSend); 
 //            System.out.println("UDP Data sent: "+UDPData);
-            Thread.sleep(1);
+            Thread.sleep(100);
+            
 //          
         }
     }

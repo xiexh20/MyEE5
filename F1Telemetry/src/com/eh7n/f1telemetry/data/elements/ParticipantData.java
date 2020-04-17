@@ -47,5 +47,14 @@ public class ParticipantData {
 	public void setName(String name) {
 		this.name = name;
 	}
+        
+        @Override
+        public String toString()
+        {
+            String str = null;
+            str = "aiControlled:"+aiControlled+"driverId:"+driverId+"teamId:"+teamId+"raceNum:"+raceNumber
+                    + "nationality:" + nationality +"name:" + name;
+            return str;
+        }
 
 }

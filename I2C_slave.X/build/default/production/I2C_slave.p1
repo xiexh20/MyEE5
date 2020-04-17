@@ -1,20 +1,20 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"34 I2C_slave.c
-[; ;I2C_slave.c: 34: typedef struct buffer{
-[s S608 `uc -> 2 `i `uc 1 ]
+"40 I2C_slave.c
+[; ;I2C_slave.c: 40: typedef struct buffer{
+[s S608 `uc -> 3 `i `uc 1 ]
 [n S608 buffer data idx ]
 [p mainexit ]
-"39
-[; ;I2C_slave.c: 39: void init_Chip();
+"45
+[; ;I2C_slave.c: 45: void init_Chip();
 [v _init_Chip `(v ~T0 @X0 0 e? ]
-"40
-[; ;I2C_slave.c: 40: void init_I2C();
+"46
+[; ;I2C_slave.c: 46: void init_I2C();
 [v _init_I2C `(v ~T0 @X0 0 e? ]
-"41
-[; ;I2C_slave.c: 41: void init_ADC();
+"47
+[; ;I2C_slave.c: 47: void init_ADC();
 [v _init_ADC `(v ~T0 @X0 0 e? ]
-"43
-[; ;I2C_slave.c: 43: void init_TM0();
+"49
+[; ;I2C_slave.c: 49: void init_TM0();
 [v _init_TM0 `(v ~T0 @X0 0 e? ]
 "12422 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 12422:     struct {
@@ -71,63 +71,27 @@ Version 4.0 HI-TECH Software Intermediate Code
 "11650
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 11650: extern volatile T0CONbits_t T0CONbits __attribute__((address(0xFD5)));
 [v _T0CONbits `VS528 ~T0 @X0 0 e@4053 ]
-"8972
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8972:     struct {
-[s S407 :1 `uc 1 :1 `uc 1 ]
-[n S407 . . GO_NOT_DONE ]
-"8976
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8976:     struct {
-[s S408 :1 `uc 1 :1 `uc 1 :5 `uc 1 ]
-[n S408 . ADON GO_nDONE CHS ]
-"8981
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8981:     struct {
-[s S409 :1 `uc 1 :1 `uc 1 ]
-[n S409 . . DONE ]
-"8985
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8985:     struct {
-[s S410 :1 `uc 1 :1 `uc 1 ]
-[n S410 . . GO ]
-"8989
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8989:     struct {
-[s S411 :1 `uc 1 :1 `uc 1 ]
-[n S411 . . NOT_DONE ]
-"8993
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8993:     struct {
-[s S412 :1 `uc 1 :1 `uc 1 ]
-[n S412 . . nDONE ]
-"8997
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8997:     struct {
-[s S413 :1 `uc 1 :1 `uc 1 ]
-[n S413 . . GODONE ]
-"9001
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 9001:     struct {
-[s S414 :1 `uc 1 :1 `uc 1 ]
-[n S414 . . GO_DONE ]
-"8971
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8971: typedef union {
-[u S406 `S407 1 `S408 1 `S409 1 `S410 1 `S411 1 `S412 1 `S413 1 `S414 1 ]
-[n S406 . . . . . . . . . ]
-"9006
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 9006: extern volatile ADCON0bits_t ADCON0bits __attribute__((address(0xFC2)));
-[v _ADCON0bits `VS406 ~T0 @X0 0 e@4034 ]
 "2795
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 2795: extern volatile unsigned char PORTA __attribute__((address(0xF80)));
 [v _PORTA `Vuc ~T0 @X0 0 e@3968 ]
-"3590
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3590:     struct {
-[s S157 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S157 . LATB0 LATB1 LATB2 LATB3 LATB4 LATB5 LATB6 LATB7 ]
-"3600
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3600:     struct {
-[s S158 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S158 . LB0 LB1 LB2 LB3 LB4 LB5 LB6 LB7 ]
-"3589
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3589: typedef union {
-[u S156 `S157 1 `S158 1 ]
-[n S156 . . . ]
-"3611
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3611: extern volatile LATBbits_t LATBbits __attribute__((address(0xF8A)));
-[v _LATBbits `VS156 ~T0 @X0 0 e@3978 ]
+"2947
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 2947: extern volatile unsigned char PORTB __attribute__((address(0xF81)));
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"3702
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3702:     struct {
+[s S160 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S160 . LATC0 LATC1 LATC2 . LATC4 LATC5 LATC6 LATC7 ]
+"3712
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3712:     struct {
+[s S161 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S161 . LC0 LC1 LC2 . LC4 LC5 LC6 LC7 ]
+"3701
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3701: typedef union {
+[u S159 `S160 1 `S161 1 ]
+[n S159 . . . ]
+"3723
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3723: extern volatile LATCbits_t LATCbits __attribute__((address(0xF8B)));
+[v _LATCbits `VS159 ~T0 @X0 0 e@3979 ]
 "4155
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 4155: extern volatile unsigned char TRISA __attribute__((address(0xF92)));
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
@@ -195,21 +159,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "5410
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 5410: extern volatile PIE1bits_t PIE1bits __attribute__((address(0xF9D)));
 [v _PIE1bits `VS222 ~T0 @X0 0 e@3997 ]
-"3702
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3702:     struct {
-[s S160 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S160 . LATC0 LATC1 LATC2 . LATC4 LATC5 LATC6 LATC7 ]
-"3712
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3712:     struct {
-[s S161 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S161 . LC0 LC1 LC2 . LC4 LC5 LC6 LC7 ]
-"3701
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3701: typedef union {
-[u S159 `S160 1 `S161 1 ]
-[n S159 . . . ]
-"3723
-[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3723: extern volatile LATCbits_t LATCbits __attribute__((address(0xF8B)));
-[v _LATCbits `VS159 ~T0 @X0 0 e@3979 ]
 "8966
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8966: extern volatile unsigned char ADCON0 __attribute__((address(0xFC2)));
 [v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
@@ -347,6 +296,60 @@ Version 4.0 HI-TECH Software Intermediate Code
 "9068
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 9068: extern volatile unsigned char ADRESH __attribute__((address(0xFC4)));
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
+"3590
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3590:     struct {
+[s S157 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S157 . LATB0 LATB1 LATB2 LATB3 LATB4 LATB5 LATB6 LATB7 ]
+"3600
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3600:     struct {
+[s S158 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S158 . LB0 LB1 LB2 LB3 LB4 LB5 LB6 LB7 ]
+"3589
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3589: typedef union {
+[u S156 `S157 1 `S158 1 ]
+[n S156 . . . ]
+"3611
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 3611: extern volatile LATBbits_t LATBbits __attribute__((address(0xF8A)));
+[v _LATBbits `VS156 ~T0 @X0 0 e@3978 ]
+"8972
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8972:     struct {
+[s S407 :1 `uc 1 :1 `uc 1 ]
+[n S407 . . GO_NOT_DONE ]
+"8976
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8976:     struct {
+[s S408 :1 `uc 1 :1 `uc 1 :5 `uc 1 ]
+[n S408 . ADON GO_nDONE CHS ]
+"8981
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8981:     struct {
+[s S409 :1 `uc 1 :1 `uc 1 ]
+[n S409 . . DONE ]
+"8985
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8985:     struct {
+[s S410 :1 `uc 1 :1 `uc 1 ]
+[n S410 . . GO ]
+"8989
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8989:     struct {
+[s S411 :1 `uc 1 :1 `uc 1 ]
+[n S411 . . NOT_DONE ]
+"8993
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8993:     struct {
+[s S412 :1 `uc 1 :1 `uc 1 ]
+[n S412 . . nDONE ]
+"8997
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8997:     struct {
+[s S413 :1 `uc 1 :1 `uc 1 ]
+[n S413 . . GODONE ]
+"9001
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 9001:     struct {
+[s S414 :1 `uc 1 :1 `uc 1 ]
+[n S414 . . GO_DONE ]
+"8971
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 8971: typedef union {
+[u S406 `S407 1 `S408 1 `S409 1 `S410 1 `S411 1 `S412 1 `S413 1 `S414 1 ]
+[n S406 . . . . . . . . . ]
+"9006
+[; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 9006: extern volatile ADCON0bits_t ADCON0bits __attribute__((address(0xFC2)));
+[v _ADCON0bits `VS406 ~T0 @X0 0 e@4034 ]
 "54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 54: __asm("SRCON1 equ 0F57h");
 [; <" SRCON1 equ 0F57h ;# ">
@@ -944,528 +947,528 @@ Version 4.0 HI-TECH Software Intermediate Code
 "12842
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 12842: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
-"46 I2C_slave.c
-[; ;I2C_slave.c: 46: unsigned char data = 0;
+"52 I2C_slave.c
+[; ;I2C_slave.c: 52: unsigned char data = 0;
 [v _data `uc ~T0 @X0 1 e ]
 [i _data
 -> -> 0 `i `uc
 ]
-"47
-[; ;I2C_slave.c: 47: unsigned char addr = 0;
+"53
+[; ;I2C_slave.c: 53: unsigned char addr = 0;
 [v _addr `uc ~T0 @X0 1 e ]
 [i _addr
 -> -> 0 `i `uc
 ]
-"48
-[; ;I2C_slave.c: 48: unsigned char sent = 0x11;
+"54
+[; ;I2C_slave.c: 54: unsigned char sent = 0x11;
 [v _sent `uc ~T0 @X0 1 e ]
 [i _sent
 -> -> 17 `i `uc
 ]
-"49
-[; ;I2C_slave.c: 49: unsigned char data_past = 0;
+"55
+[; ;I2C_slave.c: 55: unsigned char data_past = 0;
 [v _data_past `uc ~T0 @X0 1 e ]
 [i _data_past
 -> -> 0 `i `uc
 ]
-"50
-[; ;I2C_slave.c: 50: unsigned char RxStatus = 0;
+"56
+[; ;I2C_slave.c: 56: unsigned char RxStatus = 0;
 [v _RxStatus `uc ~T0 @X0 1 e ]
 [i _RxStatus
 -> -> 0 `i `uc
 ]
-"51
-[; ;I2C_slave.c: 51: unsigned char T0Thres = 1;
+"57
+[; ;I2C_slave.c: 57: unsigned char T0Thres = 1;
 [v _T0Thres `uc ~T0 @X0 1 e ]
 [i _T0Thres
 -> -> 1 `i `uc
 ]
-"52
-[; ;I2C_slave.c: 52: unsigned char T0count = 0;
+"58
+[; ;I2C_slave.c: 58: unsigned char T0count = 0;
 [v _T0count `uc ~T0 @X0 1 e ]
 [i _T0count
 -> -> 0 `i `uc
 ]
-"54
-[; ;I2C_slave.c: 54: buffer_t Txbuf;
+"60
+[; ;I2C_slave.c: 60: buffer_t Txbuf;
 [v _Txbuf `S608 ~T0 @X0 1 e ]
-"55
-[; ;I2C_slave.c: 55: buffer_t Rxbuf;
+"61
+[; ;I2C_slave.c: 61: buffer_t Rxbuf;
 [v _Rxbuf `S608 ~T0 @X0 1 e ]
-"56
-[; ;I2C_slave.c: 56: uchar I2Cstatus = 0;
+"62
+[; ;I2C_slave.c: 62: uchar I2Cstatus = 0;
 [v _I2Cstatus `uc ~T0 @X0 1 e ]
 [i _I2Cstatus
 -> -> 0 `i `uc
 ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"58
-[; ;I2C_slave.c: 58: void main(void)
+"64
+[; ;I2C_slave.c: 64: void main(void)
 [v _main `(v ~T0 @X0 1 ef ]
-"59
-[; ;I2C_slave.c: 59: {
+"65
+[; ;I2C_slave.c: 65: {
 {
 [e :U _main ]
 [f ]
-"60
-[; ;I2C_slave.c: 60:     init_Chip();
+"66
+[; ;I2C_slave.c: 66:     init_Chip();
 [e ( _init_Chip ..  ]
-"61
-[; ;I2C_slave.c: 61:     init_I2C();
-[e ( _init_I2C ..  ]
-"62
-[; ;I2C_slave.c: 62:     init_ADC();
-[e ( _init_ADC ..  ]
-"64
-[; ;I2C_slave.c: 64:     init_TM0();
-[e ( _init_TM0 ..  ]
 "67
-[; ;I2C_slave.c: 67:     Txbuf.idx = 0;
-[e = . _Txbuf 1 -> -> 0 `i `uc ]
+[; ;I2C_slave.c: 67:     init_I2C();
+[e ( _init_I2C ..  ]
 "68
-[; ;I2C_slave.c: 68:     Rxbuf.idx = 0;
-[e = . _Rxbuf 1 -> -> 0 `i `uc ]
+[; ;I2C_slave.c: 68:     init_ADC();
+[e ( _init_ADC ..  ]
 "70
-[; ;I2C_slave.c: 70:     INTCONbits.GIE = 1;
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-"71
-[; ;I2C_slave.c: 71:     LATB = 0;
-[e = _LATB -> -> 0 `i `uc ]
-"72
-[; ;I2C_slave.c: 72:     LATA = 0;
-[e = _LATA -> -> 0 `i `uc ]
+[; ;I2C_slave.c: 70:     init_TM0();
+[e ( _init_TM0 ..  ]
 "73
-[; ;I2C_slave.c: 73:     T2CONbits.TMR2ON = 1;
-[e = . . _T2CONbits 0 1 -> -> 1 `i `uc ]
+[; ;I2C_slave.c: 73:     Txbuf.idx = 0;
+[e = . _Txbuf 1 -> -> 0 `i `uc ]
 "74
-[; ;I2C_slave.c: 74:     T0CONbits.TMR0ON = 1;
-[e = . . _T0CONbits 0 5 -> -> 1 `i `uc ]
-"75
-[; ;I2C_slave.c: 75:     while(1)
-[e :U 611 ]
+[; ;I2C_slave.c: 74:     Rxbuf.idx = 0;
+[e = . _Rxbuf 1 -> -> 0 `i `uc ]
 "76
-[; ;I2C_slave.c: 76:     {
-{
+[; ;I2C_slave.c: 76:     INTCONbits.GIE = 1;
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+"77
+[; ;I2C_slave.c: 77:     LATB = 0;
+[e = _LATB -> -> 0 `i `uc ]
 "78
-[; ;I2C_slave.c: 78:         ADCON0bits.GODONE = 1;
-[e = . . _ADCON0bits 6 1 -> -> 1 `i `uc ]
+[; ;I2C_slave.c: 78:     LATA = 0;
+[e = _LATA -> -> 0 `i `uc ]
 "79
-[; ;I2C_slave.c: 79:         Txbuf.data[1] = PORTA;
-[e = *U + &U . _Txbuf 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _Txbuf 0 `ui `ux _PORTA ]
+[; ;I2C_slave.c: 79:     T2CONbits.TMR2ON = 1;
+[e = . . _T2CONbits 0 1 -> -> 1 `i `uc ]
 "80
-[; ;I2C_slave.c: 80:         T0Thres = Rxbuf.data[0];
+[; ;I2C_slave.c: 80:     T0CONbits.TMR0ON = 1;
+[e = . . _T0CONbits 0 5 -> -> 1 `i `uc ]
+"82
+[; ;I2C_slave.c: 82:     while(1)
+[e :U 611 ]
+"83
+[; ;I2C_slave.c: 83:     {
+{
+"84
+[; ;I2C_slave.c: 84:         LATA = Rxbuf.data[2];
+[e = _LATA *U + &U . _Rxbuf 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _Rxbuf 0 `ui `ux ]
+"88
+[; ;I2C_slave.c: 88:         Txbuf.data[1] = PORTA;
+[e = *U + &U . _Txbuf 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _Txbuf 0 `ui `ux _PORTA ]
+"89
+[; ;I2C_slave.c: 89:         Txbuf.data[2] = PORTB;
+[e = *U + &U . _Txbuf 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _Txbuf 0 `ui `ux _PORTB ]
+"90
+[; ;I2C_slave.c: 90:         T0Thres = Rxbuf.data[0];
 [e = _T0Thres *U + &U . _Rxbuf 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _Rxbuf 0 `ui `ux ]
-"81
-[; ;I2C_slave.c: 81:         if(Rxbuf.data[1]==1){
+"92
+[; ;I2C_slave.c: 92:         if(Rxbuf.data[1]==1){
 [e $ ! == -> *U + &U . _Rxbuf 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _Rxbuf 0 `ui `ux `i -> 1 `i 613  ]
 {
-"82
-[; ;I2C_slave.c: 82:             LATBbits.LATB6 = 1;
-[e = . . _LATBbits 0 6 -> -> 1 `i `uc ]
-"83
-[; ;I2C_slave.c: 83:         }
+"93
+[; ;I2C_slave.c: 93:             LATCbits.LATC6 = 1;
+[e = . . _LATCbits 0 6 -> -> 1 `i `uc ]
+"94
+[; ;I2C_slave.c: 94:         }
 }
 [e $U 614  ]
-"84
-[; ;I2C_slave.c: 84:         else{
+"95
+[; ;I2C_slave.c: 95:         else{
 [e :U 613 ]
 {
-"85
-[; ;I2C_slave.c: 85:             LATBbits.LATB6 = 0;
-[e = . . _LATBbits 0 6 -> -> 0 `i `uc ]
-"86
-[; ;I2C_slave.c: 86:         }
+"96
+[; ;I2C_slave.c: 96:             LATCbits.LATC6 = 0;
+[e = . . _LATCbits 0 6 -> -> 0 `i `uc ]
+"97
+[; ;I2C_slave.c: 97:         }
 }
 [e :U 614 ]
-"87
-[; ;I2C_slave.c: 87:     }
+"106
+[; ;I2C_slave.c: 106:     }
 }
 [e :U 610 ]
 [e $U 611  ]
 [e :U 612 ]
-"88
-[; ;I2C_slave.c: 88: }
+"107
+[; ;I2C_slave.c: 107: }
 [e :UE 609 ]
 }
-"90
-[; ;I2C_slave.c: 90: void init_Chip()
+"109
+[; ;I2C_slave.c: 109: void init_Chip()
 [v _init_Chip `(v ~T0 @X0 1 ef ]
-"91
-[; ;I2C_slave.c: 91: {
+"110
+[; ;I2C_slave.c: 110: {
 {
 [e :U _init_Chip ]
 [f ]
-"92
-[; ;I2C_slave.c: 92:     LATA = 0x00;
+"111
+[; ;I2C_slave.c: 111:     LATA = 0x00;
 [e = _LATA -> -> 0 `i `uc ]
-"93
-[; ;I2C_slave.c: 93:     TRISA = 0x83;
-[e = _TRISA -> -> 131 `i `uc ]
-"94
-[; ;I2C_slave.c: 94:     ADCON1 = 0x00;
+"112
+[; ;I2C_slave.c: 112:     TRISA = 0xFF;
+[e = _TRISA -> -> 255 `i `uc ]
+"115
+[; ;I2C_slave.c: 115:     ADCON1 = 0x00;
 [e = _ADCON1 -> -> 0 `i `uc ]
-"95
-[; ;I2C_slave.c: 95:     ANSELA = 0x00;
+"116
+[; ;I2C_slave.c: 116:     ANSELA = 0x00;
 [e = _ANSELA -> -> 0 `i `uc ]
-"96
-[; ;I2C_slave.c: 96:     CM1CON0 = 0x00;
+"117
+[; ;I2C_slave.c: 117:     CM1CON0 = 0x00;
 [e = _CM1CON0 -> -> 0 `i `uc ]
-"97
-[; ;I2C_slave.c: 97:     LATB = 0x00;
+"118
+[; ;I2C_slave.c: 118:     LATB = 0x00;
 [e = _LATB -> -> 0 `i `uc ]
-"98
-[; ;I2C_slave.c: 98:     TRISB = 0x00;
-[e = _TRISB -> -> 0 `i `uc ]
-"99
-[; ;I2C_slave.c: 99:     LATC = 0x00;
+"119
+[; ;I2C_slave.c: 119:     TRISB = 0xF0;
+[e = _TRISB -> -> 240 `i `uc ]
+"120
+[; ;I2C_slave.c: 120:     LATC = 0x00;
 [e = _LATC -> -> 0 `i `uc ]
-"100
-[; ;I2C_slave.c: 100:     TRISC = 0x00;
+"121
+[; ;I2C_slave.c: 121:     TRISC = 0x00;
 [e = _TRISC -> -> 0 `i `uc ]
-"101
-[; ;I2C_slave.c: 101:  INTCONbits.GIE = 0;
+"122
+[; ;I2C_slave.c: 122:  INTCONbits.GIE = 0;
 [e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-"102
-[; ;I2C_slave.c: 102: }
+"123
+[; ;I2C_slave.c: 123: }
 [e :UE 615 ]
 }
-"104
-[; ;I2C_slave.c: 104: void init_I2C()
+"125
+[; ;I2C_slave.c: 125: void init_I2C()
 [v _init_I2C `(v ~T0 @X0 1 ef ]
-"105
-[; ;I2C_slave.c: 105: {
+"126
+[; ;I2C_slave.c: 126: {
 {
 [e :U _init_I2C ]
 [f ]
-"107
-[; ;I2C_slave.c: 107:     TRISBbits.TRISB0 = 1;
+"128
+[; ;I2C_slave.c: 128:     TRISBbits.TRISB0 = 1;
 [e = . . _TRISBbits 0 0 -> -> 1 `i `uc ]
-"108
-[; ;I2C_slave.c: 108:     TRISBbits.TRISB1 = 1;
+"129
+[; ;I2C_slave.c: 129:     TRISBbits.TRISB1 = 1;
 [e = . . _TRISBbits 0 1 -> -> 1 `i `uc ]
-"110
-[; ;I2C_slave.c: 110:     SSPADD = 0x30;
+"131
+[; ;I2C_slave.c: 131:     SSPADD = 0x30;
 [e = _SSPADD -> -> 48 `i `uc ]
-"111
-[; ;I2C_slave.c: 111:     SSPCON1 = 0x36;
+"132
+[; ;I2C_slave.c: 132:     SSPCON1 = 0x36;
 [e = _SSPCON1 -> -> 54 `i `uc ]
-"112
-[; ;I2C_slave.c: 112:     SSPSTAT = 0x80;
+"133
+[; ;I2C_slave.c: 133:     SSPSTAT = 0x80;
 [e = _SSPSTAT -> -> 128 `i `uc ]
-"113
-[; ;I2C_slave.c: 113:     SSPCON2 = 0x01;
+"134
+[; ;I2C_slave.c: 134:     SSPCON2 = 0x01;
 [e = _SSPCON2 -> -> 1 `i `uc ]
-"115
-[; ;I2C_slave.c: 115:     PIE1bits.SSPIE = 1;
+"136
+[; ;I2C_slave.c: 136:     PIE1bits.SSPIE = 1;
 [e = . . _PIE1bits 0 3 -> -> 1 `i `uc ]
-"116
-[; ;I2C_slave.c: 116:     INTCONbits.PEIE = 1;
+"137
+[; ;I2C_slave.c: 137:     INTCONbits.PEIE = 1;
 [e = . . _INTCONbits 1 6 -> -> 1 `i `uc ]
-"117
-[; ;I2C_slave.c: 117: }
+"138
+[; ;I2C_slave.c: 138: }
 [e :UE 616 ]
 }
-"119
-[; ;I2C_slave.c: 119: void writePortB(unsigned char data)
+"140
+[; ;I2C_slave.c: 140: void writePortB(unsigned char data)
 [v _writePortB `(v ~T0 @X0 1 ef1`uc ]
-"120
-[; ;I2C_slave.c: 120: {
+"141
+[; ;I2C_slave.c: 141: {
 {
 [e :U _writePortB ]
-"119
-[; ;I2C_slave.c: 119: void writePortB(unsigned char data)
+"140
+[; ;I2C_slave.c: 140: void writePortB(unsigned char data)
 [v _data `uc ~T0 @X0 1 r1 ]
-"120
-[; ;I2C_slave.c: 120: {
+"141
+[; ;I2C_slave.c: 141: {
 [f ]
-"121
-[; ;I2C_slave.c: 121:     LATB = data;
+"142
+[; ;I2C_slave.c: 142:     LATB = data;
 [e = _LATB _data ]
-"122
-[; ;I2C_slave.c: 122:     LATCbits.LATC1 = (data>>2)&0x01;
+"143
+[; ;I2C_slave.c: 143:     LATCbits.LATC1 = (data>>2)&0x01;
 [e = . . _LATCbits 0 1 -> & >> -> _data `i -> 2 `i -> 1 `i `uc ]
-"123
-[; ;I2C_slave.c: 123:     LATCbits.LATC2 = (data>>1)&0x01;
+"144
+[; ;I2C_slave.c: 144:     LATCbits.LATC2 = (data>>1)&0x01;
 [e = . . _LATCbits 0 2 -> & >> -> _data `i -> 1 `i -> 1 `i `uc ]
-"124
-[; ;I2C_slave.c: 124: }
+"145
+[; ;I2C_slave.c: 145: }
 [e :UE 617 ]
 }
-"126
-[; ;I2C_slave.c: 126: void init_ADC()
+"147
+[; ;I2C_slave.c: 147: void init_ADC()
 [v _init_ADC `(v ~T0 @X0 1 ef ]
-"127
-[; ;I2C_slave.c: 127: {
+"148
+[; ;I2C_slave.c: 148: {
 {
 [e :U _init_ADC ]
 [f ]
-"128
-[; ;I2C_slave.c: 128:     ADCON0 = 0x01;
+"149
+[; ;I2C_slave.c: 149:     ADCON0 = 0x01;
 [e = _ADCON0 -> -> 1 `i `uc ]
-"129
-[; ;I2C_slave.c: 129:     ADCON1 = 0x00;
+"150
+[; ;I2C_slave.c: 150:     ADCON1 = 0x00;
 [e = _ADCON1 -> -> 0 `i `uc ]
-"130
-[; ;I2C_slave.c: 130:     ADCON2 = 0x08;
+"151
+[; ;I2C_slave.c: 151:     ADCON2 = 0x08;
 [e = _ADCON2 -> -> 8 `i `uc ]
-"131
-[; ;I2C_slave.c: 131: }
+"152
+[; ;I2C_slave.c: 152: }
 [e :UE 618 ]
 }
-"133
-[; ;I2C_slave.c: 133: void init_TM2()
+"154
+[; ;I2C_slave.c: 154: void init_TM2()
 [v _init_TM2 `(v ~T0 @X0 1 ef ]
-"134
-[; ;I2C_slave.c: 134: {
+"155
+[; ;I2C_slave.c: 155: {
 {
 [e :U _init_TM2 ]
 [f ]
-"136
-[; ;I2C_slave.c: 136:     PR2 = 0xff;
+"157
+[; ;I2C_slave.c: 157:     PR2 = 0xff;
 [e = _PR2 -> -> 255 `i `uc ]
-"138
-[; ;I2C_slave.c: 138:     T2CON = 0x79;
+"159
+[; ;I2C_slave.c: 159:     T2CON = 0x79;
 [e = _T2CON -> -> 121 `i `uc ]
-"139
-[; ;I2C_slave.c: 139:     PIE1bits.TMR2IE = 1;
+"160
+[; ;I2C_slave.c: 160:     PIE1bits.TMR2IE = 1;
 [e = . . _PIE1bits 0 1 -> -> 1 `i `uc ]
-"140
-[; ;I2C_slave.c: 140:     TMR2 = 0;
+"161
+[; ;I2C_slave.c: 161:     TMR2 = 0;
 [e = _TMR2 -> -> 0 `i `uc ]
-"141
-[; ;I2C_slave.c: 141:     T2CONbits.T2OUTPS = 0x0f;
+"162
+[; ;I2C_slave.c: 162:     T2CONbits.T2OUTPS = 0x0f;
 [e = . . _T2CONbits 0 2 -> -> 15 `i `uc ]
-"143
-[; ;I2C_slave.c: 143: }
+"164
+[; ;I2C_slave.c: 164: }
 [e :UE 619 ]
 }
-"145
-[; ;I2C_slave.c: 145: void init_TM0()
+"166
+[; ;I2C_slave.c: 166: void init_TM0()
 [v _init_TM0 `(v ~T0 @X0 1 ef ]
-"146
-[; ;I2C_slave.c: 146: {
+"167
+[; ;I2C_slave.c: 167: {
 {
 [e :U _init_TM0 ]
 [f ]
-"147
-[; ;I2C_slave.c: 147:     T0CON = 0x43;
+"168
+[; ;I2C_slave.c: 168:     T0CON = 0x43;
 [e = _T0CON -> -> 67 `i `uc ]
-"148
-[; ;I2C_slave.c: 148:     TMR0H = 0x4C;
+"169
+[; ;I2C_slave.c: 169:     TMR0H = 0x4C;
 [e = _TMR0H -> -> 76 `i `uc ]
-"149
-[; ;I2C_slave.c: 149:     TMR0L = 0xB0;
+"170
+[; ;I2C_slave.c: 170:     TMR0L = 0xB0;
 [e = _TMR0L -> -> 176 `i `uc ]
-"150
-[; ;I2C_slave.c: 150:     INTCONbits.TMR0IF = 0;
+"171
+[; ;I2C_slave.c: 171:     INTCONbits.TMR0IF = 0;
 [e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
-"151
-[; ;I2C_slave.c: 151:     INTCONbits.TMR0IE = 1;
+"172
+[; ;I2C_slave.c: 172:     INTCONbits.TMR0IE = 1;
 [e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
-"152
-[; ;I2C_slave.c: 152: }
+"173
+[; ;I2C_slave.c: 173: }
 [e :UE 620 ]
 }
 [v $root$_high_ISR `(v ~T0 @X0 0 e ]
-"158
-[; ;I2C_slave.c: 158: void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
+"179
+[; ;I2C_slave.c: 179: void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
 [v _high_ISR `(v ~T1 @X0 1 ef ]
-"159
-[; ;I2C_slave.c: 159: {
+"180
+[; ;I2C_slave.c: 180: {
 {
 [e :U _high_ISR ]
 [f ]
-"160
-[; ;I2C_slave.c: 160:     if(PIR1bits.SSPIF==1){
+"181
+[; ;I2C_slave.c: 181:     if(PIR1bits.SSPIF==1){
 [e $ ! == -> . . _PIR1bits 0 3 `i -> 1 `i 622  ]
 {
-"163
-[; ;I2C_slave.c: 163:         if((SSPSTAT&0x20)==0){
+"184
+[; ;I2C_slave.c: 184:         if((SSPSTAT&0x20)==0){
 [e $ ! == & -> _SSPSTAT `i -> 32 `i -> 0 `i 623  ]
 {
-"165
-[; ;I2C_slave.c: 165:             addr = SSPBUF;
+"186
+[; ;I2C_slave.c: 186:             addr = SSPBUF;
 [e = _addr _SSPBUF ]
-"166
-[; ;I2C_slave.c: 166:             LATCbits.LATC7 ^= 1;
-[e =^ . . _LATCbits 0 7 -> -> 1 `i `Vuc ]
-"169
-[; ;I2C_slave.c: 169:             if(SSPSTATbits.R_nW){
+"190
+[; ;I2C_slave.c: 190:             if(SSPSTATbits.R_nW){
 [e $ ! != -> . . _SSPSTATbits 2 2 `i -> 0 `i 624  ]
 {
-"170
-[; ;I2C_slave.c: 170:                 I2Cstatus = 1;
+"191
+[; ;I2C_slave.c: 191:                 I2Cstatus = 1;
 [e = _I2Cstatus -> -> 1 `i `uc ]
-"172
-[; ;I2C_slave.c: 172:                 if((I2Cstatus==1)&&(Txbuf.idx<2))
-[e $ ! && == -> _I2Cstatus `i -> 1 `i < -> . _Txbuf 1 `i -> 2 `i 625  ]
-"173
-[; ;I2C_slave.c: 173:                 {
+"193
+[; ;I2C_slave.c: 193:                 if((I2Cstatus==1)&&(Txbuf.idx<3))
+[e $ ! && == -> _I2Cstatus `i -> 1 `i < -> . _Txbuf 1 `i -> 3 `i 625  ]
+"194
+[; ;I2C_slave.c: 194:                 {
 {
-"174
-[; ;I2C_slave.c: 174:                     SSPBUF = Txbuf.data[Txbuf.idx];
+"195
+[; ;I2C_slave.c: 195:                     SSPBUF = Txbuf.data[Txbuf.idx];
 [e = _SSPBUF *U + &U . _Txbuf 0 * -> . _Txbuf 1 `ux -> -> # *U &U . _Txbuf 0 `ui `ux ]
-"176
-[; ;I2C_slave.c: 176:                     Txbuf.idx++;
+"197
+[; ;I2C_slave.c: 197:                     Txbuf.idx++;
 [e ++ . _Txbuf 1 -> -> 1 `i `uc ]
-"177
-[; ;I2C_slave.c: 177:                     if(Txbuf.idx==2){
-[e $ ! == -> . _Txbuf 1 `i -> 2 `i 626  ]
+"198
+[; ;I2C_slave.c: 198:                     if(Txbuf.idx==3){
+[e $ ! == -> . _Txbuf 1 `i -> 3 `i 626  ]
 {
-"179
-[; ;I2C_slave.c: 179:                         I2Cstatus = 0;
+"200
+[; ;I2C_slave.c: 200:                         I2Cstatus = 0;
 [e = _I2Cstatus -> -> 0 `i `uc ]
-"180
-[; ;I2C_slave.c: 180:                         Txbuf.idx = 0;
+"201
+[; ;I2C_slave.c: 201:                         Txbuf.idx = 0;
 [e = . _Txbuf 1 -> -> 0 `i `uc ]
-"181
-[; ;I2C_slave.c: 181:                     }
+"202
+[; ;I2C_slave.c: 202:                     }
 }
 [e :U 626 ]
-"182
-[; ;I2C_slave.c: 182:                 }
+"203
+[; ;I2C_slave.c: 203:                 }
 }
 [e :U 625 ]
-"183
-[; ;I2C_slave.c: 183:             }
+"204
+[; ;I2C_slave.c: 204:             }
 }
 [e $U 627  ]
-"184
-[; ;I2C_slave.c: 184:             else{
+"205
+[; ;I2C_slave.c: 205:             else{
 [e :U 624 ]
 {
-"186
-[; ;I2C_slave.c: 186:                 I2Cstatus = 2;
+"207
+[; ;I2C_slave.c: 207:                 I2Cstatus = 2;
 [e = _I2Cstatus -> -> 2 `i `uc ]
-"187
-[; ;I2C_slave.c: 187:             }
+"208
+[; ;I2C_slave.c: 208:             }
 }
 [e :U 627 ]
-"189
-[; ;I2C_slave.c: 189:         }
+"210
+[; ;I2C_slave.c: 210:         }
 }
 [e $U 628  ]
-"190
-[; ;I2C_slave.c: 190:         else{
+"211
+[; ;I2C_slave.c: 211:         else{
 [e :U 623 ]
 {
-"192
-[; ;I2C_slave.c: 192:             if((I2Cstatus==2)&&(Rxbuf.idx<2)){
-[e $ ! && == -> _I2Cstatus `i -> 2 `i < -> . _Rxbuf 1 `i -> 2 `i 629  ]
+"213
+[; ;I2C_slave.c: 213:             if((I2Cstatus==2)&&(Rxbuf.idx<3)){
+[e $ ! && == -> _I2Cstatus `i -> 2 `i < -> . _Rxbuf 1 `i -> 3 `i 629  ]
 {
-"193
-[; ;I2C_slave.c: 193:                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
+"214
+[; ;I2C_slave.c: 214:                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
 [e = *U + &U . _Rxbuf 0 * -> . _Rxbuf 1 `ux -> -> # *U &U . _Rxbuf 0 `ui `ux _SSPBUF ]
-"196
-[; ;I2C_slave.c: 196:                 Rxbuf.idx++;
+"217
+[; ;I2C_slave.c: 217:                 Rxbuf.idx++;
 [e ++ . _Rxbuf 1 -> -> 1 `i `uc ]
-"197
-[; ;I2C_slave.c: 197:                 if(Rxbuf.idx==2){
-[e $ ! == -> . _Rxbuf 1 `i -> 2 `i 630  ]
+"218
+[; ;I2C_slave.c: 218:                 if(Rxbuf.idx==3){
+[e $ ! == -> . _Rxbuf 1 `i -> 3 `i 630  ]
 {
-"198
-[; ;I2C_slave.c: 198:                     Rxbuf.idx = 0;
+"219
+[; ;I2C_slave.c: 219:                     Rxbuf.idx = 0;
 [e = . _Rxbuf 1 -> -> 0 `i `uc ]
-"199
-[; ;I2C_slave.c: 199:                     I2Cstatus = 0;
+"220
+[; ;I2C_slave.c: 220:                     I2Cstatus = 0;
 [e = _I2Cstatus -> -> 0 `i `uc ]
-"200
-[; ;I2C_slave.c: 200:                 }
+"221
+[; ;I2C_slave.c: 221:                 }
 }
 [e :U 630 ]
-"201
-[; ;I2C_slave.c: 201:             }
+"222
+[; ;I2C_slave.c: 222:             }
 }
 [e $U 631  ]
-"202
-[; ;I2C_slave.c: 202:             else{
+"223
+[; ;I2C_slave.c: 223:             else{
 [e :U 629 ]
 {
-"203
-[; ;I2C_slave.c: 203:                 I2Cstatus = 0;
+"224
+[; ;I2C_slave.c: 224:                 I2Cstatus = 0;
 [e = _I2Cstatus -> -> 0 `i `uc ]
-"204
-[; ;I2C_slave.c: 204:                 Rxbuf.idx = 0;
+"225
+[; ;I2C_slave.c: 225:                 Rxbuf.idx = 0;
 [e = . _Rxbuf 1 -> -> 0 `i `uc ]
-"205
-[; ;I2C_slave.c: 205:             }
+"226
+[; ;I2C_slave.c: 226:             }
 }
 [e :U 631 ]
-"206
-[; ;I2C_slave.c: 206:         }
+"227
+[; ;I2C_slave.c: 227:         }
 }
 [e :U 628 ]
-"208
-[; ;I2C_slave.c: 208:         SSPCON1bits.SSPOV = 0;
+"229
+[; ;I2C_slave.c: 229:         SSPCON1bits.SSPOV = 0;
 [e = . . _SSPCON1bits 0 3 -> -> 0 `i `uc ]
-"209
-[; ;I2C_slave.c: 209:         SSPCON1bits.WCOL = 0;
+"230
+[; ;I2C_slave.c: 230:         SSPCON1bits.WCOL = 0;
 [e = . . _SSPCON1bits 0 4 -> -> 0 `i `uc ]
-"210
-[; ;I2C_slave.c: 210:         PIR1bits.SSPIF = 0;
+"231
+[; ;I2C_slave.c: 231:         PIR1bits.SSPIF = 0;
 [e = . . _PIR1bits 0 3 -> -> 0 `i `uc ]
-"211
-[; ;I2C_slave.c: 211:         SSPCON1bits.CKP = 1;
+"232
+[; ;I2C_slave.c: 232:         SSPCON1bits.CKP = 1;
 [e = . . _SSPCON1bits 0 1 -> -> 1 `i `uc ]
-"212
-[; ;I2C_slave.c: 212:     }
+"233
+[; ;I2C_slave.c: 233:     }
 }
 [e :U 622 ]
-"214
-[; ;I2C_slave.c: 214:     if(PIR1bits.ADIF==1){
+"235
+[; ;I2C_slave.c: 235:     if(PIR1bits.ADIF==1){
 [e $ ! == -> . . _PIR1bits 0 6 `i -> 1 `i 632  ]
 {
-"216
-[; ;I2C_slave.c: 216:         PIR1bits.ADIF = 0;
+"237
+[; ;I2C_slave.c: 237:         PIR1bits.ADIF = 0;
 [e = . . _PIR1bits 0 6 -> -> 0 `i `uc ]
-"217
-[; ;I2C_slave.c: 217:         Txbuf.data[0] = ADRESH;
+"238
+[; ;I2C_slave.c: 238:         Txbuf.data[0] = ADRESH;
 [e = *U + &U . _Txbuf 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _Txbuf 0 `ui `ux _ADRESH ]
-"221
-[; ;I2C_slave.c: 221:     }
+"240
+[; ;I2C_slave.c: 240:     }
 }
 [e :U 632 ]
-"222
-[; ;I2C_slave.c: 222:     if(INTCONbits.TMR0IF == 1){
+"241
+[; ;I2C_slave.c: 241:     if(INTCONbits.TMR0IF == 1){
 [e $ ! == -> . . _INTCONbits 0 2 `i -> 1 `i 633  ]
 {
-"223
-[; ;I2C_slave.c: 223:         TMR0H = 0x4C;
+"242
+[; ;I2C_slave.c: 242:         TMR0H = 0x4C;
 [e = _TMR0H -> -> 76 `i `uc ]
-"224
-[; ;I2C_slave.c: 224:         TMR0L = 0xB0;
+"243
+[; ;I2C_slave.c: 243:         TMR0L = 0xB0;
 [e = _TMR0L -> -> 176 `i `uc ]
-"225
-[; ;I2C_slave.c: 225:         INTCONbits.TMR0IF=0;
+"244
+[; ;I2C_slave.c: 244:         INTCONbits.TMR0IF=0;
 [e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
-"226
-[; ;I2C_slave.c: 226:         LATBbits.LATB2 ^= 1;
+"245
+[; ;I2C_slave.c: 245:         LATBbits.LATB2 ^= 1;
 [e =^ . . _LATBbits 0 2 -> -> 1 `i `Vuc ]
-"227
-[; ;I2C_slave.c: 227:         ADCON0bits.GODONE = 1;
+"246
+[; ;I2C_slave.c: 246:         ADCON0bits.GODONE = 1;
 [e = . . _ADCON0bits 6 1 -> -> 1 `i `uc ]
-"228
-[; ;I2C_slave.c: 228:         T0count++;
+"247
+[; ;I2C_slave.c: 247:         T0count++;
 [e ++ _T0count -> -> 1 `i `uc ]
-"229
-[; ;I2C_slave.c: 229:         if(T0count==T0Thres){
+"248
+[; ;I2C_slave.c: 248:         if(T0count==T0Thres){
 [e $ ! == -> _T0count `i -> _T0Thres `i 634  ]
 {
-"230
-[; ;I2C_slave.c: 230:             LATBbits.LATB7 ^= 1;
-[e =^ . . _LATBbits 0 7 -> -> 1 `i `Vuc ]
-"231
-[; ;I2C_slave.c: 231:             T0count = 0;
+"249
+[; ;I2C_slave.c: 249:             LATCbits.LATC7 ^= 1;
+[e =^ . . _LATCbits 0 7 -> -> 1 `i `Vuc ]
+"250
+[; ;I2C_slave.c: 250:             T0count = 0;
 [e = _T0count -> -> 0 `i `uc ]
-"232
-[; ;I2C_slave.c: 232:         }
+"251
+[; ;I2C_slave.c: 251:         }
 }
 [e :U 634 ]
-"234
-[; ;I2C_slave.c: 234:      }
+"253
+[; ;I2C_slave.c: 253:      }
 }
 [e :U 633 ]
-"235
-[; ;I2C_slave.c: 235: }
+"254
+[; ;I2C_slave.c: 254: }
 [e :UE 621 ]
 }

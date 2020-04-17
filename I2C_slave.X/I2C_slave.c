@@ -15,7 +15,13 @@
 #define IDLE 0
 #define I2CTxing 1      // the I2C module is sending data out
 #define I2CRxing 2      // the I2C module is receiving data in
-#define FRAME_LEN 2    // the length of the data frame
+#define FRAME_LEN 3    // the length of the data frame
+
+// pin definition
+#define ADCREHidx 0     // the index ADC result in Txbuf
+#define PORTAidx 1
+#define PORTBidx 2
+
 
 #define BIT0 0x01
 #define BIT1 0x02
@@ -72,30 +78,45 @@ void main(void)
     LATA = 0;
     T2CONbits.TMR2ON = 1;
     T0CONbits.TMR0ON = 1;   // start TMR0
+    
     while(1)
     {
+        LATA = Rxbuf.data[2];
+        
 //        __delay_us(100); 
-        ADCON0bits.GODONE = 1;      // start ADC
-        Txbuf.data[1] = PORTA;      // read PORTA status
+//        ADCON0bits.GODONE = 1;      // start ADC
+        Txbuf.data[PORTAidx] = PORTA;      // read PORTA status
+        Txbuf.data[PORTBidx] = PORTB;      // read PORTB status
         T0Thres = Rxbuf.data[0];   
+//        
         if(Rxbuf.data[1]==1){
-            LATBbits.LATB6 = 1;
+            LATCbits.LATC6 = 1;
         }
         else{
-            LATBbits.LATB6 = 0;
+            LATCbits.LATC6 = 0;
         }
+//        LATCbits.LATC7 = 1;
+//        
+//        if(Rxbuf.data[2]==1){
+//            LATCbits.LATC7 = 1;
+//        }
+//        else{
+//            LATCbits.LATC7 = 0;
+//        }
     }
 }
 
 void init_Chip()
 {
     LATA = 0x00; //Initial PORTA
-    TRISA = 0x83; // set RA0,1,7 as input
+    TRISA = 0xFF; // set RA as input
+//    TRISA = 0x00; // set RA as output, for test;
+    
     ADCON1 = 0x00; //AD voltage reference
     ANSELA = 0x00; // define analog or digital
     CM1CON0 = 0x00; //Turn off Comparator
     LATB = 0x00; //Initial PORTB
-    TRISB = 0x00; //Define PORTB as output
+    TRISB = 0xF0; //Define RB7, 6, 5, 4 as input
     LATC = 0x00; //Initial PORTC
     TRISC = 0x00; //Define PORTC as output
 	INTCONbits.GIE = 0;	// Turn Off global interrupt
@@ -163,7 +184,7 @@ void __interrupt (high_priority) high_ISR(void)
         if((SSPSTAT&BIT5)==0){
             // an address byte is received
             addr = SSPBUF;      // every time when the master calls read/write method, the address will be sent out
-            LATCbits.LATC7 ^= 1;    // test the frequency of received address
+//            LATCbits.LATC7 ^= 1;    // test the frequency of received address
             
             // the address byte will be sent when never the master can read() method)
             if(SSPSTATbits.R_nW){
@@ -214,9 +235,7 @@ void __interrupt (high_priority) high_ISR(void)
     if(PIR1bits.ADIF==1){
         // ADC interrupt
         PIR1bits.ADIF = 0;    // clear flag
-        Txbuf.data[0] = ADRESH;        // read the result: high byte
-//        LATBbits.LATB2 = 0;
-//        Txbuf.data[1] = ADRESL;         // read the result: low byte--not needed        
+        Txbuf.data[ADCREHidx] = ADRESH;        // read the result: high byte
         
     }
     if(INTCONbits.TMR0IF == 1){
@@ -227,7 +246,7 @@ void __interrupt (high_priority) high_ISR(void)
         ADCON0bits.GODONE = 1;      // start ADC
         T0count++;
         if(T0count==T0Thres){
-            LATBbits.LATB7 ^= 1;    // blink at 20Hz
+            LATCbits.LATC7 ^= 1;    // blink at 20Hz
             T0count = 0;
         }
         

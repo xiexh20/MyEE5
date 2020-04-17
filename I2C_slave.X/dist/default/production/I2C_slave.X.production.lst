@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Tue Apr 14 16:24:51 2020
+                                                                                               Fri Apr 17 16:18:58 2020
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1 
      1                           	processor	18F25K50
@@ -67,782 +67,782 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
     53                           ; SFR Addresses
     54  0000                     
     55                           	psect	idataCOMRAM
-    56  001240                     __pidataCOMRAM:
+    56  001242                     __pidataCOMRAM:
     57                           	opt callstack 0
     58                           
     59                           ;initializer for _T0Thres
-    60  001240  01                 	db	1
+    60  001242  01                 	db	1
     61                           
     62                           ;initializer for _sent
-    63  001241  11                 	db	17
+    63  001243  11                 	db	17
     64  0000                     _ANSELA	set	3931
-    65  0000                     _ADRESH	set	4036
-    66  0000                     _SSPCON1bits	set	4038
-    67  0000                     _SSPSTATbits	set	4039
-    68  0000                     _SSPBUF	set	4041
-    69  0000                     _PIR1bits	set	3998
-    70  0000                     _TMR0L	set	4054
-    71  0000                     _TMR0H	set	4055
-    72  0000                     _T0CON	set	4053
-    73  0000                     _TMR2	set	4028
-    74  0000                     _T2CON	set	4026
-    75  0000                     _PR2	set	4027
-    76  0000                     _ADCON2	set	4032
-    77  0000                     _ADCON0	set	4034
-    78  0000                     _LATCbits	set	3979
-    79  0000                     _PIE1bits	set	3997
-    80  0000                     _SSPCON2	set	4037
-    81  0000                     _SSPSTAT	set	4039
-    82  0000                     _SSPCON1	set	4038
-    83  0000                     _SSPADD	set	4040
-    84  0000                     _TRISBbits	set	3987
-    85  0000                     _TRISC	set	3988
-    86  0000                     _LATC	set	3979
-    87  0000                     _TRISB	set	3987
-    88  0000                     _CM1CON0	set	3992
-    89  0000                     _ADCON1	set	4033
-    90  0000                     _TRISA	set	3986
-    91  0000                     _LATBbits	set	3978
-    92  0000                     _PORTA	set	3968
-    93  0000                     _ADCON0bits	set	4034
-    94  0000                     _T0CONbits	set	4053
-    95  0000                     _T2CONbits	set	4026
-    96  0000                     _LATA	set	3977
-    97  0000                     _LATB	set	3978
-    98  0000                     _INTCONbits	set	4082
-    99                           
-   100                           ; #config settings
-   101                           
-   102                           	psect	cinit
-   103  0011AE                     __pcinit:
-   104                           	opt callstack 0
-   105  0011AE                     start_initialization:
-   106                           	opt callstack 0
-   107  0011AE                     __initialization:
-   108                           	opt callstack 0
-   109                           
-   110                           ; Initialize objects allocated to COMRAM (2 bytes)
-   111                           ; load TBLPTR registers with __pidataCOMRAM
-   112  0011AE  0E40               	movlw	low __pidataCOMRAM
-   113  0011B0  6EF6               	movwf	tblptrl,c
-   114  0011B2  0E12               	movlw	high __pidataCOMRAM
-   115  0011B4  6EF7               	movwf	tblptrh,c
-   116  0011B6  0E00               	movlw	low (__pidataCOMRAM shr (0+16))
-   117  0011B8  6EF8               	movwf	tblptru,c
-   118  0011BA  0009               	tblrd		*+	;fetch initializer
-   119  0011BC  CFF5 F00D          	movff	tablat,__pdataCOMRAM
-   120  0011C0  0009               	tblrd		*+	;fetch initializer
-   121  0011C2  CFF5 F00E          	movff	tablat,__pdataCOMRAM+1
-   122                           
-   123                           ; Clear objects allocated to COMRAM (12 bytes)
-   124  0011C6  EE00  F001         	lfsr	0,__pbssCOMRAM
-   125  0011CA  0E0C               	movlw	12
-   126  0011CC                     clear_0:
-   127  0011CC  6AEE               	clrf	postinc0,c
-   128  0011CE  06E8               	decf	wreg,f,c
-   129  0011D0  E1FD               	bnz	clear_0
-   130  0011D2                     end_of_initialization:
-   131                           	opt callstack 0
-   132  0011D2                     __end_of__initialization:
-   133                           	opt callstack 0
-   134  0011D2  9011               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
-   135  0011D4  9211               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
-   136  0011D6  0100               	movlb	0
-   137  0011D8  EFAF  F008         	goto	_main	;jump to C main() function
-   138                           
-   139                           	psect	bssCOMRAM
-   140  000001                     __pbssCOMRAM:
-   141                           	opt callstack 0
-   142  000001                     _Rxbuf:
-   143                           	opt callstack 0
-   144  000001                     	ds	3
-   145  000004                     _Txbuf:
-   146                           	opt callstack 0
-   147  000004                     	ds	3
-   148  000007                     _I2Cstatus:
-   149                           	opt callstack 0
-   150  000007                     	ds	1
-   151  000008                     _T0count:
-   152                           	opt callstack 0
-   153  000008                     	ds	1
-   154  000009                     _RxStatus:
-   155                           	opt callstack 0
-   156  000009                     	ds	1
-   157  00000A                     _data_past:
-   158                           	opt callstack 0
-   159  00000A                     	ds	1
-   160  00000B                     _addr:
-   161                           	opt callstack 0
-   162  00000B                     	ds	1
-   163  00000C                     _data:
-   164                           	opt callstack 0
-   165  00000C                     	ds	1
-   166                           
-   167                           	psect	dataCOMRAM
-   168  00000D                     __pdataCOMRAM:
-   169                           	opt callstack 0
-   170  00000D                     _T0Thres:
-   171                           	opt callstack 0
-   172  00000D                     	ds	1
-   173  00000E                     _sent:
-   174                           	opt callstack 0
-   175  00000E                     	ds	1
-   176                           
-   177                           	psect	cstackCOMRAM
-   178  00000F                     __pcstackCOMRAM:
-   179                           	opt callstack 0
-   180  00000F                     ??_high_ISR:
-   181                           
-   182                           ; 1 bytes @ 0x0
-   183  00000F                     	ds	2
-   184  000011                     
-   185                           ; 1 bytes @ 0x2
-   186 ;;
-   187 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
-   188 ;;
-   189 ;; *************** function _main *****************
-   190 ;; Defined at:
-   191 ;;		line 58 in file "I2C_slave.c"
-   192 ;; Parameters:    Size  Location     Type
-   193 ;;		None
-   194 ;; Auto vars:     Size  Location     Type
-   195 ;;		None
-   196 ;; Return value:  Size  Location     Type
-   197 ;;                  1    wreg      void 
-   198 ;; Registers used:
-   199 ;;		wreg, status,2, status,0, cstack
-   200 ;; Tracked objects:
-   201 ;;		On entry : 0/0
-   202 ;;		On exit  : 0/0
-   203 ;;		Unchanged: 0/0
-   204 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   205 ;;      Params:         0       0       0       0       0       0       0       0       0
-   206 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   207 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   208 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   209 ;;Total ram usage:        0 bytes
-   210 ;; Hardware stack levels required when called:    2
-   211 ;; This function calls:
-   212 ;;		_init_ADC
-   213 ;;		_init_Chip
-   214 ;;		_init_I2C
-   215 ;;		_init_TM0
-   216 ;; This function is called by:
-   217 ;;		Startup code after reset
-   218 ;; This function uses a non-reentrant model
-   219 ;;
-   220                           
-   221                           	psect	text0
-   222  00115E                     __ptext0:
-   223                           	opt callstack 0
-   224  00115E                     _main:
-   225                           	opt callstack 29
-   226  00115E                     
-   227                           ;I2C_slave.c: 60:     init_Chip();
-   228  00115E  ECEE  F008         	call	_init_Chip	;wreg free
-   229                           
-   230                           ;I2C_slave.c: 61:     init_I2C();
-   231  001162  EC03  F009         	call	_init_I2C	;wreg free
-   232                           
-   233                           ;I2C_slave.c: 62:     init_ADC();
-   234  001166  EC19  F009         	call	_init_ADC	;wreg free
-   235                           
-   236                           ;I2C_slave.c: 64:     init_TM0();
-   237  00116A  EC10  F009         	call	_init_TM0	;wreg free
-   238  00116E                     
-   239                           ;I2C_slave.c: 67:     Txbuf.idx = 0;
-   240  00116E  0E00               	movlw	0
-   241  001170  6E06               	movwf	(_Txbuf+2)^0,c
-   242  001172                     
-   243                           ;I2C_slave.c: 68:     Rxbuf.idx = 0;
-   244  001172  0E00               	movlw	0
-   245  001174  6E03               	movwf	(_Rxbuf+2)^0,c
-   246  001176                     
-   247                           ;I2C_slave.c: 70:     INTCONbits.GIE = 1;
-   248  001176  8EF2               	bsf	242,7,c	;volatile
-   249  001178                     
-   250                           ;I2C_slave.c: 71:     LATB = 0;
-   251  001178  0E00               	movlw	0
-   252  00117A  6E8A               	movwf	138,c	;volatile
-   253  00117C                     
-   254                           ;I2C_slave.c: 72:     LATA = 0;
-   255  00117C  0E00               	movlw	0
-   256  00117E  6E89               	movwf	137,c	;volatile
-   257  001180                     
-   258                           ;I2C_slave.c: 73:     T2CONbits.TMR2ON = 1;
-   259  001180  84BA               	bsf	186,2,c	;volatile
-   260  001182                     
-   261                           ;I2C_slave.c: 74:     T0CONbits.TMR0ON = 1;
-   262  001182  8ED5               	bsf	213,7,c	;volatile
-   263  001184                     l856:
-   264                           
-   265                           ;I2C_slave.c: 76:     {;I2C_slave.c: 78:         ADCON0bits.GODONE = 1;
-   266  001184  82C2               	bsf	194,1,c	;volatile
-   267  001186                     
-   268                           ;I2C_slave.c: 79:         Txbuf.data[1] = PORTA;
-   269  001186  CF80 F005          	movff	3968,_Txbuf+1	;volatile
-   270  00118A                     
-   271                           ;I2C_slave.c: 80:         T0Thres = Rxbuf.data[0];
-   272  00118A  C001  F00D         	movff	_Rxbuf,_T0Thres
-   273  00118E                     
-   274                           ;I2C_slave.c: 81:         if(Rxbuf.data[1]==1){
-   275  00118E  0402               	decf	(_Rxbuf+1)^0,w,c
-   276  001190  A4D8               	btfss	status,2,c
-   277  001192  EFCD  F008         	goto	u11
-   278  001196  EFCF  F008         	goto	u10
-   279  00119A                     u11:
-   280  00119A  EFD2  F008         	goto	l104
-   281  00119E                     u10:
-   282  00119E                     
-   283                           ;I2C_slave.c: 82:             LATBbits.LATB6 = 1;
-   284  00119E  8C8A               	bsf	138,6,c	;volatile
-   285                           
-   286                           ;I2C_slave.c: 83:         }
-   287  0011A0  EFC2  F008         	goto	l856
-   288  0011A4                     l104:
+    65  0000                     _ADCON0bits	set	4034
+    66  0000                     _LATBbits	set	3978
+    67  0000                     _ADRESH	set	4036
+    68  0000                     _SSPCON1bits	set	4038
+    69  0000                     _SSPSTATbits	set	4039
+    70  0000                     _SSPBUF	set	4041
+    71  0000                     _PIR1bits	set	3998
+    72  0000                     _TMR0L	set	4054
+    73  0000                     _TMR0H	set	4055
+    74  0000                     _T0CON	set	4053
+    75  0000                     _TMR2	set	4028
+    76  0000                     _T2CON	set	4026
+    77  0000                     _PR2	set	4027
+    78  0000                     _ADCON2	set	4032
+    79  0000                     _ADCON0	set	4034
+    80  0000                     _PIE1bits	set	3997
+    81  0000                     _SSPCON2	set	4037
+    82  0000                     _SSPSTAT	set	4039
+    83  0000                     _SSPCON1	set	4038
+    84  0000                     _SSPADD	set	4040
+    85  0000                     _TRISBbits	set	3987
+    86  0000                     _TRISC	set	3988
+    87  0000                     _LATC	set	3979
+    88  0000                     _TRISB	set	3987
+    89  0000                     _CM1CON0	set	3992
+    90  0000                     _ADCON1	set	4033
+    91  0000                     _TRISA	set	3986
+    92  0000                     _LATCbits	set	3979
+    93  0000                     _PORTB	set	3969
+    94  0000                     _PORTA	set	3968
+    95  0000                     _T0CONbits	set	4053
+    96  0000                     _T2CONbits	set	4026
+    97  0000                     _LATA	set	3977
+    98  0000                     _LATB	set	3978
+    99  0000                     _INTCONbits	set	4082
+   100                           
+   101                           ; #config settings
+   102                           
+   103                           	psect	cinit
+   104  0011B2                     __pcinit:
+   105                           	opt callstack 0
+   106  0011B2                     start_initialization:
+   107                           	opt callstack 0
+   108  0011B2                     __initialization:
+   109                           	opt callstack 0
+   110                           
+   111                           ; Initialize objects allocated to COMRAM (2 bytes)
+   112                           ; load TBLPTR registers with __pidataCOMRAM
+   113  0011B2  0E42               	movlw	low __pidataCOMRAM
+   114  0011B4  6EF6               	movwf	tblptrl,c
+   115  0011B6  0E12               	movlw	high __pidataCOMRAM
+   116  0011B8  6EF7               	movwf	tblptrh,c
+   117  0011BA  0E00               	movlw	low (__pidataCOMRAM shr (0+16))
+   118  0011BC  6EF8               	movwf	tblptru,c
+   119  0011BE  0009               	tblrd		*+	;fetch initializer
+   120  0011C0  CFF5 F00F          	movff	tablat,__pdataCOMRAM
+   121  0011C4  0009               	tblrd		*+	;fetch initializer
+   122  0011C6  CFF5 F010          	movff	tablat,__pdataCOMRAM+1
+   123                           
+   124                           ; Clear objects allocated to COMRAM (14 bytes)
+   125  0011CA  EE00  F001         	lfsr	0,__pbssCOMRAM
+   126  0011CE  0E0E               	movlw	14
+   127  0011D0                     clear_0:
+   128  0011D0  6AEE               	clrf	postinc0,c
+   129  0011D2  06E8               	decf	wreg,f,c
+   130  0011D4  E1FD               	bnz	clear_0
+   131  0011D6                     end_of_initialization:
+   132                           	opt callstack 0
+   133  0011D6                     __end_of__initialization:
+   134                           	opt callstack 0
+   135  0011D6  9013               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
+   136  0011D8  9213               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+   137  0011DA  0100               	movlb	0
+   138  0011DC  EFAE  F008         	goto	_main	;jump to C main() function
+   139                           
+   140                           	psect	bssCOMRAM
+   141  000001                     __pbssCOMRAM:
+   142                           	opt callstack 0
+   143  000001                     _Rxbuf:
+   144                           	opt callstack 0
+   145  000001                     	ds	4
+   146  000005                     _Txbuf:
+   147                           	opt callstack 0
+   148  000005                     	ds	4
+   149  000009                     _I2Cstatus:
+   150                           	opt callstack 0
+   151  000009                     	ds	1
+   152  00000A                     _T0count:
+   153                           	opt callstack 0
+   154  00000A                     	ds	1
+   155  00000B                     _RxStatus:
+   156                           	opt callstack 0
+   157  00000B                     	ds	1
+   158  00000C                     _data_past:
+   159                           	opt callstack 0
+   160  00000C                     	ds	1
+   161  00000D                     _addr:
+   162                           	opt callstack 0
+   163  00000D                     	ds	1
+   164  00000E                     _data:
+   165                           	opt callstack 0
+   166  00000E                     	ds	1
+   167                           
+   168                           	psect	dataCOMRAM
+   169  00000F                     __pdataCOMRAM:
+   170                           	opt callstack 0
+   171  00000F                     _T0Thres:
+   172                           	opt callstack 0
+   173  00000F                     	ds	1
+   174  000010                     _sent:
+   175                           	opt callstack 0
+   176  000010                     	ds	1
+   177                           
+   178                           	psect	cstackCOMRAM
+   179  000011                     __pcstackCOMRAM:
+   180                           	opt callstack 0
+   181  000011                     ??_high_ISR:
+   182                           
+   183                           ; 1 bytes @ 0x0
+   184  000011                     	ds	2
+   185  000013                     
+   186                           ; 1 bytes @ 0x2
+   187 ;;
+   188 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   189 ;;
+   190 ;; *************** function _main *****************
+   191 ;; Defined at:
+   192 ;;		line 64 in file "I2C_slave.c"
+   193 ;; Parameters:    Size  Location     Type
+   194 ;;		None
+   195 ;; Auto vars:     Size  Location     Type
+   196 ;;		None
+   197 ;; Return value:  Size  Location     Type
+   198 ;;                  1    wreg      void 
+   199 ;; Registers used:
+   200 ;;		wreg, status,2, status,0, cstack
+   201 ;; Tracked objects:
+   202 ;;		On entry : 0/0
+   203 ;;		On exit  : 0/0
+   204 ;;		Unchanged: 0/0
+   205 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   206 ;;      Params:         0       0       0       0       0       0       0       0       0
+   207 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   208 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   209 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   210 ;;Total ram usage:        0 bytes
+   211 ;; Hardware stack levels required when called:    2
+   212 ;; This function calls:
+   213 ;;		_init_ADC
+   214 ;;		_init_Chip
+   215 ;;		_init_I2C
+   216 ;;		_init_TM0
+   217 ;; This function is called by:
+   218 ;;		Startup code after reset
+   219 ;; This function uses a non-reentrant model
+   220 ;;
+   221                           
+   222                           	psect	text0
+   223  00115C                     __ptext0:
+   224                           	opt callstack 0
+   225  00115C                     _main:
+   226                           	opt callstack 29
+   227  00115C                     
+   228                           ;I2C_slave.c: 66:     init_Chip();
+   229  00115C  ECF0  F008         	call	_init_Chip	;wreg free
+   230                           
+   231                           ;I2C_slave.c: 67:     init_I2C();
+   232  001160  EC04  F009         	call	_init_I2C	;wreg free
+   233                           
+   234                           ;I2C_slave.c: 68:     init_ADC();
+   235  001164  EC1A  F009         	call	_init_ADC	;wreg free
+   236                           
+   237                           ;I2C_slave.c: 70:     init_TM0();
+   238  001168  EC11  F009         	call	_init_TM0	;wreg free
+   239  00116C                     
+   240                           ;I2C_slave.c: 73:     Txbuf.idx = 0;
+   241  00116C  0E00               	movlw	0
+   242  00116E  6E08               	movwf	(_Txbuf+3)^0,c
+   243  001170                     
+   244                           ;I2C_slave.c: 74:     Rxbuf.idx = 0;
+   245  001170  0E00               	movlw	0
+   246  001172  6E04               	movwf	(_Rxbuf+3)^0,c
+   247  001174                     
+   248                           ;I2C_slave.c: 76:     INTCONbits.GIE = 1;
+   249  001174  8EF2               	bsf	242,7,c	;volatile
+   250  001176                     
+   251                           ;I2C_slave.c: 77:     LATB = 0;
+   252  001176  0E00               	movlw	0
+   253  001178  6E8A               	movwf	138,c	;volatile
+   254  00117A                     
+   255                           ;I2C_slave.c: 78:     LATA = 0;
+   256  00117A  0E00               	movlw	0
+   257  00117C  6E89               	movwf	137,c	;volatile
+   258  00117E                     
+   259                           ;I2C_slave.c: 79:     T2CONbits.TMR2ON = 1;
+   260  00117E  84BA               	bsf	186,2,c	;volatile
+   261  001180                     
+   262                           ;I2C_slave.c: 80:     T0CONbits.TMR0ON = 1;
+   263  001180  8ED5               	bsf	213,7,c	;volatile
+   264  001182                     l860:
+   265                           
+   266                           ;I2C_slave.c: 83:     {;I2C_slave.c: 84:         LATA = Rxbuf.data[2];
+   267  001182  C003  FF89         	movff	_Rxbuf+2,3977	;volatile
+   268  001186                     
+   269                           ;I2C_slave.c: 88:         Txbuf.data[1] = PORTA;
+   270  001186  CF80 F006          	movff	3968,_Txbuf+1	;volatile
+   271  00118A                     
+   272                           ;I2C_slave.c: 89:         Txbuf.data[2] = PORTB;
+   273  00118A  CF81 F007          	movff	3969,_Txbuf+2	;volatile
+   274  00118E                     
+   275                           ;I2C_slave.c: 90:         T0Thres = Rxbuf.data[0];
+   276  00118E  C001  F00F         	movff	_Rxbuf,_T0Thres
+   277  001192                     
+   278                           ;I2C_slave.c: 92:         if(Rxbuf.data[1]==1){
+   279  001192  0402               	decf	(_Rxbuf+1)^0,w,c
+   280  001194  A4D8               	btfss	status,2,c
+   281  001196  EFCF  F008         	goto	u11
+   282  00119A  EFD1  F008         	goto	u10
+   283  00119E                     u11:
+   284  00119E  EFD4  F008         	goto	l106
+   285  0011A2                     u10:
+   286  0011A2                     
+   287                           ;I2C_slave.c: 93:             LATCbits.LATC6 = 1;
+   288  0011A2  8C8B               	bsf	139,6,c	;volatile
    289                           
-   290                           ;I2C_slave.c: 85:             LATBbits.LATB6 = 0;
-   291  0011A4  9C8A               	bcf	138,6,c	;volatile
-   292  0011A6  EFC2  F008         	goto	l856
-   293  0011AA  EFAD  F008         	goto	start
-   294  0011AE                     __end_of_main:
-   295                           	opt callstack 0
-   296                           
-   297 ;; *************** function _init_TM0 *****************
-   298 ;; Defined at:
-   299 ;;		line 145 in file "I2C_slave.c"
-   300 ;; Parameters:    Size  Location     Type
-   301 ;;		None
-   302 ;; Auto vars:     Size  Location     Type
-   303 ;;		None
-   304 ;; Return value:  Size  Location     Type
-   305 ;;                  1    wreg      void 
-   306 ;; Registers used:
-   307 ;;		wreg, status,2
-   308 ;; Tracked objects:
-   309 ;;		On entry : 0/0
-   310 ;;		On exit  : 0/0
-   311 ;;		Unchanged: 0/0
-   312 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   313 ;;      Params:         0       0       0       0       0       0       0       0       0
-   314 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   315 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   316 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   317 ;;Total ram usage:        0 bytes
-   318 ;; Hardware stack levels used:    1
-   319 ;; Hardware stack levels required when called:    1
-   320 ;; This function calls:
-   321 ;;		Nothing
-   322 ;; This function is called by:
-   323 ;;		_main
-   324 ;; This function uses a non-reentrant model
-   325 ;;
-   326                           
-   327                           	psect	text1
-   328  001220                     __ptext1:
-   329                           	opt callstack 0
-   330  001220                     _init_TM0:
-   331                           	opt callstack 29
-   332  001220                     
-   333                           ;I2C_slave.c: 147:     T0CON = 0x43;
-   334  001220  0E43               	movlw	67
-   335  001222  6ED5               	movwf	213,c	;volatile
-   336                           
-   337                           ;I2C_slave.c: 148:     TMR0H = 0x4C;
-   338  001224  0E4C               	movlw	76
-   339  001226  6ED7               	movwf	215,c	;volatile
+   290                           ;I2C_slave.c: 94:         }
+   291  0011A4  EFC1  F008         	goto	l860
+   292  0011A8                     l106:
+   293                           
+   294                           ;I2C_slave.c: 96:             LATCbits.LATC6 = 0;
+   295  0011A8  9C8B               	bcf	139,6,c	;volatile
+   296  0011AA  EFC1  F008         	goto	l860
+   297  0011AE  EFAC  F008         	goto	start
+   298  0011B2                     __end_of_main:
+   299                           	opt callstack 0
+   300                           
+   301 ;; *************** function _init_TM0 *****************
+   302 ;; Defined at:
+   303 ;;		line 166 in file "I2C_slave.c"
+   304 ;; Parameters:    Size  Location     Type
+   305 ;;		None
+   306 ;; Auto vars:     Size  Location     Type
+   307 ;;		None
+   308 ;; Return value:  Size  Location     Type
+   309 ;;                  1    wreg      void 
+   310 ;; Registers used:
+   311 ;;		wreg, status,2
+   312 ;; Tracked objects:
+   313 ;;		On entry : 0/0
+   314 ;;		On exit  : 0/0
+   315 ;;		Unchanged: 0/0
+   316 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   317 ;;      Params:         0       0       0       0       0       0       0       0       0
+   318 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   319 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   320 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   321 ;;Total ram usage:        0 bytes
+   322 ;; Hardware stack levels used:    1
+   323 ;; Hardware stack levels required when called:    1
+   324 ;; This function calls:
+   325 ;;		Nothing
+   326 ;; This function is called by:
+   327 ;;		_main
+   328 ;; This function uses a non-reentrant model
+   329 ;;
+   330                           
+   331                           	psect	text1
+   332  001222                     __ptext1:
+   333                           	opt callstack 0
+   334  001222                     _init_TM0:
+   335                           	opt callstack 29
+   336  001222                     
+   337                           ;I2C_slave.c: 168:     T0CON = 0x43;
+   338  001222  0E43               	movlw	67
+   339  001224  6ED5               	movwf	213,c	;volatile
    340                           
-   341                           ;I2C_slave.c: 149:     TMR0L = 0xB0;
-   342  001228  0EB0               	movlw	176
-   343  00122A  6ED6               	movwf	214,c	;volatile
-   344  00122C                     
-   345                           ;I2C_slave.c: 150:     INTCONbits.TMR0IF = 0;
-   346  00122C  94F2               	bcf	242,2,c	;volatile
-   347  00122E                     
-   348                           ;I2C_slave.c: 151:     INTCONbits.TMR0IE = 1;
-   349  00122E  8AF2               	bsf	242,5,c	;volatile
-   350  001230  0012               	return		;funcret
-   351  001232                     __end_of_init_TM0:
-   352                           	opt callstack 0
-   353                           
-   354 ;; *************** function _init_I2C *****************
-   355 ;; Defined at:
-   356 ;;		line 104 in file "I2C_slave.c"
-   357 ;; Parameters:    Size  Location     Type
-   358 ;;		None
-   359 ;; Auto vars:     Size  Location     Type
-   360 ;;		None
-   361 ;; Return value:  Size  Location     Type
-   362 ;;                  1    wreg      void 
-   363 ;; Registers used:
-   364 ;;		wreg, status,2
-   365 ;; Tracked objects:
-   366 ;;		On entry : 0/0
-   367 ;;		On exit  : 0/0
-   368 ;;		Unchanged: 0/0
-   369 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   370 ;;      Params:         0       0       0       0       0       0       0       0       0
-   371 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   372 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   373 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   374 ;;Total ram usage:        0 bytes
-   375 ;; Hardware stack levels used:    1
-   376 ;; Hardware stack levels required when called:    1
-   377 ;; This function calls:
-   378 ;;		Nothing
-   379 ;; This function is called by:
-   380 ;;		_main
-   381 ;; This function uses a non-reentrant model
-   382 ;;
-   383                           
-   384                           	psect	text2
-   385  001206                     __ptext2:
-   386                           	opt callstack 0
-   387  001206                     _init_I2C:
-   388                           	opt callstack 29
-   389  001206                     
-   390                           ;I2C_slave.c: 107:     TRISBbits.TRISB0 = 1;
-   391  001206  8093               	bsf	147,0,c	;volatile
-   392                           
-   393                           ;I2C_slave.c: 108:     TRISBbits.TRISB1 = 1;
-   394  001208  8293               	bsf	147,1,c	;volatile
-   395  00120A                     
-   396                           ;I2C_slave.c: 110:     SSPADD = 0x30;
-   397  00120A  0E30               	movlw	48
-   398  00120C  6EC8               	movwf	200,c	;volatile
-   399                           
-   400                           ;I2C_slave.c: 111:     SSPCON1 = 0x36;
-   401  00120E  0E36               	movlw	54
-   402  001210  6EC6               	movwf	198,c	;volatile
+   341                           ;I2C_slave.c: 169:     TMR0H = 0x4C;
+   342  001226  0E4C               	movlw	76
+   343  001228  6ED7               	movwf	215,c	;volatile
+   344                           
+   345                           ;I2C_slave.c: 170:     TMR0L = 0xB0;
+   346  00122A  0EB0               	movlw	176
+   347  00122C  6ED6               	movwf	214,c	;volatile
+   348  00122E                     
+   349                           ;I2C_slave.c: 171:     INTCONbits.TMR0IF = 0;
+   350  00122E  94F2               	bcf	242,2,c	;volatile
+   351  001230                     
+   352                           ;I2C_slave.c: 172:     INTCONbits.TMR0IE = 1;
+   353  001230  8AF2               	bsf	242,5,c	;volatile
+   354  001232  0012               	return		;funcret
+   355  001234                     __end_of_init_TM0:
+   356                           	opt callstack 0
+   357                           
+   358 ;; *************** function _init_I2C *****************
+   359 ;; Defined at:
+   360 ;;		line 125 in file "I2C_slave.c"
+   361 ;; Parameters:    Size  Location     Type
+   362 ;;		None
+   363 ;; Auto vars:     Size  Location     Type
+   364 ;;		None
+   365 ;; Return value:  Size  Location     Type
+   366 ;;                  1    wreg      void 
+   367 ;; Registers used:
+   368 ;;		wreg, status,2
+   369 ;; Tracked objects:
+   370 ;;		On entry : 0/0
+   371 ;;		On exit  : 0/0
+   372 ;;		Unchanged: 0/0
+   373 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   374 ;;      Params:         0       0       0       0       0       0       0       0       0
+   375 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   376 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   377 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   378 ;;Total ram usage:        0 bytes
+   379 ;; Hardware stack levels used:    1
+   380 ;; Hardware stack levels required when called:    1
+   381 ;; This function calls:
+   382 ;;		Nothing
+   383 ;; This function is called by:
+   384 ;;		_main
+   385 ;; This function uses a non-reentrant model
+   386 ;;
+   387                           
+   388                           	psect	text2
+   389  001208                     __ptext2:
+   390                           	opt callstack 0
+   391  001208                     _init_I2C:
+   392                           	opt callstack 29
+   393  001208                     
+   394                           ;I2C_slave.c: 128:     TRISBbits.TRISB0 = 1;
+   395  001208  8093               	bsf	147,0,c	;volatile
+   396                           
+   397                           ;I2C_slave.c: 129:     TRISBbits.TRISB1 = 1;
+   398  00120A  8293               	bsf	147,1,c	;volatile
+   399  00120C                     
+   400                           ;I2C_slave.c: 131:     SSPADD = 0x30;
+   401  00120C  0E30               	movlw	48
+   402  00120E  6EC8               	movwf	200,c	;volatile
    403                           
-   404                           ;I2C_slave.c: 112:     SSPSTAT = 0x80;
-   405  001212  0E80               	movlw	128
-   406  001214  6EC7               	movwf	199,c	;volatile
+   404                           ;I2C_slave.c: 132:     SSPCON1 = 0x36;
+   405  001210  0E36               	movlw	54
+   406  001212  6EC6               	movwf	198,c	;volatile
    407                           
-   408                           ;I2C_slave.c: 113:     SSPCON2 = 0x01;
-   409  001216  0E01               	movlw	1
-   410  001218  6EC5               	movwf	197,c	;volatile
-   411  00121A                     
-   412                           ;I2C_slave.c: 115:     PIE1bits.SSPIE = 1;
-   413  00121A  869D               	bsf	157,3,c	;volatile
-   414  00121C                     
-   415                           ;I2C_slave.c: 116:     INTCONbits.PEIE = 1;
-   416  00121C  8CF2               	bsf	242,6,c	;volatile
-   417  00121E  0012               	return		;funcret
-   418  001220                     __end_of_init_I2C:
-   419                           	opt callstack 0
-   420                           
-   421 ;; *************** function _init_Chip *****************
-   422 ;; Defined at:
-   423 ;;		line 90 in file "I2C_slave.c"
-   424 ;; Parameters:    Size  Location     Type
-   425 ;;		None
-   426 ;; Auto vars:     Size  Location     Type
-   427 ;;		None
-   428 ;; Return value:  Size  Location     Type
-   429 ;;                  1    wreg      void 
-   430 ;; Registers used:
-   431 ;;		wreg, status,2
-   432 ;; Tracked objects:
-   433 ;;		On entry : 0/0
-   434 ;;		On exit  : 0/0
-   435 ;;		Unchanged: 0/0
-   436 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   437 ;;      Params:         0       0       0       0       0       0       0       0       0
-   438 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   439 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   440 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   441 ;;Total ram usage:        0 bytes
-   442 ;; Hardware stack levels used:    1
-   443 ;; Hardware stack levels required when called:    1
-   444 ;; This function calls:
-   445 ;;		Nothing
-   446 ;; This function is called by:
-   447 ;;		_main
-   448 ;; This function uses a non-reentrant model
-   449 ;;
-   450                           
-   451                           	psect	text3
-   452  0011DC                     __ptext3:
-   453                           	opt callstack 0
-   454  0011DC                     _init_Chip:
-   455                           	opt callstack 29
-   456  0011DC                     
-   457                           ;I2C_slave.c: 92:     LATA = 0x00;
-   458  0011DC  0E00               	movlw	0
-   459  0011DE  6E89               	movwf	137,c	;volatile
-   460                           
-   461                           ;I2C_slave.c: 93:     TRISA = 0x83;
-   462  0011E0  0E83               	movlw	131
-   463  0011E2  6E92               	movwf	146,c	;volatile
-   464                           
-   465                           ;I2C_slave.c: 94:     ADCON1 = 0x00;
-   466  0011E4  0E00               	movlw	0
-   467  0011E6  6EC1               	movwf	193,c	;volatile
-   468                           
-   469                           ;I2C_slave.c: 95:     ANSELA = 0x00;
-   470  0011E8  0E00               	movlw	0
-   471  0011EA  010F               	movlb	15	; () banked
-   472  0011EC  6F5B               	movwf	91,b	;volatile
-   473                           
-   474                           ;I2C_slave.c: 96:     CM1CON0 = 0x00;
-   475  0011EE  0E00               	movlw	0
-   476  0011F0  6E98               	movwf	152,c	;volatile
-   477                           
-   478                           ;I2C_slave.c: 97:     LATB = 0x00;
-   479  0011F2  0E00               	movlw	0
-   480  0011F4  6E8A               	movwf	138,c	;volatile
-   481                           
-   482                           ;I2C_slave.c: 98:     TRISB = 0x00;
-   483  0011F6  0E00               	movlw	0
-   484  0011F8  6E93               	movwf	147,c	;volatile
-   485                           
-   486                           ;I2C_slave.c: 99:     LATC = 0x00;
-   487  0011FA  0E00               	movlw	0
-   488  0011FC  6E8B               	movwf	139,c	;volatile
-   489                           
-   490                           ;I2C_slave.c: 100:     TRISC = 0x00;
-   491  0011FE  0E00               	movlw	0
-   492  001200  6E94               	movwf	148,c	;volatile
-   493  001202                     
-   494                           ; BSR set to: 15
-   495                           ;I2C_slave.c: 101:  INTCONbits.GIE = 0;
-   496  001202  9EF2               	bcf	242,7,c	;volatile
-   497  001204                     
-   498                           ; BSR set to: 15
-   499  001204  0012               	return		;funcret
-   500  001206                     __end_of_init_Chip:
-   501                           	opt callstack 0
-   502                           
-   503 ;; *************** function _init_ADC *****************
-   504 ;; Defined at:
-   505 ;;		line 126 in file "I2C_slave.c"
-   506 ;; Parameters:    Size  Location     Type
-   507 ;;		None
-   508 ;; Auto vars:     Size  Location     Type
-   509 ;;		None
-   510 ;; Return value:  Size  Location     Type
-   511 ;;                  1    wreg      void 
-   512 ;; Registers used:
-   513 ;;		wreg, status,2
-   514 ;; Tracked objects:
-   515 ;;		On entry : 0/0
-   516 ;;		On exit  : 0/0
-   517 ;;		Unchanged: 0/0
-   518 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   519 ;;      Params:         0       0       0       0       0       0       0       0       0
-   520 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   521 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   522 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   523 ;;Total ram usage:        0 bytes
-   524 ;; Hardware stack levels used:    1
-   525 ;; Hardware stack levels required when called:    1
-   526 ;; This function calls:
-   527 ;;		Nothing
-   528 ;; This function is called by:
-   529 ;;		_main
-   530 ;; This function uses a non-reentrant model
-   531 ;;
-   532                           
-   533                           	psect	text4
-   534  001232                     __ptext4:
-   535                           	opt callstack 0
-   536  001232                     _init_ADC:
-   537                           	opt callstack 29
-   538  001232                     
-   539                           ;I2C_slave.c: 128:     ADCON0 = 0x01;
-   540  001232  0E01               	movlw	1
-   541  001234  6EC2               	movwf	194,c	;volatile
-   542                           
-   543                           ;I2C_slave.c: 129:     ADCON1 = 0x00;
-   544  001236  0E00               	movlw	0
-   545  001238  6EC1               	movwf	193,c	;volatile
-   546                           
-   547                           ;I2C_slave.c: 130:     ADCON2 = 0x08;
-   548  00123A  0E08               	movlw	8
-   549  00123C  6EC0               	movwf	192,c	;volatile
-   550  00123E  0012               	return		;funcret
-   551  001240                     __end_of_init_ADC:
-   552                           	opt callstack 0
-   553                           
-   554 ;; *************** function _high_ISR *****************
-   555 ;; Defined at:
-   556 ;;		line 158 in file "I2C_slave.c"
-   557 ;; Parameters:    Size  Location     Type
-   558 ;;		None
-   559 ;; Auto vars:     Size  Location     Type
-   560 ;;		None
-   561 ;; Return value:  Size  Location     Type
-   562 ;;                  1    wreg      void 
-   563 ;; Registers used:
-   564 ;;		wreg, fsr2l, fsr2h, status,2, status,0
-   565 ;; Tracked objects:
-   566 ;;		On entry : 0/0
-   567 ;;		On exit  : 0/0
-   568 ;;		Unchanged: 0/0
-   569 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   570 ;;      Params:         0       0       0       0       0       0       0       0       0
-   571 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   572 ;;      Temps:          2       0       0       0       0       0       0       0       0
-   573 ;;      Totals:         2       0       0       0       0       0       0       0       0
-   574 ;;Total ram usage:        2 bytes
-   575 ;; Hardware stack levels used:    1
-   576 ;; This function calls:
-   577 ;;		Nothing
-   578 ;; This function is called by:
-   579 ;;		Interrupt level 2
-   580 ;; This function uses a non-reentrant model
-   581 ;;
-   582                           
-   583                           	psect	intcode
-   584  001008                     __pintcode:
-   585                           	opt callstack 0
-   586  001008                     _high_ISR:
-   587                           	opt callstack 29
-   588                           
-   589                           ;incstack = 0
-   590  001008  8211               	bsf	int$flags,1,c	;set compiler interrupt flag (level 2)
-   591  00100A  CFD9 F00F          	movff	fsr2l,??_high_ISR
-   592  00100E  CFDA F010          	movff	fsr2h,??_high_ISR+1
-   593  001012                     
-   594                           ;I2C_slave.c: 160:     if(PIR1bits.SSPIF==1){
-   595  001012  A69E               	btfss	158,3,c	;volatile
-   596  001014  EF0E  F008         	goto	i2u2_41
-   597  001018  EF10  F008         	goto	i2u2_40
-   598  00101C                     i2u2_41:
-   599  00101C  EF82  F008         	goto	i2l926
-   600  001020                     i2u2_40:
-   601  001020                     
-   602                           ;I2C_slave.c: 163:         if((SSPSTAT&0x20)==0){
-   603  001020  BAC7               	btfsc	199,5,c	;volatile
-   604  001022  EF15  F008         	goto	i2u3_41
-   605  001026  EF17  F008         	goto	i2u3_40
-   606  00102A                     i2u3_41:
-   607  00102A  EF51  F008         	goto	i2l904
-   608  00102E                     i2u3_40:
-   609  00102E                     
-   610                           ;I2C_slave.c: 165:             addr = SSPBUF;
-   611  00102E  CFC9 F00B          	movff	4041,_addr	;volatile
-   612  001032                     
-   613                           ;I2C_slave.c: 166:             LATCbits.LATC7 ^= 1;
-   614  001032  7E8B               	btg	139,7,c	;volatile
-   615  001034                     
-   616                           ;I2C_slave.c: 169:             if(SSPSTATbits.R_nW){
-   617  001034  A4C7               	btfss	199,2,c	;volatile
-   618  001036  EF1F  F008         	goto	i2u4_41
-   619  00103A  EF21  F008         	goto	i2u4_40
-   620  00103E                     i2u4_41:
-   621  00103E  EF4B  F008         	goto	i2l902
-   622  001042                     i2u4_40:
-   623  001042                     
-   624                           ;I2C_slave.c: 170:                 I2Cstatus = 1;
-   625  001042  0E01               	movlw	1
-   626  001044  6E07               	movwf	_I2Cstatus^0,c
-   627  001046                     
-   628                           ;I2C_slave.c: 172:                 if((I2Cstatus==1)&&(Txbuf.idx<2))
-   629  001046  0407               	decf	_I2Cstatus^0,w,c
-   630  001048  A4D8               	btfss	status,2,c
-   631  00104A  EF29  F008         	goto	i2u5_41
-   632  00104E  EF2B  F008         	goto	i2u5_40
-   633  001052                     i2u5_41:
-   634  001052  EF7E  F008         	goto	i2l918
-   635  001056                     i2u5_40:
-   636  001056  0E02               	movlw	2
-   637  001058  6006               	cpfslt	(_Txbuf+2)^0,c
-   638  00105A  EF31  F008         	goto	i2u6_41
-   639  00105E  EF33  F008         	goto	i2u6_40
-   640  001062                     i2u6_41:
-   641  001062  EF7E  F008         	goto	i2l918
-   642  001066                     i2u6_40:
-   643  001066                     
-   644                           ;I2C_slave.c: 173:                 {;I2C_slave.c: 174:                     SSPBUF = Txbu
+   408                           ;I2C_slave.c: 133:     SSPSTAT = 0x80;
+   409  001214  0E80               	movlw	128
+   410  001216  6EC7               	movwf	199,c	;volatile
+   411                           
+   412                           ;I2C_slave.c: 134:     SSPCON2 = 0x01;
+   413  001218  0E01               	movlw	1
+   414  00121A  6EC5               	movwf	197,c	;volatile
+   415  00121C                     
+   416                           ;I2C_slave.c: 136:     PIE1bits.SSPIE = 1;
+   417  00121C  869D               	bsf	157,3,c	;volatile
+   418  00121E                     
+   419                           ;I2C_slave.c: 137:     INTCONbits.PEIE = 1;
+   420  00121E  8CF2               	bsf	242,6,c	;volatile
+   421  001220  0012               	return		;funcret
+   422  001222                     __end_of_init_I2C:
+   423                           	opt callstack 0
+   424                           
+   425 ;; *************** function _init_Chip *****************
+   426 ;; Defined at:
+   427 ;;		line 109 in file "I2C_slave.c"
+   428 ;; Parameters:    Size  Location     Type
+   429 ;;		None
+   430 ;; Auto vars:     Size  Location     Type
+   431 ;;		None
+   432 ;; Return value:  Size  Location     Type
+   433 ;;                  1    wreg      void 
+   434 ;; Registers used:
+   435 ;;		wreg, status,2
+   436 ;; Tracked objects:
+   437 ;;		On entry : 0/0
+   438 ;;		On exit  : 0/0
+   439 ;;		Unchanged: 0/0
+   440 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   441 ;;      Params:         0       0       0       0       0       0       0       0       0
+   442 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   443 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   444 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   445 ;;Total ram usage:        0 bytes
+   446 ;; Hardware stack levels used:    1
+   447 ;; Hardware stack levels required when called:    1
+   448 ;; This function calls:
+   449 ;;		Nothing
+   450 ;; This function is called by:
+   451 ;;		_main
+   452 ;; This function uses a non-reentrant model
+   453 ;;
+   454                           
+   455                           	psect	text3
+   456  0011E0                     __ptext3:
+   457                           	opt callstack 0
+   458  0011E0                     _init_Chip:
+   459                           	opt callstack 29
+   460  0011E0                     
+   461                           ;I2C_slave.c: 111:     LATA = 0x00;
+   462  0011E0  0E00               	movlw	0
+   463  0011E2  6E89               	movwf	137,c	;volatile
+   464  0011E4                     
+   465                           ;I2C_slave.c: 112:     TRISA = 0xFF;
+   466  0011E4  6892               	setf	146,c	;volatile
+   467                           
+   468                           ;I2C_slave.c: 115:     ADCON1 = 0x00;
+   469  0011E6  0E00               	movlw	0
+   470  0011E8  6EC1               	movwf	193,c	;volatile
+   471                           
+   472                           ;I2C_slave.c: 116:     ANSELA = 0x00;
+   473  0011EA  0E00               	movlw	0
+   474  0011EC  010F               	movlb	15	; () banked
+   475  0011EE  6F5B               	movwf	91,b	;volatile
+   476                           
+   477                           ;I2C_slave.c: 117:     CM1CON0 = 0x00;
+   478  0011F0  0E00               	movlw	0
+   479  0011F2  6E98               	movwf	152,c	;volatile
+   480                           
+   481                           ;I2C_slave.c: 118:     LATB = 0x00;
+   482  0011F4  0E00               	movlw	0
+   483  0011F6  6E8A               	movwf	138,c	;volatile
+   484                           
+   485                           ;I2C_slave.c: 119:     TRISB = 0xF0;
+   486  0011F8  0EF0               	movlw	240
+   487  0011FA  6E93               	movwf	147,c	;volatile
+   488                           
+   489                           ;I2C_slave.c: 120:     LATC = 0x00;
+   490  0011FC  0E00               	movlw	0
+   491  0011FE  6E8B               	movwf	139,c	;volatile
+   492                           
+   493                           ;I2C_slave.c: 121:     TRISC = 0x00;
+   494  001200  0E00               	movlw	0
+   495  001202  6E94               	movwf	148,c	;volatile
+   496  001204                     
+   497                           ; BSR set to: 15
+   498                           ;I2C_slave.c: 122:  INTCONbits.GIE = 0;
+   499  001204  9EF2               	bcf	242,7,c	;volatile
+   500  001206                     
+   501                           ; BSR set to: 15
+   502  001206  0012               	return		;funcret
+   503  001208                     __end_of_init_Chip:
+   504                           	opt callstack 0
+   505                           
+   506 ;; *************** function _init_ADC *****************
+   507 ;; Defined at:
+   508 ;;		line 147 in file "I2C_slave.c"
+   509 ;; Parameters:    Size  Location     Type
+   510 ;;		None
+   511 ;; Auto vars:     Size  Location     Type
+   512 ;;		None
+   513 ;; Return value:  Size  Location     Type
+   514 ;;                  1    wreg      void 
+   515 ;; Registers used:
+   516 ;;		wreg, status,2
+   517 ;; Tracked objects:
+   518 ;;		On entry : 0/0
+   519 ;;		On exit  : 0/0
+   520 ;;		Unchanged: 0/0
+   521 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   522 ;;      Params:         0       0       0       0       0       0       0       0       0
+   523 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   524 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   525 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   526 ;;Total ram usage:        0 bytes
+   527 ;; Hardware stack levels used:    1
+   528 ;; Hardware stack levels required when called:    1
+   529 ;; This function calls:
+   530 ;;		Nothing
+   531 ;; This function is called by:
+   532 ;;		_main
+   533 ;; This function uses a non-reentrant model
+   534 ;;
+   535                           
+   536                           	psect	text4
+   537  001234                     __ptext4:
+   538                           	opt callstack 0
+   539  001234                     _init_ADC:
+   540                           	opt callstack 29
+   541  001234                     
+   542                           ;I2C_slave.c: 149:     ADCON0 = 0x01;
+   543  001234  0E01               	movlw	1
+   544  001236  6EC2               	movwf	194,c	;volatile
+   545                           
+   546                           ;I2C_slave.c: 150:     ADCON1 = 0x00;
+   547  001238  0E00               	movlw	0
+   548  00123A  6EC1               	movwf	193,c	;volatile
+   549                           
+   550                           ;I2C_slave.c: 151:     ADCON2 = 0x08;
+   551  00123C  0E08               	movlw	8
+   552  00123E  6EC0               	movwf	192,c	;volatile
+   553  001240  0012               	return		;funcret
+   554  001242                     __end_of_init_ADC:
+   555                           	opt callstack 0
+   556                           
+   557 ;; *************** function _high_ISR *****************
+   558 ;; Defined at:
+   559 ;;		line 179 in file "I2C_slave.c"
+   560 ;; Parameters:    Size  Location     Type
+   561 ;;		None
+   562 ;; Auto vars:     Size  Location     Type
+   563 ;;		None
+   564 ;; Return value:  Size  Location     Type
+   565 ;;                  1    wreg      void 
+   566 ;; Registers used:
+   567 ;;		wreg, fsr2l, fsr2h, status,2, status,0
+   568 ;; Tracked objects:
+   569 ;;		On entry : 0/0
+   570 ;;		On exit  : 0/0
+   571 ;;		Unchanged: 0/0
+   572 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   573 ;;      Params:         0       0       0       0       0       0       0       0       0
+   574 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   575 ;;      Temps:          2       0       0       0       0       0       0       0       0
+   576 ;;      Totals:         2       0       0       0       0       0       0       0       0
+   577 ;;Total ram usage:        2 bytes
+   578 ;; Hardware stack levels used:    1
+   579 ;; This function calls:
+   580 ;;		Nothing
+   581 ;; This function is called by:
+   582 ;;		Interrupt level 2
+   583 ;; This function uses a non-reentrant model
+   584 ;;
+   585                           
+   586                           	psect	intcode
+   587  001008                     __pintcode:
+   588                           	opt callstack 0
+   589  001008                     _high_ISR:
+   590                           	opt callstack 29
+   591                           
+   592                           ;incstack = 0
+   593  001008  8213               	bsf	int$flags,1,c	;set compiler interrupt flag (level 2)
+   594  00100A  CFD9 F011          	movff	fsr2l,??_high_ISR
+   595  00100E  CFDA F012          	movff	fsr2h,??_high_ISR+1
+   596  001012                     
+   597                           ;I2C_slave.c: 181:     if(PIR1bits.SSPIF==1){
+   598  001012  A69E               	btfss	158,3,c	;volatile
+   599  001014  EF0E  F008         	goto	i2u2_41
+   600  001018  EF10  F008         	goto	i2u2_40
+   601  00101C                     i2u2_41:
+   602  00101C  EF81  F008         	goto	i2l928
+   603  001020                     i2u2_40:
+   604  001020                     
+   605                           ;I2C_slave.c: 184:         if((SSPSTAT&0x20)==0){
+   606  001020  BAC7               	btfsc	199,5,c	;volatile
+   607  001022  EF15  F008         	goto	i2u3_41
+   608  001026  EF17  F008         	goto	i2u3_40
+   609  00102A                     i2u3_41:
+   610  00102A  EF50  F008         	goto	i2l906
+   611  00102E                     i2u3_40:
+   612  00102E                     
+   613                           ;I2C_slave.c: 186:             addr = SSPBUF;
+   614  00102E  CFC9 F00D          	movff	4041,_addr	;volatile
+   615                           
+   616                           ;I2C_slave.c: 190:             if(SSPSTATbits.R_nW){
+   617  001032  A4C7               	btfss	199,2,c	;volatile
+   618  001034  EF1E  F008         	goto	i2u4_41
+   619  001038  EF20  F008         	goto	i2u4_40
+   620  00103C                     i2u4_41:
+   621  00103C  EF4A  F008         	goto	i2l904
+   622  001040                     i2u4_40:
+   623  001040                     
+   624                           ;I2C_slave.c: 191:                 I2Cstatus = 1;
+   625  001040  0E01               	movlw	1
+   626  001042  6E09               	movwf	_I2Cstatus^0,c
+   627  001044                     
+   628                           ;I2C_slave.c: 193:                 if((I2Cstatus==1)&&(Txbuf.idx<3))
+   629  001044  0409               	decf	_I2Cstatus^0,w,c
+   630  001046  A4D8               	btfss	status,2,c
+   631  001048  EF28  F008         	goto	i2u5_41
+   632  00104C  EF2A  F008         	goto	i2u5_40
+   633  001050                     i2u5_41:
+   634  001050  EF7D  F008         	goto	i2l920
+   635  001054                     i2u5_40:
+   636  001054  0E03               	movlw	3
+   637  001056  6008               	cpfslt	(_Txbuf+3)^0,c
+   638  001058  EF30  F008         	goto	i2u6_41
+   639  00105C  EF32  F008         	goto	i2u6_40
+   640  001060                     i2u6_41:
+   641  001060  EF7D  F008         	goto	i2l920
+   642  001064                     i2u6_40:
+   643  001064                     
+   644                           ;I2C_slave.c: 194:                 {;I2C_slave.c: 195:                     SSPBUF = Txbu
       +                          f.data[Txbuf.idx];
-   645  001066  0E04               	movlw	low _Txbuf
-   646  001068  2406               	addwf	(_Txbuf+2)^0,w,c
-   647  00106A  6ED9               	movwf	fsr2l,c
-   648  00106C  6ADA               	clrf	fsr2h,c
-   649  00106E  0E00               	movlw	high _Txbuf
-   650  001070  22DA               	addwfc	fsr2h,f,c
-   651  001072  50DF               	movf	indf2,w,c
-   652  001074  6EC9               	movwf	201,c	;volatile
-   653  001076                     
-   654                           ;I2C_slave.c: 176:                     Txbuf.idx++;
-   655  001076  2A06               	incf	(_Txbuf+2)^0,f,c
-   656  001078                     
-   657                           ;I2C_slave.c: 177:                     if(Txbuf.idx==2){
-   658  001078  0E02               	movlw	2
-   659  00107A  1806               	xorwf	(_Txbuf+2)^0,w,c
-   660  00107C  A4D8               	btfss	status,2,c
-   661  00107E  EF43  F008         	goto	i2u7_41
-   662  001082  EF45  F008         	goto	i2u7_40
-   663  001086                     i2u7_41:
-   664  001086  EF4F  F008         	goto	i2l136
-   665  00108A                     i2u7_40:
-   666  00108A                     
-   667                           ;I2C_slave.c: 179:                         I2Cstatus = 0;
-   668  00108A  0E00               	movlw	0
-   669  00108C  6E07               	movwf	_I2Cstatus^0,c
+   645  001064  0E05               	movlw	low _Txbuf
+   646  001066  2408               	addwf	(_Txbuf+3)^0,w,c
+   647  001068  6ED9               	movwf	fsr2l,c
+   648  00106A  6ADA               	clrf	fsr2h,c
+   649  00106C  0E00               	movlw	high _Txbuf
+   650  00106E  22DA               	addwfc	fsr2h,f,c
+   651  001070  50DF               	movf	indf2,w,c
+   652  001072  6EC9               	movwf	201,c	;volatile
+   653  001074                     
+   654                           ;I2C_slave.c: 197:                     Txbuf.idx++;
+   655  001074  2A08               	incf	(_Txbuf+3)^0,f,c
+   656  001076                     
+   657                           ;I2C_slave.c: 198:                     if(Txbuf.idx==3){
+   658  001076  0E03               	movlw	3
+   659  001078  1808               	xorwf	(_Txbuf+3)^0,w,c
+   660  00107A  A4D8               	btfss	status,2,c
+   661  00107C  EF42  F008         	goto	i2u7_41
+   662  001080  EF44  F008         	goto	i2u7_40
+   663  001084                     i2u7_41:
+   664  001084  EF4E  F008         	goto	i2l138
+   665  001088                     i2u7_40:
+   666  001088                     
+   667                           ;I2C_slave.c: 200:                         I2Cstatus = 0;
+   668  001088  0E00               	movlw	0
+   669  00108A  6E09               	movwf	_I2Cstatus^0,c
    670                           
-   671                           ;I2C_slave.c: 180:                         Txbuf.idx = 0;
-   672  00108E  0E00               	movlw	0
-   673  001090  6E06               	movwf	(_Txbuf+2)^0,c
-   674  001092  EF7E  F008         	goto	i2l918
-   675  001096                     i2l902:
+   671                           ;I2C_slave.c: 201:                         Txbuf.idx = 0;
+   672  00108C  0E00               	movlw	0
+   673  00108E  6E08               	movwf	(_Txbuf+3)^0,c
+   674  001090  EF7D  F008         	goto	i2l920
+   675  001094                     i2l904:
    676                           
-   677                           ;I2C_slave.c: 186:                 I2Cstatus = 2;
-   678  001096  0E02               	movlw	2
-   679  001098  6E07               	movwf	_I2Cstatus^0,c
-   680  00109A  EF7E  F008         	goto	i2l918
-   681  00109E                     i2l136:
+   677                           ;I2C_slave.c: 207:                 I2Cstatus = 2;
+   678  001094  0E02               	movlw	2
+   679  001096  6E09               	movwf	_I2Cstatus^0,c
+   680  001098  EF7D  F008         	goto	i2l920
+   681  00109C                     i2l138:
    682                           
-   683                           ;I2C_slave.c: 189:         }
-   684  00109E  EF7E  F008         	goto	i2l918
-   685  0010A2                     i2l904:
+   683                           ;I2C_slave.c: 210:         }
+   684  00109C  EF7D  F008         	goto	i2l920
+   685  0010A0                     i2l906:
    686                           
-   687                           ;I2C_slave.c: 192:             if((I2Cstatus==2)&&(Rxbuf.idx<2)){
-   688  0010A2  0E02               	movlw	2
-   689  0010A4  1807               	xorwf	_I2Cstatus^0,w,c
-   690  0010A6  A4D8               	btfss	status,2,c
-   691  0010A8  EF58  F008         	goto	i2u8_41
-   692  0010AC  EF5A  F008         	goto	i2u8_40
-   693  0010B0                     i2u8_41:
-   694  0010B0  EF7A  F008         	goto	i2l916
-   695  0010B4                     i2u8_40:
-   696  0010B4  0E02               	movlw	2
-   697  0010B6  6003               	cpfslt	(_Rxbuf+2)^0,c
-   698  0010B8  EF60  F008         	goto	i2u9_41
-   699  0010BC  EF62  F008         	goto	i2u9_40
-   700  0010C0                     i2u9_41:
-   701  0010C0  EF7A  F008         	goto	i2l916
-   702  0010C4                     i2u9_40:
-   703  0010C4                     
-   704                           ;I2C_slave.c: 193:                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
-   705  0010C4  0E01               	movlw	low _Rxbuf
-   706  0010C6  2403               	addwf	(_Rxbuf+2)^0,w,c
-   707  0010C8  6ED9               	movwf	fsr2l,c
-   708  0010CA  6ADA               	clrf	fsr2h,c
-   709  0010CC  0E00               	movlw	high _Rxbuf
-   710  0010CE  22DA               	addwfc	fsr2h,f,c
-   711  0010D0  CFC9 FFDF          	movff	4041,indf2	;volatile
-   712  0010D4                     
-   713                           ;I2C_slave.c: 196:                 Rxbuf.idx++;
-   714  0010D4  2A03               	incf	(_Rxbuf+2)^0,f,c
-   715  0010D6                     
-   716                           ;I2C_slave.c: 197:                 if(Rxbuf.idx==2){
-   717  0010D6  0E02               	movlw	2
-   718  0010D8  1803               	xorwf	(_Rxbuf+2)^0,w,c
-   719  0010DA  A4D8               	btfss	status,2,c
-   720  0010DC  EF72  F008         	goto	i2u10_41
-   721  0010E0  EF74  F008         	goto	i2u10_40
-   722  0010E4                     i2u10_41:
-   723  0010E4  EF7E  F008         	goto	i2l918
-   724  0010E8                     i2u10_40:
-   725  0010E8                     
-   726                           ;I2C_slave.c: 198:                     Rxbuf.idx = 0;
-   727  0010E8  0E00               	movlw	0
-   728  0010EA  6E03               	movwf	(_Rxbuf+2)^0,c
+   687                           ;I2C_slave.c: 213:             if((I2Cstatus==2)&&(Rxbuf.idx<3)){
+   688  0010A0  0E02               	movlw	2
+   689  0010A2  1809               	xorwf	_I2Cstatus^0,w,c
+   690  0010A4  A4D8               	btfss	status,2,c
+   691  0010A6  EF57  F008         	goto	i2u8_41
+   692  0010AA  EF59  F008         	goto	i2u8_40
+   693  0010AE                     i2u8_41:
+   694  0010AE  EF79  F008         	goto	i2l918
+   695  0010B2                     i2u8_40:
+   696  0010B2  0E03               	movlw	3
+   697  0010B4  6004               	cpfslt	(_Rxbuf+3)^0,c
+   698  0010B6  EF5F  F008         	goto	i2u9_41
+   699  0010BA  EF61  F008         	goto	i2u9_40
+   700  0010BE                     i2u9_41:
+   701  0010BE  EF79  F008         	goto	i2l918
+   702  0010C2                     i2u9_40:
+   703  0010C2                     
+   704                           ;I2C_slave.c: 214:                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
+   705  0010C2  0E01               	movlw	low _Rxbuf
+   706  0010C4  2404               	addwf	(_Rxbuf+3)^0,w,c
+   707  0010C6  6ED9               	movwf	fsr2l,c
+   708  0010C8  6ADA               	clrf	fsr2h,c
+   709  0010CA  0E00               	movlw	high _Rxbuf
+   710  0010CC  22DA               	addwfc	fsr2h,f,c
+   711  0010CE  CFC9 FFDF          	movff	4041,indf2	;volatile
+   712  0010D2                     
+   713                           ;I2C_slave.c: 217:                 Rxbuf.idx++;
+   714  0010D2  2A04               	incf	(_Rxbuf+3)^0,f,c
+   715  0010D4                     
+   716                           ;I2C_slave.c: 218:                 if(Rxbuf.idx==3){
+   717  0010D4  0E03               	movlw	3
+   718  0010D6  1804               	xorwf	(_Rxbuf+3)^0,w,c
+   719  0010D8  A4D8               	btfss	status,2,c
+   720  0010DA  EF71  F008         	goto	i2u10_41
+   721  0010DE  EF73  F008         	goto	i2u10_40
+   722  0010E2                     i2u10_41:
+   723  0010E2  EF7D  F008         	goto	i2l920
+   724  0010E6                     i2u10_40:
+   725  0010E6                     
+   726                           ;I2C_slave.c: 219:                     Rxbuf.idx = 0;
+   727  0010E6  0E00               	movlw	0
+   728  0010E8  6E04               	movwf	(_Rxbuf+3)^0,c
    729                           
-   730                           ;I2C_slave.c: 199:                     I2Cstatus = 0;
-   731  0010EC  0E00               	movlw	0
-   732  0010EE  6E07               	movwf	_I2Cstatus^0,c
-   733  0010F0  EF7E  F008         	goto	i2l918
-   734  0010F4                     i2l916:
+   730                           ;I2C_slave.c: 220:                     I2Cstatus = 0;
+   731  0010EA  0E00               	movlw	0
+   732  0010EC  6E09               	movwf	_I2Cstatus^0,c
+   733  0010EE  EF7D  F008         	goto	i2l920
+   734  0010F2                     i2l918:
    735                           
-   736                           ;I2C_slave.c: 203:                 I2Cstatus = 0;
-   737  0010F4  0E00               	movlw	0
-   738  0010F6  6E07               	movwf	_I2Cstatus^0,c
+   736                           ;I2C_slave.c: 224:                 I2Cstatus = 0;
+   737  0010F2  0E00               	movlw	0
+   738  0010F4  6E09               	movwf	_I2Cstatus^0,c
    739                           
-   740                           ;I2C_slave.c: 204:                 Rxbuf.idx = 0;
-   741  0010F8  0E00               	movlw	0
-   742  0010FA  6E03               	movwf	(_Rxbuf+2)^0,c
-   743  0010FC                     i2l918:
+   740                           ;I2C_slave.c: 225:                 Rxbuf.idx = 0;
+   741  0010F6  0E00               	movlw	0
+   742  0010F8  6E04               	movwf	(_Rxbuf+3)^0,c
+   743  0010FA                     i2l920:
    744                           
-   745                           ;I2C_slave.c: 208:         SSPCON1bits.SSPOV = 0;
-   746  0010FC  9CC6               	bcf	198,6,c	;volatile
-   747  0010FE                     
-   748                           ;I2C_slave.c: 209:         SSPCON1bits.WCOL = 0;
-   749  0010FE  9EC6               	bcf	198,7,c	;volatile
-   750  001100                     
-   751                           ;I2C_slave.c: 210:         PIR1bits.SSPIF = 0;
-   752  001100  969E               	bcf	158,3,c	;volatile
-   753  001102                     
-   754                           ;I2C_slave.c: 211:         SSPCON1bits.CKP = 1;
-   755  001102  88C6               	bsf	198,4,c	;volatile
-   756  001104                     i2l926:
+   745                           ;I2C_slave.c: 229:         SSPCON1bits.SSPOV = 0;
+   746  0010FA  9CC6               	bcf	198,6,c	;volatile
+   747  0010FC                     
+   748                           ;I2C_slave.c: 230:         SSPCON1bits.WCOL = 0;
+   749  0010FC  9EC6               	bcf	198,7,c	;volatile
+   750  0010FE                     
+   751                           ;I2C_slave.c: 231:         PIR1bits.SSPIF = 0;
+   752  0010FE  969E               	bcf	158,3,c	;volatile
+   753  001100                     
+   754                           ;I2C_slave.c: 232:         SSPCON1bits.CKP = 1;
+   755  001100  88C6               	bsf	198,4,c	;volatile
+   756  001102                     i2l928:
    757                           
-   758                           ;I2C_slave.c: 214:     if(PIR1bits.ADIF==1){
-   759  001104  AC9E               	btfss	158,6,c	;volatile
-   760  001106  EF87  F008         	goto	i2u11_41
-   761  00110A  EF89  F008         	goto	i2u11_40
-   762  00110E                     i2u11_41:
-   763  00110E  EF8C  F008         	goto	i2l141
-   764  001112                     i2u11_40:
-   765  001112                     
-   766                           ;I2C_slave.c: 216:         PIR1bits.ADIF = 0;
-   767  001112  9C9E               	bcf	158,6,c	;volatile
+   758                           ;I2C_slave.c: 235:     if(PIR1bits.ADIF==1){
+   759  001102  AC9E               	btfss	158,6,c	;volatile
+   760  001104  EF86  F008         	goto	i2u11_41
+   761  001108  EF88  F008         	goto	i2u11_40
+   762  00110C                     i2u11_41:
+   763  00110C  EF8B  F008         	goto	i2l143
+   764  001110                     i2u11_40:
+   765  001110                     
+   766                           ;I2C_slave.c: 237:         PIR1bits.ADIF = 0;
+   767  001110  9C9E               	bcf	158,6,c	;volatile
    768                           
-   769                           ;I2C_slave.c: 217:         Txbuf.data[0] = ADRESH;
-   770  001114  CFC4 F004          	movff	4036,_Txbuf	;volatile
-   771  001118                     i2l141:
+   769                           ;I2C_slave.c: 238:         Txbuf.data[0] = ADRESH;
+   770  001112  CFC4 F005          	movff	4036,_Txbuf	;volatile
+   771  001116                     i2l143:
    772                           
-   773                           ;I2C_slave.c: 222:     if(INTCONbits.TMR0IF == 1){
-   774  001118  A4F2               	btfss	242,2,c	;volatile
-   775  00111A  EF91  F008         	goto	i2u12_41
-   776  00111E  EF93  F008         	goto	i2u12_40
-   777  001122                     i2u12_41:
-   778  001122  EFA7  F008         	goto	i2l144
-   779  001126                     i2u12_40:
-   780  001126                     
-   781                           ;I2C_slave.c: 223:         TMR0H = 0x4C;
-   782  001126  0E4C               	movlw	76
-   783  001128  6ED7               	movwf	215,c	;volatile
+   773                           ;I2C_slave.c: 241:     if(INTCONbits.TMR0IF == 1){
+   774  001116  A4F2               	btfss	242,2,c	;volatile
+   775  001118  EF90  F008         	goto	i2u12_41
+   776  00111C  EF92  F008         	goto	i2u12_40
+   777  001120                     i2u12_41:
+   778  001120  EFA6  F008         	goto	i2l146
+   779  001124                     i2u12_40:
+   780  001124                     
+   781                           ;I2C_slave.c: 242:         TMR0H = 0x4C;
+   782  001124  0E4C               	movlw	76
+   783  001126  6ED7               	movwf	215,c	;volatile
    784                           
-   785                           ;I2C_slave.c: 224:         TMR0L = 0xB0;
-   786  00112A  0EB0               	movlw	176
-   787  00112C  6ED6               	movwf	214,c	;volatile
-   788  00112E                     
-   789                           ;I2C_slave.c: 225:         INTCONbits.TMR0IF=0;
-   790  00112E  94F2               	bcf	242,2,c	;volatile
-   791  001130                     
-   792                           ;I2C_slave.c: 226:         LATBbits.LATB2 ^= 1;
-   793  001130  748A               	btg	138,2,c	;volatile
-   794  001132                     
-   795                           ;I2C_slave.c: 227:         ADCON0bits.GODONE = 1;
-   796  001132  82C2               	bsf	194,1,c	;volatile
-   797  001134                     
-   798                           ;I2C_slave.c: 228:         T0count++;
-   799  001134  2A08               	incf	_T0count^0,f,c
-   800  001136                     
-   801                           ;I2C_slave.c: 229:         if(T0count==T0Thres){
-   802  001136  500D               	movf	_T0Thres^0,w,c
-   803  001138  1808               	xorwf	_T0count^0,w,c
-   804  00113A  A4D8               	btfss	status,2,c
-   805  00113C  EFA2  F008         	goto	i2u13_41
-   806  001140  EFA4  F008         	goto	i2u13_40
-   807  001144                     i2u13_41:
-   808  001144  EFA7  F008         	goto	i2l144
-   809  001148                     i2u13_40:
-   810  001148                     
-   811                           ;I2C_slave.c: 230:             LATBbits.LATB7 ^= 1;
-   812  001148  7E8A               	btg	138,7,c	;volatile
-   813  00114A                     
-   814                           ;I2C_slave.c: 231:             T0count = 0;
-   815  00114A  0E00               	movlw	0
-   816  00114C  6E08               	movwf	_T0count^0,c
-   817  00114E                     i2l144:
-   818  00114E  C010  FFDA         	movff	??_high_ISR+1,fsr2h
-   819  001152  C00F  FFD9         	movff	??_high_ISR,fsr2l
-   820  001156  9211               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
-   821  001158  0011               	retfie		f
-   822  00115A                     __end_of_high_ISR:
+   785                           ;I2C_slave.c: 243:         TMR0L = 0xB0;
+   786  001128  0EB0               	movlw	176
+   787  00112A  6ED6               	movwf	214,c	;volatile
+   788  00112C                     
+   789                           ;I2C_slave.c: 244:         INTCONbits.TMR0IF=0;
+   790  00112C  94F2               	bcf	242,2,c	;volatile
+   791  00112E                     
+   792                           ;I2C_slave.c: 245:         LATBbits.LATB2 ^= 1;
+   793  00112E  748A               	btg	138,2,c	;volatile
+   794  001130                     
+   795                           ;I2C_slave.c: 246:         ADCON0bits.GODONE = 1;
+   796  001130  82C2               	bsf	194,1,c	;volatile
+   797  001132                     
+   798                           ;I2C_slave.c: 247:         T0count++;
+   799  001132  2A0A               	incf	_T0count^0,f,c
+   800  001134                     
+   801                           ;I2C_slave.c: 248:         if(T0count==T0Thres){
+   802  001134  500F               	movf	_T0Thres^0,w,c
+   803  001136  180A               	xorwf	_T0count^0,w,c
+   804  001138  A4D8               	btfss	status,2,c
+   805  00113A  EFA1  F008         	goto	i2u13_41
+   806  00113E  EFA3  F008         	goto	i2u13_40
+   807  001142                     i2u13_41:
+   808  001142  EFA6  F008         	goto	i2l146
+   809  001146                     i2u13_40:
+   810  001146                     
+   811                           ;I2C_slave.c: 249:             LATCbits.LATC7 ^= 1;
+   812  001146  7E8B               	btg	139,7,c	;volatile
+   813  001148                     
+   814                           ;I2C_slave.c: 250:             T0count = 0;
+   815  001148  0E00               	movlw	0
+   816  00114A  6E0A               	movwf	_T0count^0,c
+   817  00114C                     i2l146:
+   818  00114C  C012  FFDA         	movff	??_high_ISR+1,fsr2h
+   819  001150  C011  FFD9         	movff	??_high_ISR,fsr2l
+   820  001154  9213               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+   821  001156  0011               	retfie		f
+   822  001158                     __end_of_high_ISR:
    823                           	opt callstack 0
    824  0000                     
    825                           	psect	rparam
    826  0000                     
    827                           	psect	temp
-   828  000011                     btemp:
+   828  000013                     btemp:
    829                           	opt callstack 0
-   830  000011                     	ds	1
+   830  000013                     	ds	1
    831  0000                     int$flags	set	btemp
    832  0000                     wtemp8	set	btemp+1
    833  0000                     ttemp5	set	btemp+1
@@ -891,13 +891,13 @@ Data Sizes:
     Strings     0
     Constant    0
     Data        2
-    BSS         12
+    BSS         14
     Persistent  0
     Stack       0
 
 Auto Spaces:
     Space          Size  Autos    Used
-    COMRAM           94      2      16
+    COMRAM           94      2      18
     BANK0           160      0       0
     BANK1           256      0       0
     BANK2           256      0       0
@@ -1043,88 +1043,88 @@ BANK1              100      0       0       8        0.0%
 BITBANK0            A0      0       0       4        0.0%
 BANK0               A0      0       0       5        0.0%
 BITCOMRAM           5E      0       0       0        0.0%
-COMRAM              5E      2      10       1       17.0%
+COMRAM              5E      2      12       1       19.1%
 BITSFR_1             0      0       0     200        0.0%
 SFR_1                0      0       0     200        0.0%
 BITSFR               0      0       0     200        0.0%
 SFR                  0      0       0     200        0.0%
 STACK                0      0       0       2        0.0%
 NULL                 0      0       0       0        0.0%
-ABS                  0      0      10       6        0.0%
-DATA                 0      0      10       3        0.0%
+ABS                  0      0      12       6        0.0%
+DATA                 0      0      12       3        0.0%
 CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Tue Apr 14 16:24:51 2020
+Symbol Table                                                                                   Fri Apr 17 16:18:58 2020
 
-            _SSPSTATbits 000FC7                       u10 119E                       u11 119A  
-                    l111 1204                      l120 123E                      l104 11A4  
-                    l114 121E                      l126 1230                      l820 11DC  
-                    l822 1202                      l830 121C                      l832 1232  
-                    l824 1206                      l840 115E                      l826 120A  
-                    l834 1220                      l850 117C                      l842 116E  
-                    l828 121A                      l836 122C                      l860 118A  
-                    l852 1180                      l844 1172                      l838 122E  
-                    l862 118E                      l854 1182                      l846 1176  
-                    l864 119E                      l856 1184                      l848 1178  
-                    l858 1186                      _PR2 000FBB                      wreg 000FE8  
-                   _LATA 000F89                     _LATB 000F8A                     _LATC 000F8B  
-                   _TMR2 000FBC                     _addr 000B                     _data 000C  
-                   _main 115E                     _sent 000E                     fsr2h 000FDA  
-                   indf2 000FDF                     fsr2l 000FD9                     btemp 0011  
-                   start 115A             ___param_bank 000000                    ?_main 000F  
-                  _T0CON 000FD5                    _T2CON 000FBA                    i2l141 1118  
-                  i2l144 114E                    i2l136 109E                    i2l900 108A  
-                  i2l910 10D4                    i2l902 1096                    i2l920 10FE  
-                  i2l912 10D6                    i2l904 10A2                    i2l930 1126  
-                  i2l922 1100                    i2l914 10E8                    i2l906 10B4  
-                  i2l940 1136                    i2l932 112E                    i2l924 1102  
-                  i2l908 10C4                    i2l916 10F4                    i2l942 1148  
-                  i2l934 1130                    i2l918 10FC                    i2l926 1104  
-                  i2l944 114A                    i2l936 1132                    i2l928 1112  
-                  i2l880 1020                    i2l938 1134                    i2l890 1046  
-                  i2l882 102E                    i2l892 1056                    i2l884 1032  
-                  i2l894 1066                    i2l886 1034                    i2l878 1012  
-                  i2l896 1076                    i2l888 1042                    i2l898 1078  
+            _SSPSTATbits 000FC7                       u10 11A2                       u11 119E  
+                    l113 1206                      l122 1240                      l106 11A8  
+                    l116 1220                      l128 1232                      l822 11E0  
+                    l830 120C                      l824 11E4                      l832 121C  
+                    l840 122E                      l826 1204                      l834 121E  
+                    l842 1230                      l850 1174                      l836 1234  
+                    l828 1208                      l860 1182                      l852 1176  
+                    l844 115C                      l838 1222                      l870 11A2  
+                    l862 1186                      l854 117A                      l846 116C  
+                    l864 118A                      l856 117E                      l848 1170  
+                    l866 118E                      l858 1180                      l868 1192  
+                    _PR2 000FBB                      wreg 000FE8                     _LATA 000F89  
+                   _LATB 000F8A                     _LATC 000F8B                     _TMR2 000FBC  
+                   _addr 000D                     _data 000E                     _main 115C  
+                   _sent 0010                     fsr2h 000FDA                     indf2 000FDF  
+                   fsr2l 000FD9                     btemp 0013                     start 1158  
+           ___param_bank 000000                    ?_main 0011                    _T0CON 000FD5  
+                  _T2CON 000FBA                    i2l143 1116                    i2l146 114C  
+                  i2l138 109C                    i2l900 1076                    i2l910 10C2  
+                  i2l902 1088                    i2l912 10D2                    i2l920 10FA  
+                  i2l904 1094                    i2l930 1110                    i2l922 10FC  
+                  i2l914 10D4                    i2l906 10A0                    i2l940 1132  
+                  i2l932 1124                    i2l924 10FE                    i2l916 10E6  
+                  i2l908 10B2                    i2l942 1134                    i2l934 112C  
+                  i2l926 1100                    i2l918 10F2                    i2l944 1146  
+                  i2l936 112E                    i2l928 1102                    i2l946 1148  
+                  i2l938 1130                    i2l890 1040                    i2l892 1044  
+                  i2l884 1012                    i2l894 1054                    i2l886 1020  
+                  i2l896 1064                    i2l888 102E                    i2l898 1074  
                   _TMR0H 000FD7                    _TMR0L 000FD6                    _PORTA 000F80  
-                  _TRISA 000F92                    _TRISB 000F93                    _TRISC 000F94  
-                  _Rxbuf 0001                    _Txbuf 0004                    tablat 000FF5  
-                  ttemp5 0012                    ttemp6 0015                    ttemp7 0019  
-                  status 000FD8                    wtemp8 0012          __initialization 11AE  
-           __end_of_main 11AE                   ??_main 0011            __activetblptr 000000  
-                 _ADCON0 000FC2                   _ADCON1 000FC1                   _ADCON2 000FC0  
-                 _ADRESH 000FC4                   _ANSELA 000F5B                   i2u2_40 1020  
-                 i2u2_41 101C                   i2u3_40 102E                   i2u3_41 102A  
-                 i2u4_40 1042                   i2u4_41 103E                   i2u5_40 1056  
-                 i2u5_41 1052                   i2u6_40 1066                   i2u6_41 1062  
-                 i2u7_40 108A                   i2u7_41 1086                   _SSPADD 000FC8  
-                 i2u8_40 10B4                   i2u8_41 10B0                   i2u9_40 10C4  
-                 i2u9_41 10C0                   _SSPBUF 000FC9         __end_of_high_ISR 115A  
-       __end_of_init_I2C 1220         __end_of_init_ADC 1240         __end_of_init_TM0 1232  
-                 clear_0 11CC             __pdataCOMRAM 000D                   tblptrh 000FF7  
-                 tblptrl 000FF6                   tblptru 000FF8               __accesstop 0060  
-__end_of__initialization 11D2            ___rparam_used 000001           __pcstackCOMRAM 000F  
-     __size_of_init_Chip 002A                  _CM1CON0 000F98                  _T0Thres 000D  
-                i2u10_40 10E8                  i2u10_41 10E4                  i2u11_40 1112  
-                i2u11_41 110E                  i2u12_40 1126                  i2u12_41 1122  
-                i2u13_40 1148                  i2u13_41 1144                  _T0count 0008  
-              ?_high_ISR 000F                  _SSPCON1 000FC6                  _SSPCON2 000FC5  
-                _SSPSTAT 000FC7                ?_init_I2C 000F                ?_init_ADC 000F  
-              ?_init_TM0 000F                  __Hparam 0000                  __Lparam 0000  
-              _I2Cstatus 0007                  __pcinit 11AE                  __ramtop 0800  
-                __ptext0 115E                  __ptext1 1220                  __ptext2 1206  
-                __ptext3 11DC                  __ptext4 1232                _T0CONbits 000FD5  
-      __end_of_init_Chip 1206                _T2CONbits 000FBA               ??_high_ISR 000F  
-   end_of_initialization 11D2               ??_init_I2C 0011               ??_init_ADC 0011  
-             ??_init_TM0 0011                  postinc0 000FEE                _TRISBbits 000F93  
-          __pidataCOMRAM 1240      start_initialization 11AE              __pbssCOMRAM 0001  
-      __size_of_high_ISR 0152        __size_of_init_I2C 001A        __size_of_init_ADC 000E  
-      __size_of_init_TM0 0012                _data_past 000A                __pintcode 1008  
-              _init_Chip 11DC                 _LATBbits 000F8A                 _LATCbits 000F8B  
-               _PIE1bits 000F9D                 _PIR1bits 000F9E               _ADCON0bits 000FC2  
-             ?_init_Chip 000F                 __Hrparam 0000                 __Lrparam 0000  
-               _RxStatus 0009                 _high_ISR 1008                 _init_I2C 1206  
-               _init_ADC 1232                 _init_TM0 1220            __size_of_main 0050  
-               int$flags 0011               _INTCONbits 000FF2              ??_init_Chip 0011  
-               intlevel2 0000              _SSPCON1bits 000FC6  
+                  _PORTB 000F81                    _TRISA 000F92                    _TRISB 000F93  
+                  _TRISC 000F94                    _Rxbuf 0001                    _Txbuf 0005  
+                  tablat 000FF5                    ttemp5 0014                    ttemp6 0017  
+                  ttemp7 001B                    status 000FD8                    wtemp8 0014  
+        __initialization 11B2             __end_of_main 11B2                   ??_main 0013  
+          __activetblptr 000000                   _ADCON0 000FC2                   _ADCON1 000FC1  
+                 _ADCON2 000FC0                   _ADRESH 000FC4                   _ANSELA 000F5B  
+                 i2u2_40 1020                   i2u2_41 101C                   i2u3_40 102E  
+                 i2u3_41 102A                   i2u4_40 1040                   i2u4_41 103C  
+                 i2u5_40 1054                   i2u5_41 1050                   i2u6_40 1064  
+                 i2u6_41 1060                   i2u7_40 1088                   i2u7_41 1084  
+                 _SSPADD 000FC8                   i2u8_40 10B2                   i2u8_41 10AE  
+                 i2u9_40 10C2                   i2u9_41 10BE                   _SSPBUF 000FC9  
+       __end_of_high_ISR 1158         __end_of_init_I2C 1222         __end_of_init_ADC 1242  
+       __end_of_init_TM0 1234                   clear_0 11D0             __pdataCOMRAM 000F  
+                 tblptrh 000FF7                   tblptrl 000FF6                   tblptru 000FF8  
+             __accesstop 0060  __end_of__initialization 11D6            ___rparam_used 000001  
+         __pcstackCOMRAM 0011       __size_of_init_Chip 0028                  _CM1CON0 000F98  
+                _T0Thres 000F                  i2u10_40 10E6                  i2u10_41 10E2  
+                i2u11_40 1110                  i2u11_41 110C                  i2u12_40 1124  
+                i2u12_41 1120                  i2u13_40 1146                  i2u13_41 1142  
+                _T0count 000A                ?_high_ISR 0011                  _SSPCON1 000FC6  
+                _SSPCON2 000FC5                  _SSPSTAT 000FC7                ?_init_I2C 0011  
+              ?_init_ADC 0011                ?_init_TM0 0011                  __Hparam 0000  
+                __Lparam 0000                _I2Cstatus 0009                  __pcinit 11B2  
+                __ramtop 0800                  __ptext0 115C                  __ptext1 1222  
+                __ptext2 1208                  __ptext3 11E0                  __ptext4 1234  
+              _T0CONbits 000FD5        __end_of_init_Chip 1208                _T2CONbits 000FBA  
+             ??_high_ISR 0011     end_of_initialization 11D6               ??_init_I2C 0013  
+             ??_init_ADC 0013               ??_init_TM0 0013                  postinc0 000FEE  
+              _TRISBbits 000F93            __pidataCOMRAM 1242      start_initialization 11B2  
+            __pbssCOMRAM 0001        __size_of_high_ISR 0150        __size_of_init_I2C 001A  
+      __size_of_init_ADC 000E        __size_of_init_TM0 0012                _data_past 000C  
+              __pintcode 1008                _init_Chip 11E0                 _LATBbits 000F8A  
+               _LATCbits 000F8B                 _PIE1bits 000F9D                 _PIR1bits 000F9E  
+             _ADCON0bits 000FC2               ?_init_Chip 0011                 __Hrparam 0000  
+               __Lrparam 0000                 _RxStatus 000B                 _high_ISR 1008  
+               _init_I2C 1208                 _init_ADC 1234                 _init_TM0 1222  
+          __size_of_main 0056                 int$flags 0013               _INTCONbits 000FF2  
+            ??_init_Chip 0013                 intlevel2 0000              _SSPCON1bits 000FC6  

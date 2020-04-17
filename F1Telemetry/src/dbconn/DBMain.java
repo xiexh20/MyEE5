@@ -37,6 +37,7 @@ public class DBMain {
 //            create.insertInto(Tables.TRACKS, Tables.TRACKS.IDTRACK, Tables.TRACKS.TRACKNAME)
 //                    .values((short)20, "Shanghai")
 //                    .execute();
+            // TODO: error handler
             for(int i = 10;i<100;i++)
             {
                 create.insertInto(Tables.PLAYERS, Tables.PLAYERS.IDPLAYER, Tables.PLAYERS.PLAYERNAME)
