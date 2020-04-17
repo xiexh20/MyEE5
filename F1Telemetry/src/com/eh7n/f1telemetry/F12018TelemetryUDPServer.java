@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.eh7n.f1telemetry.data.Packet;
 import com.eh7n.f1telemetry.util.PacketDeserializer;
+import udpclient.GPIOThread;
 
 
 /**
@@ -116,8 +117,13 @@ public class F12018TelemetryUDPServer {
 			while (true) {
 				channel.receive(buf);
 				final Packet packet = PacketDeserializer.read(buf.array());
+                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
+                                
+                                // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
+                                // one thread, so there is no need to use multithread to handle packets
 				executor.submit(() -> {
 					packetConsumer.accept(packet);
+//                                        System.out.println(packet.toJSON());
 				});
 				buf.clear();
 			}
@@ -135,12 +141,18 @@ public class F12018TelemetryUDPServer {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+            
+            Thread gpioThread = new GPIOThread();
+            gpioThread.start();
+            
+                    
+            
 		F12018TelemetryUDPServer.create()
 							.bindTo("0.0.0.0")
 							.onPort(20777)
 							.consumeWith((p) -> {
-//									log.trace(p.toJSON());
-                                                                System.out.println(p.toJSON());
+//                                                                System.out.println(p.toJSON());
+                                                                
 								})
 							.start();
 	}
