@@ -56,7 +56,7 @@ public abstract class Packet {
      */
     public PacketList[] addToHistLists(PacketList[] histPacketLists) {
         int packetId = header.getPacketId();
-        histPacketLists[packetId].getPackets().add(this);
+        histPacketLists[packetId].add(this);
         return histPacketLists;
     }
 

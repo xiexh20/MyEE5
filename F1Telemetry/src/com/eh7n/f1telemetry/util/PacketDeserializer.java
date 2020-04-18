@@ -872,7 +872,7 @@ public class PacketDeserializer {
 		carStatus.setTiresWear(new WheelData<Integer>(buffer.getNextUInt8ArrayAsIntegerArray(4)));
 		carStatus.setTireCompound(buffer.getNextUInt8AsInt());
 		carStatus.setTiresDamage(new WheelData<Integer>(buffer.getNextUInt8ArrayAsIntegerArray(4)));
-		carStatus.setFrontLeftWheelDamage(buffer.getNextUInt8AsInt());
+		carStatus.setFrontLeftWingDamage(buffer.getNextUInt8AsInt());
 		carStatus.setFrontRightWingDamage(buffer.getNextUInt8AsInt());
 		carStatus.setRearWingDamage(buffer.getNextUInt8AsInt());
 		carStatus.setEngineDamage(buffer.getNextUInt8AsInt());

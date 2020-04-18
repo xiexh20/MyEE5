@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * this class stores a list of packet
  * @author 25691
  */
-public class PacketList extends ArrayList {
+public class PacketList{
     private ArrayList<Packet> packetList;
     
     public PacketList()
@@ -22,6 +22,30 @@ public class PacketList extends ArrayList {
     public ArrayList<Packet> getPackets()
     {
         return packetList;
+    }
+    
+    public void add(Packet p)
+    {
+        packetList.add(p);
+        
+    }
+    
+    
+    public Packet get(int i)
+    {
+        return packetList.get(i);
+                
+    }
+    
+    
+    public void clear()
+    {
+        packetList.clear();
+    }
+    
+    public int size()
+    {
+        return packetList.size();
     }
     
 }

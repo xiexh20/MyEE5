@@ -15,216 +15,220 @@ import org.jooq.Result;
 
 public class PacketSessionData extends Packet {
 
-	private Weather weather;
-	private int trackTemperature;
-	private int airTemperature;
-	private int totalLaps;
-	private int trackLength;
-	private SessionType sessionType;
-	private int trackId;
-	private Era era;
-	private int sessionTimeLeft;
-	private int sessionDuration;
-	private int pitSpeedLimit;
-	private boolean gamePaused;
-	private boolean spectating;
-	private int spectatorCarIndex;
-	private boolean sliProNativeSupport;
-	private int numMarshalZones;
-	private List<MarshalZone> marshalZones;
-	private SafetyCarStatus safetyCarStatus;
-	private boolean networkGame;
-	
-	public PacketSessionData() {}
+    private Weather weather;
+    private int trackTemperature;
+    private int airTemperature;
+    private int totalLaps;
+    private int trackLength;
+    private SessionType sessionType;
+    private int trackId;
+    private Era era;
+    private int sessionTimeLeft;
+    private int sessionDuration;
+    private int pitSpeedLimit;
+    private boolean gamePaused;
+    private boolean spectating;
+    private int spectatorCarIndex;
+    private boolean sliProNativeSupport;
+    private int numMarshalZones;
+    private List<MarshalZone> marshalZones;
+    private SafetyCarStatus safetyCarStatus;
+    private boolean networkGame;
 
-	public Weather getWeather() {
-		return weather;
-	}
+    private static final int UPDATEPERIOD = 10;
 
-	public void setWeather(Weather weather) {
-		this.weather = weather;
-	}
+    public PacketSessionData() {
+    }
 
-	public int getTrackTemperature() {
-		return trackTemperature;
-	}
+    public Weather getWeather() {
+        return weather;
+    }
 
-	public void setTrackTemperature(int trackTemperature) {
-		this.trackTemperature = trackTemperature;
-	}
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
 
-	public int getAirTemperature() {
-		return airTemperature;
-	}
+    public int getTrackTemperature() {
+        return trackTemperature;
+    }
 
-	public void setAirTemperature(int airTemperature) {
-		this.airTemperature = airTemperature;
-	}
+    public void setTrackTemperature(int trackTemperature) {
+        this.trackTemperature = trackTemperature;
+    }
 
-	public int getTotalLaps() {
-		return totalLaps;
-	}
+    public int getAirTemperature() {
+        return airTemperature;
+    }
 
-	public void setTotalLaps(int totalLaps) {
-		this.totalLaps = totalLaps;
-	}
+    public void setAirTemperature(int airTemperature) {
+        this.airTemperature = airTemperature;
+    }
 
-	public int getTrackLength() {
-		return trackLength;
-	}
+    public int getTotalLaps() {
+        return totalLaps;
+    }
 
-	public void setTrackLength(int trackLength) {
-		this.trackLength = trackLength;
-	}
+    public void setTotalLaps(int totalLaps) {
+        this.totalLaps = totalLaps;
+    }
 
-	public SessionType getSessionType() {
-		return sessionType;
-	}
+    public int getTrackLength() {
+        return trackLength;
+    }
 
-	public void setSessionType(SessionType sessionType) {
-		this.sessionType = sessionType;
-	}
+    public void setTrackLength(int trackLength) {
+        this.trackLength = trackLength;
+    }
 
-	public int getTrackId() {
-		return trackId;
-	}
+    public SessionType getSessionType() {
+        return sessionType;
+    }
 
-	public void setTrackId(int trackId) {
-		this.trackId = trackId;
-	}
+    public void setSessionType(SessionType sessionType) {
+        this.sessionType = sessionType;
+    }
 
-	public Era getEra() {
-		return era;
-	}
+    public int getTrackId() {
+        return trackId;
+    }
 
-	public void setEra(Era era) {
-		this.era = era;
-	}
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
+    }
 
-	public int getSessionTimeLeft() {
-		return sessionTimeLeft;
-	}
+    public Era getEra() {
+        return era;
+    }
 
-	public void setSessionTimeLeft(int sessionTimeLeft) {
-		this.sessionTimeLeft = sessionTimeLeft;
-	}
+    public void setEra(Era era) {
+        this.era = era;
+    }
 
-	public int getSessionDuration() {
-		return sessionDuration;
-	}
+    public int getSessionTimeLeft() {
+        return sessionTimeLeft;
+    }
 
-	public void setSessionDuration(int sessionDuration) {
-		this.sessionDuration = sessionDuration;
-	}
+    public void setSessionTimeLeft(int sessionTimeLeft) {
+        this.sessionTimeLeft = sessionTimeLeft;
+    }
 
-	public int getPitSpeedLimit() {
-		return pitSpeedLimit;
-	}
+    public int getSessionDuration() {
+        return sessionDuration;
+    }
 
-	public void setPitSpeedLimit(int pitSpeedLimit) {
-		this.pitSpeedLimit = pitSpeedLimit;
-	}
+    public void setSessionDuration(int sessionDuration) {
+        this.sessionDuration = sessionDuration;
+    }
 
-	public boolean isGamePaused() {
-		return gamePaused;
-	}
+    public int getPitSpeedLimit() {
+        return pitSpeedLimit;
+    }
 
-	public void setGamePaused(boolean gamePaused) {
-		this.gamePaused = gamePaused;
-	}
+    public void setPitSpeedLimit(int pitSpeedLimit) {
+        this.pitSpeedLimit = pitSpeedLimit;
+    }
 
-	public boolean isSpectating() {
-		return spectating;
-	}
+    public boolean isGamePaused() {
+        return gamePaused;
+    }
 
-	public void setSpectating(boolean spectating) {
-		this.spectating = spectating;
-	}
+    public void setGamePaused(boolean gamePaused) {
+        this.gamePaused = gamePaused;
+    }
 
-	public int getSpectatorCarIndex() {
-		return spectatorCarIndex;
-	}
+    public boolean isSpectating() {
+        return spectating;
+    }
 
-	public void setSpectatorCarIndex(int spectatorCarIndex) {
-		this.spectatorCarIndex = spectatorCarIndex;
-	}
+    public void setSpectating(boolean spectating) {
+        this.spectating = spectating;
+    }
 
-	public boolean isSliProNativeSupport() {
-		return sliProNativeSupport;
-	}
+    public int getSpectatorCarIndex() {
+        return spectatorCarIndex;
+    }
 
-	public void setSliProNativeSupport(boolean sliProNativeSupport) {
-		this.sliProNativeSupport = sliProNativeSupport;
-	}
+    public void setSpectatorCarIndex(int spectatorCarIndex) {
+        this.spectatorCarIndex = spectatorCarIndex;
+    }
 
-	public int getNumMarshalZones() {
-		return numMarshalZones;
-	}
+    public boolean isSliProNativeSupport() {
+        return sliProNativeSupport;
+    }
 
-	public void setNumMarshalZones(int numMarshalZones) {
-		this.numMarshalZones = numMarshalZones;
-	}
+    public void setSliProNativeSupport(boolean sliProNativeSupport) {
+        this.sliProNativeSupport = sliProNativeSupport;
+    }
 
-	public List<MarshalZone> getMarshalZones() {
-		return marshalZones;
-	}
+    public int getNumMarshalZones() {
+        return numMarshalZones;
+    }
 
-	public void setMarshalZones(List<MarshalZone> marshalZones) {
-		this.marshalZones = marshalZones;
-	}
+    public void setNumMarshalZones(int numMarshalZones) {
+        this.numMarshalZones = numMarshalZones;
+    }
 
-	public SafetyCarStatus getSafetyCarStatus() {
-		return safetyCarStatus;
-	}
+    public List<MarshalZone> getMarshalZones() {
+        return marshalZones;
+    }
 
-	public void setSafetyCarStatus(SafetyCarStatus safetyCarStatus) {
-		this.safetyCarStatus = safetyCarStatus;
-	}
+    public void setMarshalZones(List<MarshalZone> marshalZones) {
+        this.marshalZones = marshalZones;
+    }
 
-	public boolean isNetworkGame() {
-		return networkGame;
-	}
+    public SafetyCarStatus getSafetyCarStatus() {
+        return safetyCarStatus;
+    }
 
-	public void setNetworkGame(boolean networkGame) {
-		this.networkGame = networkGame;
-	}
+    public void setSafetyCarStatus(SafetyCarStatus safetyCarStatus) {
+        this.safetyCarStatus = safetyCarStatus;
+    }
+
+    public boolean isNetworkGame() {
+        return networkGame;
+    }
+
+    public void setNetworkGame(boolean networkGame) {
+        this.networkGame = networkGame;
+    }
 
     @Override
     /**
-     * update an entry in SessionInfos using session UID
-     * do not update history packet list
+     * update an entry in SessionInfos using session UID do not update history
+     * packet list
      */
     public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        Sessioninfos si = Tables.SESSIONINFOS;  // abrv for table SessionInfos
-        Result<Record> result = dbContext.select()
+        PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
+        int histPacketsCount = newLists[getHeader().getPacketId()].size();
+        if (histPacketsCount == UPDATEPERIOD) {
+            Sessioninfos si = Tables.SESSIONINFOS;  // abrv for table SessionInfos
+            Result<Record> result = dbContext.select()
                     .from(si)
                     .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
                     .fetch();
-        if(result.size()>0){
-            // only update existing entry 
-            dbContext.update(si)
-                    .set(si.TRACKID, (short)getTrackId())
-                    .set(si.PITSPEEDLIMIT, getPitSpeedLimit())
-                    .set(si.DURATION, getSessionDuration())
-                    .set(si.TOTALLAPS, (short)getTotalLaps())
-                    .set(si.TRACKLENGTH, getTrackLength())
-                    .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
-                    .execute();
-        }
-        else{
-            // insert a new entry
-            dbContext.insertInto(si, si.SESSIONUID, si.TRACKID, si.PITSPEEDLIMIT, si.DURATION, si.TOTALLAPS, si.TRACKLENGTH)
-                    .values(getHeader().getSessionUID().longValue(),
-                            (short)getTrackId(), getPitSpeedLimit(), 
-                            getSessionDuration(), (short)getTotalLaps(),
-                            getTrackLength())
-                    .execute();
-            
-            
+            if (result.size() > 0) {
+                // only update existing entry 
+                dbContext.update(si)
+                        .set(si.TRACKID, (short) getTrackId())
+                        .set(si.PITSPEEDLIMIT, getPitSpeedLimit())
+                        .set(si.DURATION, getSessionDuration())
+                        .set(si.TOTALLAPS, (short) getTotalLaps())
+                        .set(si.TRACKLENGTH, getTrackLength())
+                        .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
+                        .execute();
+            } else {
+                // insert a new entry
+                dbContext.insertInto(si, si.SESSIONUID, si.TRACKID, si.PITSPEEDLIMIT, si.DURATION, si.TOTALLAPS, si.TRACKLENGTH)
+                        .values(getHeader().getSessionUID().longValue(),
+                                (short) getTrackId(), getPitSpeedLimit(),
+                                getSessionDuration(), (short) getTotalLaps(),
+                                getTrackLength())
+                        .execute();
+
+            }
         }
 
-        return histPacketLists;
+        return newLists;
     }
 
 }

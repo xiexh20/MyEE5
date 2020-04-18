@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import udpclient.GPIOThread;
 
@@ -135,7 +136,9 @@ public class F12018TelemetryUDPServer {
             gpioThread.start();
             
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL);
+            Settings settings = new Settings().withExecuteLogging(false); // turn off debug log output
+            DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL, settings);
+            
 
             // create and initialize history packets
             @SuppressWarnings("MismatchedReadAndWriteOfArray")

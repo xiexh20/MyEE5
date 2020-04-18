@@ -16,7 +16,7 @@ public class CarStatusData {
 	private WheelData<Integer> tiresWear;
 	private int tireCompound;
 	private WheelData<Integer> tiresDamage;
-	private int frontLeftWheelDamage;
+	private int frontLeftWingDamage;
 	private int frontRightWingDamage;
 	private int rearWingDamage;
 	private int engineDamage;
@@ -144,12 +144,12 @@ public class CarStatusData {
 		this.tiresDamage = tiresDamage;
 	}
 
-	public int getFrontLeftWheelDamage() {
-		return frontLeftWheelDamage;
+	public int getFrontLeftWingDamage() {
+		return frontLeftWingDamage;
 	}
 
-	public void setFrontLeftWheelDamage(int frontLeftWheelDamage) {
-		this.frontLeftWheelDamage = frontLeftWheelDamage;
+	public void setFrontLeftWingDamage(int frontLeftWheelDamage) {
+		this.frontLeftWingDamage = frontLeftWheelDamage;
 	}
 
 	public int getFrontRightWingDamage() {
