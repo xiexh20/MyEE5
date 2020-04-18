@@ -38,21 +38,25 @@ public class DBMain {
 //                    .values((short)20, "Shanghai")
 //                    .execute();
             // TODO: error handler
-            for(int i = 10;i<100;i++)
-            {
-                create.insertInto(Tables.PLAYERS, Tables.PLAYERS.IDPLAYER, Tables.PLAYERS.PLAYERNAME)
-                        .values(i, "Player"+i)
-                        .execute();
-            }
-//            Result<Record> result = create.select().from(AUTHOR).fetch();
-
-//            for (Record r : result) {
+//            for(int i = 10;i<100;i++)
+//            {
+//                create.insertInto(Tables.PLAYERS, Tables.PLAYERS.IDPLAYER, Tables.PLAYERS.PLAYERNAME)
+//                        .values(i, "Player"+i)
+//                        .execute();
+//            }
+            Result<Record> result = create.select()
+                    .from(Tables.SESSIONINFOS)
+                    .where(Tables.SESSIONINFOS.SESSIONUID.eq((long)1234))
+                    .fetch();
+            System.out.println("dbconn.DBMain.main(): reult size:"+ result.size());
+            for (Record r : result) {
 //                Integer id = r.getValue(AUTHOR.ID);
 //                String firstName = r.getValue(AUTHOR.FIRST_NAME);
 //                String lastName = r.getValue(AUTHOR.LAST_NAME);
-//
-//                System.out.println("ID: " + id + " first name: " + firstName + " last name: " + lastName);
-//            }
+                long id = r.getValue(Tables.SESSIONINFOS.SESSIONUID);
+
+                System.out.println("ID: " + id + " first name: " + id);
+            }
 
         } 
 

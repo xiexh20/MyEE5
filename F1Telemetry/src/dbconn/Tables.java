@@ -4,15 +4,16 @@
 package dbconn;
 
 
+import dbconn.tables.Carstatusdata;
+import dbconn.tables.Cartelemetry;
 import dbconn.tables.Drivers;
-import dbconn.tables.Employees;
+import dbconn.tables.Extractedlapdata;
+import dbconn.tables.Heatmapdata;
+import dbconn.tables.Instantlapdata;
+import dbconn.tables.Motiondata;
 import dbconn.tables.Nationalities;
 import dbconn.tables.Players;
-import dbconn.tables.Sessionbasics;
-import dbconn.tables.Sessiondetails;
-import dbconn.tables.Sessionendstatus;
-import dbconn.tables.Sessionperformance;
-import dbconn.tables.Sessionstatistics;
+import dbconn.tables.Sessioninfos;
 import dbconn.tables.Teams;
 import dbconn.tables.Tracks;
 
@@ -24,14 +25,39 @@ import dbconn.tables.Tracks;
 public class Tables {
 
     /**
+     * Necessary informaiton from CarStatus packet. Not needed to update quickly, 1Hz should be good enough. 
+     */
+    public static final Carstatusdata CARSTATUSDATA = Carstatusdata.CARSTATUSDATA;
+
+    /**
+     * From packet telmetry, should be updated as fast as possible
+     */
+    public static final Cartelemetry CARTELEMETRY = Cartelemetry.CARTELEMETRY;
+
+    /**
      * Store names of all drivers specified by F1 2018.
      */
     public static final Drivers DRIVERS = Drivers.DRIVERS;
 
     /**
-     * The table <code>F1GameDB.employees</code>.
+     * Lap data not updated frequently, i.e. extracted from several packets. 
      */
-    public static final Employees EMPLOYEES = Employees.EMPLOYEES;
+    public static final Extractedlapdata EXTRACTEDLAPDATA = Extractedlapdata.EXTRACTEDLAPDATA;
+
+    /**
+     * Data needed to generate a heat map of the car. Update ratio 1Hz is good enough. 
+     */
+    public static final Heatmapdata HEATMAPDATA = Heatmapdata.HEATMAPDATA;
+
+    /**
+     *  Lap Data that should be saved instantaneously. 
+     */
+    public static final Instantlapdata INSTANTLAPDATA = Instantlapdata.INSTANTLAPDATA;
+
+    /**
+     * This table includes necessary entries in Motion packet and some entries from other packet that requires instataneous update. The frequency should be as fast as possible. 
+     */
+    public static final Motiondata MOTIONDATA = Motiondata.MOTIONDATA;
 
     /**
      * Information of natinalities specified by F1 2018.
@@ -44,29 +70,9 @@ public class Tables {
     public static final Players PLAYERS = Players.PLAYERS;
 
     /**
-     * Basic information of the game session: link player to driver, team, car used in this session. 
+     * General information for this session
      */
-    public static final Sessionbasics SESSIONBASICS = Sessionbasics.SESSIONBASICS;
-
-    /**
-     * Detailed informations about the track settings. 
-     */
-    public static final Sessiondetails SESSIONDETAILS = Sessiondetails.SESSIONDETAILS;
-
-    /**
-     * Car status at the end of the session: damages fuel remainings etc. 
-     */
-    public static final Sessionendstatus SESSIONENDSTATUS = Sessionendstatus.SESSIONENDSTATUS;
-
-    /**
-     * Information related to the performance during a session: max speed, lap time, etc. 
-     */
-    public static final Sessionperformance SESSIONPERFORMANCE = Sessionperformance.SESSIONPERFORMANCE;
-
-    /**
-     * Statistic information about how the player controllers the game, such as what buttons are pressed, temperature, etc. 
-     */
-    public static final Sessionstatistics SESSIONSTATISTICS = Sessionstatistics.SESSIONSTATISTICS;
+    public static final Sessioninfos SESSIONINFOS = Sessioninfos.SESSIONINFOS;
 
     /**
      * Store information of all teams specified by F1 2018.

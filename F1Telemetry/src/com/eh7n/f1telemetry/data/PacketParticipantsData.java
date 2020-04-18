@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eh7n.f1telemetry.data.elements.ParticipantData;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jooq.DSLContext;
 
 public class PacketParticipantsData extends Packet {
 	
@@ -44,5 +45,12 @@ public class PacketParticipantsData extends Packet {
 		}
 		return json;
         }
+
+    @Override
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext) {
+//        throw new UnsupportedperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        System.out.println("No operation for participant packet!");
+        return histPacketLists;
+    }
         
 }

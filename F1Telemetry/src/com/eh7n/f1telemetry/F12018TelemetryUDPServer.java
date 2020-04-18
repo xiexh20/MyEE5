@@ -13,147 +13,175 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.eh7n.f1telemetry.data.Packet;
+import com.eh7n.f1telemetry.data.PacketList;
+import com.eh7n.f1telemetry.data.elements.PacketType;
 import com.eh7n.f1telemetry.util.PacketDeserializer;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 import udpclient.GPIOThread;
-
 
 /**
  * The base class for the F1 2018 Telemetry app. Starts up a non-blocking I/O
  * UDP server to read packets from the F1 2018 video game and then hands those
  * packets off to a parallel thread for processing based on the lambda function
- * defined. Leverages a fluent API for initialization. 
- * 
+ * defined. Leverages a fluent API for initialization.
+ *
  * Also exposes a main method for starting up a default server
- * 
+ *
  * @author eh7n
  *
  */
 public class F12018TelemetryUDPServer {
 
-	private static final Logger log = LoggerFactory.getLogger(F12018TelemetryUDPServer.class);
+    private static final Logger log = LoggerFactory.getLogger(F12018TelemetryUDPServer.class);
 
-	private static final String DEFAULT_BIND_ADDRESS = "0.0.0.0";
-	private static final int DEFAULT_PORT = 20777;
-	private static final int MAX_PACKET_SIZE = 1341;
+    private static final String USER = "xiexh";
+    private static final String PASSWORD = "123456";
+    private static final String URL = "jdbc:mysql://localhost:3306/F1GameDB";
 
-	private String bindAddress;
-	private int port;
-	private Consumer<Packet> packetConsumer;
+    private static final String DEFAULT_BIND_ADDRESS = "0.0.0.0";
+    private static final int DEFAULT_PORT = 20777;
+    private static final int MAX_PACKET_SIZE = 1341;
 
-	private F12018TelemetryUDPServer() {
-		bindAddress = DEFAULT_BIND_ADDRESS;
-		port = DEFAULT_PORT;
-	}
+    private String bindAddress;
+    private int port;
+    private Consumer<Packet> packetConsumer;
 
-	/**
-	 * Create an instance of the UDP server
-	 * 
-	 * @return
-	 */
-	public static F12018TelemetryUDPServer create() {
-		return new F12018TelemetryUDPServer();
-	}
+    private F12018TelemetryUDPServer() {
+        bindAddress = DEFAULT_BIND_ADDRESS;
+        port = DEFAULT_PORT;
+    }
 
-	/**
-	 * Set the bind address
-	 * 
-	 * @param bindAddress
-	 * @return the server instance
-	 */
-	public F12018TelemetryUDPServer bindTo(String bindAddress) {
-		this.bindAddress = bindAddress;
-		return this;
-	}
+    /**
+     * Create an instance of the UDP server
+     *
+     * @return
+     */
+    public static F12018TelemetryUDPServer create() {
+        return new F12018TelemetryUDPServer();
+    }
 
-	/**
-	 * Set the bind port
-	 * 
-	 * @param port
-	 * @return the server instance
-	 */
-	public F12018TelemetryUDPServer onPort(int port) {
-		this.port = port;
-		return this;
-	}
+    /**
+     * Set the bind address
+     *
+     * @param bindAddress
+     * @return the server instance
+     */
+    public F12018TelemetryUDPServer bindTo(String bindAddress) {
+        this.bindAddress = bindAddress;
+        return this;
+    }
 
-	/**
-	 * Set the consumer via a lambda function
-	 * 
-	 * @param consumer
-	 * @return the server instance
-	 */
-	public F12018TelemetryUDPServer consumeWith(Consumer<Packet> consumer) {
-		packetConsumer = consumer;
-		return this;
-	}
+    /**
+     * Set the bind port
+     *
+     * @param port
+     * @return the server instance
+     */
+    public F12018TelemetryUDPServer onPort(int port) {
+        this.port = port;
+        return this;
+    }
 
-	/**
-	 * Start the F1 2018 Telemetry UDP server
-	 * 
-	 * @throws IOException           if the server fails to start
-	 * @throws IllegalStateException if you do not define how the packets should be
-	 *                               consumed
-	 */
-	public void start() throws IOException {
+    /**
+     * Set the consumer via a lambda function
+     *
+     * @param consumer
+     * @return the server instance
+     */
+    public F12018TelemetryUDPServer consumeWith(Consumer<Packet> consumer) {
+        packetConsumer = consumer;
+        return this;
+    }
 
-		if (packetConsumer == null) {
-			throw new IllegalStateException("You must define how the packets will be consumed.");
-		}
+    /**
+     * Start the F1 2018 Telemetry UDP server
+     *
+     * @throws IOException if the server fails to start
+     * @throws IllegalStateException if you do not define how the packets should
+     * be consumed
+     */
+    public void start() throws IOException {
 
-		log.info("F1 2018 - Telemetry UDP Server");
+        if (packetConsumer == null) {
+            throw new IllegalStateException("You must define how the packets will be consumed.");
+        }
 
-		// Create an executor to process the Packets in a separate thread
-		// To be honest, this is probably an over-optimization due to the use of NIO,
-		// but it was done to provide a simple way of providing back pressure on the
-		// incoming UDP packet handling to allow for long-running processing of the
-		// Packet object, if required.
-		ExecutorService executor = Executors.newSingleThreadExecutor();
+        log.info("F1 2018 - Telemetry UDP Server");
 
-		try (DatagramChannel channel = DatagramChannel.open()) {
-			channel.socket().bind(new InetSocketAddress(bindAddress, port));
-			log.info("Listening on " + bindAddress + ":" + port + "...");
-			ByteBuffer buf = ByteBuffer.allocate(MAX_PACKET_SIZE);
-			buf.order(ByteOrder.LITTLE_ENDIAN);
-			while (true) {
-				channel.receive(buf);
-				final Packet packet = PacketDeserializer.read(buf.array());
-                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
-                                
-                                // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
-                                // one thread, so there is no need to use multithread to handle packets
-				executor.submit(() -> {
-					packetConsumer.accept(packet);
-//                                        System.out.println(packet.toJSON());
-				});
-				buf.clear();
-			}
-		} finally {
-			executor.shutdown();
-		}
-	}
+        // Create an executor to process the Packets in a separate thread
+        // To be honest, this is probably an over-optimization due to the use of NIO,
+        // but it was done to provide a simple way of providing back pressure on the
+        // incoming UDP packet handling to allow for long-running processing of the
+        // Packet object, if required.
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        
+        
 
-	/**
-	 * Main class in case you want to run the server independently. Uses defaults
-	 * for bind address and port, and just logs the incoming packets as a JSON
-	 * object to the location defined in the logback config
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-            
+        try (DatagramChannel channel = DatagramChannel.open()) {
+            channel.socket().bind(new InetSocketAddress(bindAddress, port));
+            log.info("Listening on " + bindAddress + ":" + port + "...");
+            ByteBuffer buf = ByteBuffer.allocate(MAX_PACKET_SIZE);
+            buf.order(ByteOrder.LITTLE_ENDIAN);
+
             Thread gpioThread = new GPIOThread();
             gpioThread.start();
             
-                    
-            
-		F12018TelemetryUDPServer.create()
-							.bindTo("0.0.0.0")
-							.onPort(20777)
-							.consumeWith((p) -> {
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL);
+
+            // create and initialize history packets
+            @SuppressWarnings("MismatchedReadAndWriteOfArray")
+            PacketList[] histPacketLists = new PacketList[PacketType.values().length];
+            for (int i = 0; i < PacketType.values().length; i++) {
+                histPacketLists[i] = new PacketList();
+            }
+
+            while (true) {
+                channel.receive(buf);
+                final Packet packet = PacketDeserializer.read(buf.array());
+//                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
+                histPacketLists = packet.saveToDB(histPacketLists, dbContext); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
+                        // one thread, so there is no need to use multithread to handle packets
+                        //                                executor.submit(() -> {
+                        //					packetConsumer.accept(packet);
+                        ////                                        System.out.println(packet.toJSON());
+                        //				});
+                buf.clear();
+            }
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(F12018TelemetryUDPServer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    /**
+     * Main class in case you want to run the server independently. Uses
+     * defaults for bind address and port, and just logs the incoming packets as
+     * a JSON object to the location defined in the logback config
+     *
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+
+//            Thread gpioThread = new GPIOThread();
+//            gpioThread.start();
+        F12018TelemetryUDPServer.create()
+                .bindTo("0.0.0.0")
+                .onPort(20777)
+                .consumeWith((p) -> {
 //                                                                System.out.println(p.toJSON());
-                                                                
-								})
-							.start();
-	}
+
+                })
+                .start();
+    }
 }

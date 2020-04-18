@@ -7,6 +7,11 @@ import com.eh7n.f1telemetry.data.elements.MarshalZone;
 import com.eh7n.f1telemetry.data.elements.SafetyCarStatus;
 import com.eh7n.f1telemetry.data.elements.SessionType;
 import com.eh7n.f1telemetry.data.elements.Weather;
+import dbconn.Tables;
+import dbconn.tables.Sessioninfos;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Result;
 
 public class PacketSessionData extends Packet {
 
@@ -183,5 +188,43 @@ public class PacketSessionData extends Packet {
 	public void setNetworkGame(boolean networkGame) {
 		this.networkGame = networkGame;
 	}
+
+    @Override
+    /**
+     * update an entry in SessionInfos using session UID
+     * do not update history packet list
+     */
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Sessioninfos si = Tables.SESSIONINFOS;  // abrv for table SessionInfos
+        Result<Record> result = dbContext.select()
+                    .from(si)
+                    .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
+                    .fetch();
+        if(result.size()>0){
+            // only update existing entry 
+            dbContext.update(si)
+                    .set(si.TRACKID, (short)getTrackId())
+                    .set(si.PITSPEEDLIMIT, getPitSpeedLimit())
+                    .set(si.DURATION, getSessionDuration())
+                    .set(si.TOTALLAPS, (short)getTotalLaps())
+                    .set(si.TRACKLENGTH, getTrackLength())
+                    .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
+                    .execute();
+        }
+        else{
+            // insert a new entry
+            dbContext.insertInto(si, si.SESSIONUID, si.TRACKID, si.PITSPEEDLIMIT, si.DURATION, si.TOTALLAPS, si.TRACKLENGTH)
+                    .values(getHeader().getSessionUID().longValue(),
+                            (short)getTrackId(), getPitSpeedLimit(), 
+                            getSessionDuration(), (short)getTotalLaps(),
+                            getTrackLength())
+                    .execute();
+            
+            
+        }
+
+        return histPacketLists;
+    }
 
 }

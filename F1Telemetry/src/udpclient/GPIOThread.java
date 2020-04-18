@@ -121,7 +121,7 @@ public class GPIOThread extends Thread {
             final Console console = new Console();
 
             // print program title/header
-            console.title("<-- The Pi4J Project -->", "I2C Example");
+//            console.title("<-- The Pi4J Project -->", "I2C Example");
 
             // allow for user to exit program using CTRL-C
             console.promptForExit();
@@ -144,7 +144,7 @@ public class GPIOThread extends Thread {
                 } catch (IOException exception) {
                     console.println("I/O error on I2C bus " + number + " occurred");
                 } catch (I2CFactory.UnsupportedBusNumberException exception) {
-                    console.println("Unsupported I2C bus " + number + " required");
+//                    console.println("Unsupported I2C bus " + number + " required");
                 }
             }
 

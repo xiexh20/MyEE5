@@ -4,30 +4,31 @@
 package dbconn;
 
 
+import dbconn.tables.Carstatusdata;
+import dbconn.tables.Cartelemetry;
 import dbconn.tables.Drivers;
-import dbconn.tables.Employees;
+import dbconn.tables.Extractedlapdata;
+import dbconn.tables.Heatmapdata;
+import dbconn.tables.Instantlapdata;
+import dbconn.tables.Motiondata;
 import dbconn.tables.Nationalities;
 import dbconn.tables.Players;
-import dbconn.tables.Sessionbasics;
-import dbconn.tables.Sessiondetails;
-import dbconn.tables.Sessionendstatus;
-import dbconn.tables.Sessionperformance;
-import dbconn.tables.Sessionstatistics;
+import dbconn.tables.Sessioninfos;
 import dbconn.tables.Teams;
 import dbconn.tables.Tracks;
+import dbconn.tables.records.CarstatusdataRecord;
+import dbconn.tables.records.CartelemetryRecord;
 import dbconn.tables.records.DriversRecord;
-import dbconn.tables.records.EmployeesRecord;
+import dbconn.tables.records.ExtractedlapdataRecord;
+import dbconn.tables.records.HeatmapdataRecord;
+import dbconn.tables.records.InstantlapdataRecord;
+import dbconn.tables.records.MotiondataRecord;
 import dbconn.tables.records.NationalitiesRecord;
 import dbconn.tables.records.PlayersRecord;
-import dbconn.tables.records.SessionbasicsRecord;
-import dbconn.tables.records.SessiondetailsRecord;
-import dbconn.tables.records.SessionendstatusRecord;
-import dbconn.tables.records.SessionperformanceRecord;
-import dbconn.tables.records.SessionstatisticsRecord;
+import dbconn.tables.records.SessioninfosRecord;
 import dbconn.tables.records.TeamsRecord;
 import dbconn.tables.records.TracksRecord;
 
-import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -45,10 +46,14 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<CarstatusdataRecord, Integer> IDENTITY_CARSTATUSDATA = Identities0.IDENTITY_CARSTATUSDATA;
+    public static final Identity<CartelemetryRecord, Integer> IDENTITY_CARTELEMETRY = Identities0.IDENTITY_CARTELEMETRY;
     public static final Identity<DriversRecord, Short> IDENTITY_DRIVERS = Identities0.IDENTITY_DRIVERS;
-    public static final Identity<EmployeesRecord, Integer> IDENTITY_EMPLOYEES = Identities0.IDENTITY_EMPLOYEES;
+    public static final Identity<ExtractedlapdataRecord, Integer> IDENTITY_EXTRACTEDLAPDATA = Identities0.IDENTITY_EXTRACTEDLAPDATA;
+    public static final Identity<HeatmapdataRecord, Integer> IDENTITY_HEATMAPDATA = Identities0.IDENTITY_HEATMAPDATA;
+    public static final Identity<InstantlapdataRecord, Integer> IDENTITY_INSTANTLAPDATA = Identities0.IDENTITY_INSTANTLAPDATA;
+    public static final Identity<MotiondataRecord, Integer> IDENTITY_MOTIONDATA = Identities0.IDENTITY_MOTIONDATA;
     public static final Identity<PlayersRecord, Integer> IDENTITY_PLAYERS = Identities0.IDENTITY_PLAYERS;
-    public static final Identity<SessionbasicsRecord, Integer> IDENTITY_SESSIONBASICS = Identities0.IDENTITY_SESSIONBASICS;
     public static final Identity<TeamsRecord, Short> IDENTITY_TEAMS = Identities0.IDENTITY_TEAMS;
     public static final Identity<TracksRecord, Short> IDENTITY_TRACKS = Identities0.IDENTITY_TRACKS;
 
@@ -56,15 +61,16 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<CarstatusdataRecord> KEY_CARSTATUSDATA_PRIMARY = UniqueKeys0.KEY_CARSTATUSDATA_PRIMARY;
+    public static final UniqueKey<CartelemetryRecord> KEY_CARTELEMETRY_PRIMARY = UniqueKeys0.KEY_CARTELEMETRY_PRIMARY;
     public static final UniqueKey<DriversRecord> KEY_DRIVERS_PRIMARY = UniqueKeys0.KEY_DRIVERS_PRIMARY;
-    public static final UniqueKey<EmployeesRecord> KEY_EMPLOYEES_PRIMARY = UniqueKeys0.KEY_EMPLOYEES_PRIMARY;
+    public static final UniqueKey<ExtractedlapdataRecord> KEY_EXTRACTEDLAPDATA_PRIMARY = UniqueKeys0.KEY_EXTRACTEDLAPDATA_PRIMARY;
+    public static final UniqueKey<HeatmapdataRecord> KEY_HEATMAPDATA_PRIMARY = UniqueKeys0.KEY_HEATMAPDATA_PRIMARY;
+    public static final UniqueKey<InstantlapdataRecord> KEY_INSTANTLAPDATA_PRIMARY = UniqueKeys0.KEY_INSTANTLAPDATA_PRIMARY;
+    public static final UniqueKey<MotiondataRecord> KEY_MOTIONDATA_PRIMARY = UniqueKeys0.KEY_MOTIONDATA_PRIMARY;
     public static final UniqueKey<NationalitiesRecord> KEY_NATIONALITIES_PRIMARY = UniqueKeys0.KEY_NATIONALITIES_PRIMARY;
     public static final UniqueKey<PlayersRecord> KEY_PLAYERS_PRIMARY = UniqueKeys0.KEY_PLAYERS_PRIMARY;
-    public static final UniqueKey<SessionbasicsRecord> KEY_SESSIONBASICS_PRIMARY = UniqueKeys0.KEY_SESSIONBASICS_PRIMARY;
-    public static final UniqueKey<SessiondetailsRecord> KEY_SESSIONDETAILS_PRIMARY = UniqueKeys0.KEY_SESSIONDETAILS_PRIMARY;
-    public static final UniqueKey<SessionendstatusRecord> KEY_SESSIONENDSTATUS_PRIMARY = UniqueKeys0.KEY_SESSIONENDSTATUS_PRIMARY;
-    public static final UniqueKey<SessionperformanceRecord> KEY_SESSIONPERFORMANCE_PRIMARY = UniqueKeys0.KEY_SESSIONPERFORMANCE_PRIMARY;
-    public static final UniqueKey<SessionstatisticsRecord> KEY_SESSIONSTATISTICS_PRIMARY = UniqueKeys0.KEY_SESSIONSTATISTICS_PRIMARY;
+    public static final UniqueKey<SessioninfosRecord> KEY_SESSIONINFOS_PRIMARY = UniqueKeys0.KEY_SESSIONINFOS_PRIMARY;
     public static final UniqueKey<TeamsRecord> KEY_TEAMS_PRIMARY = UniqueKeys0.KEY_TEAMS_PRIMARY;
     public static final UniqueKey<TracksRecord> KEY_TRACKS_PRIMARY = UniqueKeys0.KEY_TRACKS_PRIMARY;
 
@@ -72,52 +78,36 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<SessionbasicsRecord, PlayersRecord> BASIC2PLAYER = ForeignKeys0.BASIC2PLAYER;
-    public static final ForeignKey<SessionbasicsRecord, DriversRecord> BASIC2DRIVER = ForeignKeys0.BASIC2DRIVER;
-    public static final ForeignKey<SessionbasicsRecord, TeamsRecord> BASIC2TEAM = ForeignKeys0.BASIC2TEAM;
-    public static final ForeignKey<SessionbasicsRecord, NationalitiesRecord> BASIC2NATIONALITY = ForeignKeys0.BASIC2NATIONALITY;
-    public static final ForeignKey<SessiondetailsRecord, SessionbasicsRecord> DETAIL2SESSIONID = ForeignKeys0.DETAIL2SESSIONID;
-    public static final ForeignKey<SessiondetailsRecord, TracksRecord> DETAIL2TRACK = ForeignKeys0.DETAIL2TRACK;
-    public static final ForeignKey<SessionendstatusRecord, SessionbasicsRecord> ENDSTATUS2SESSIONID = ForeignKeys0.ENDSTATUS2SESSIONID;
-    public static final ForeignKey<SessionperformanceRecord, SessionbasicsRecord> PERFORM2SESSIONID = ForeignKeys0.PERFORM2SESSIONID;
-    public static final ForeignKey<SessionstatisticsRecord, SessionbasicsRecord> STATISTICS2SESSIONID = ForeignKeys0.STATISTICS2SESSIONID;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
     private static class Identities0 {
+        public static Identity<CarstatusdataRecord, Integer> IDENTITY_CARSTATUSDATA = Internal.createIdentity(Carstatusdata.CARSTATUSDATA, Carstatusdata.CARSTATUSDATA.IDCARSTATUSDATA);
+        public static Identity<CartelemetryRecord, Integer> IDENTITY_CARTELEMETRY = Internal.createIdentity(Cartelemetry.CARTELEMETRY, Cartelemetry.CARTELEMETRY.IDCARTELEMETRY);
         public static Identity<DriversRecord, Short> IDENTITY_DRIVERS = Internal.createIdentity(Drivers.DRIVERS, Drivers.DRIVERS.IDDRIVER);
-        public static Identity<EmployeesRecord, Integer> IDENTITY_EMPLOYEES = Internal.createIdentity(Employees.EMPLOYEES, Employees.EMPLOYEES.ID);
+        public static Identity<ExtractedlapdataRecord, Integer> IDENTITY_EXTRACTEDLAPDATA = Internal.createIdentity(Extractedlapdata.EXTRACTEDLAPDATA, Extractedlapdata.EXTRACTEDLAPDATA.IDLAPDATA);
+        public static Identity<HeatmapdataRecord, Integer> IDENTITY_HEATMAPDATA = Internal.createIdentity(Heatmapdata.HEATMAPDATA, Heatmapdata.HEATMAPDATA.IDHEATMAPDATA);
+        public static Identity<InstantlapdataRecord, Integer> IDENTITY_INSTANTLAPDATA = Internal.createIdentity(Instantlapdata.INSTANTLAPDATA, Instantlapdata.INSTANTLAPDATA.IDINSTANTDATA);
+        public static Identity<MotiondataRecord, Integer> IDENTITY_MOTIONDATA = Internal.createIdentity(Motiondata.MOTIONDATA, Motiondata.MOTIONDATA.IDMOTIONDATA);
         public static Identity<PlayersRecord, Integer> IDENTITY_PLAYERS = Internal.createIdentity(Players.PLAYERS, Players.PLAYERS.IDPLAYER);
-        public static Identity<SessionbasicsRecord, Integer> IDENTITY_SESSIONBASICS = Internal.createIdentity(Sessionbasics.SESSIONBASICS, Sessionbasics.SESSIONBASICS.IDSESSION);
         public static Identity<TeamsRecord, Short> IDENTITY_TEAMS = Internal.createIdentity(Teams.TEAMS, Teams.TEAMS.IDTEAM);
         public static Identity<TracksRecord, Short> IDENTITY_TRACKS = Internal.createIdentity(Tracks.TRACKS, Tracks.TRACKS.IDTRACK);
     }
 
     private static class UniqueKeys0 {
+        public static final UniqueKey<CarstatusdataRecord> KEY_CARSTATUSDATA_PRIMARY = Internal.createUniqueKey(Carstatusdata.CARSTATUSDATA, "KEY_CarStatusData_PRIMARY", new TableField[] { Carstatusdata.CARSTATUSDATA.IDCARSTATUSDATA }, true);
+        public static final UniqueKey<CartelemetryRecord> KEY_CARTELEMETRY_PRIMARY = Internal.createUniqueKey(Cartelemetry.CARTELEMETRY, "KEY_CarTelemetry_PRIMARY", new TableField[] { Cartelemetry.CARTELEMETRY.IDCARTELEMETRY }, true);
         public static final UniqueKey<DriversRecord> KEY_DRIVERS_PRIMARY = Internal.createUniqueKey(Drivers.DRIVERS, "KEY_Drivers_PRIMARY", new TableField[] { Drivers.DRIVERS.IDDRIVER }, true);
-        public static final UniqueKey<EmployeesRecord> KEY_EMPLOYEES_PRIMARY = Internal.createUniqueKey(Employees.EMPLOYEES, "KEY_employees_PRIMARY", new TableField[] { Employees.EMPLOYEES.ID }, true);
+        public static final UniqueKey<ExtractedlapdataRecord> KEY_EXTRACTEDLAPDATA_PRIMARY = Internal.createUniqueKey(Extractedlapdata.EXTRACTEDLAPDATA, "KEY_ExtractedLapData_PRIMARY", new TableField[] { Extractedlapdata.EXTRACTEDLAPDATA.IDLAPDATA }, true);
+        public static final UniqueKey<HeatmapdataRecord> KEY_HEATMAPDATA_PRIMARY = Internal.createUniqueKey(Heatmapdata.HEATMAPDATA, "KEY_HeatMapData_PRIMARY", new TableField[] { Heatmapdata.HEATMAPDATA.IDHEATMAPDATA }, true);
+        public static final UniqueKey<InstantlapdataRecord> KEY_INSTANTLAPDATA_PRIMARY = Internal.createUniqueKey(Instantlapdata.INSTANTLAPDATA, "KEY_InstantLapData_PRIMARY", new TableField[] { Instantlapdata.INSTANTLAPDATA.IDINSTANTDATA }, true);
+        public static final UniqueKey<MotiondataRecord> KEY_MOTIONDATA_PRIMARY = Internal.createUniqueKey(Motiondata.MOTIONDATA, "KEY_MotionData_PRIMARY", new TableField[] { Motiondata.MOTIONDATA.IDMOTIONDATA }, true);
         public static final UniqueKey<NationalitiesRecord> KEY_NATIONALITIES_PRIMARY = Internal.createUniqueKey(Nationalities.NATIONALITIES, "KEY_Nationalities_PRIMARY", new TableField[] { Nationalities.NATIONALITIES.IDNATIONALITY }, true);
         public static final UniqueKey<PlayersRecord> KEY_PLAYERS_PRIMARY = Internal.createUniqueKey(Players.PLAYERS, "KEY_Players_PRIMARY", new TableField[] { Players.PLAYERS.IDPLAYER }, true);
-        public static final UniqueKey<SessionbasicsRecord> KEY_SESSIONBASICS_PRIMARY = Internal.createUniqueKey(Sessionbasics.SESSIONBASICS, "KEY_SessionBasics_PRIMARY", new TableField[] { Sessionbasics.SESSIONBASICS.IDSESSION }, true);
-        public static final UniqueKey<SessiondetailsRecord> KEY_SESSIONDETAILS_PRIMARY = Internal.createUniqueKey(Sessiondetails.SESSIONDETAILS, "KEY_SessionDetails_PRIMARY", new TableField[] { Sessiondetails.SESSIONDETAILS.SESSIONID }, true);
-        public static final UniqueKey<SessionendstatusRecord> KEY_SESSIONENDSTATUS_PRIMARY = Internal.createUniqueKey(Sessionendstatus.SESSIONENDSTATUS, "KEY_SessionEndStatus_PRIMARY", new TableField[] { Sessionendstatus.SESSIONENDSTATUS.SESSIONID }, true);
-        public static final UniqueKey<SessionperformanceRecord> KEY_SESSIONPERFORMANCE_PRIMARY = Internal.createUniqueKey(Sessionperformance.SESSIONPERFORMANCE, "KEY_SessionPerformance_PRIMARY", new TableField[] { Sessionperformance.SESSIONPERFORMANCE.SENSSIONID }, true);
-        public static final UniqueKey<SessionstatisticsRecord> KEY_SESSIONSTATISTICS_PRIMARY = Internal.createUniqueKey(Sessionstatistics.SESSIONSTATISTICS, "KEY_SessionStatistics_PRIMARY", new TableField[] { Sessionstatistics.SESSIONSTATISTICS.SESSIONID }, true);
+        public static final UniqueKey<SessioninfosRecord> KEY_SESSIONINFOS_PRIMARY = Internal.createUniqueKey(Sessioninfos.SESSIONINFOS, "KEY_SessionInfos_PRIMARY", new TableField[] { Sessioninfos.SESSIONINFOS.SESSIONUID }, true);
         public static final UniqueKey<TeamsRecord> KEY_TEAMS_PRIMARY = Internal.createUniqueKey(Teams.TEAMS, "KEY_Teams_PRIMARY", new TableField[] { Teams.TEAMS.IDTEAM }, true);
         public static final UniqueKey<TracksRecord> KEY_TRACKS_PRIMARY = Internal.createUniqueKey(Tracks.TRACKS, "KEY_Tracks_PRIMARY", new TableField[] { Tracks.TRACKS.IDTRACK }, true);
-    }
-
-    private static class ForeignKeys0 {
-        public static final ForeignKey<SessionbasicsRecord, PlayersRecord> BASIC2PLAYER = Internal.createForeignKey(Keys.KEY_PLAYERS_PRIMARY, Sessionbasics.SESSIONBASICS, "basic2Player", new TableField[] { Sessionbasics.SESSIONBASICS.PLAYER }, true);
-        public static final ForeignKey<SessionbasicsRecord, DriversRecord> BASIC2DRIVER = Internal.createForeignKey(Keys.KEY_DRIVERS_PRIMARY, Sessionbasics.SESSIONBASICS, "basic2Driver", new TableField[] { Sessionbasics.SESSIONBASICS.DRIVER }, true);
-        public static final ForeignKey<SessionbasicsRecord, TeamsRecord> BASIC2TEAM = Internal.createForeignKey(Keys.KEY_TEAMS_PRIMARY, Sessionbasics.SESSIONBASICS, "basic2Team", new TableField[] { Sessionbasics.SESSIONBASICS.TEAM }, true);
-        public static final ForeignKey<SessionbasicsRecord, NationalitiesRecord> BASIC2NATIONALITY = Internal.createForeignKey(Keys.KEY_NATIONALITIES_PRIMARY, Sessionbasics.SESSIONBASICS, "basic2Nationality", new TableField[] { Sessionbasics.SESSIONBASICS.NATIONALITY }, true);
-        public static final ForeignKey<SessiondetailsRecord, SessionbasicsRecord> DETAIL2SESSIONID = Internal.createForeignKey(Keys.KEY_SESSIONBASICS_PRIMARY, Sessiondetails.SESSIONDETAILS, "detail2SessionId", new TableField[] { Sessiondetails.SESSIONDETAILS.SESSIONID }, true);
-        public static final ForeignKey<SessiondetailsRecord, TracksRecord> DETAIL2TRACK = Internal.createForeignKey(Keys.KEY_TRACKS_PRIMARY, Sessiondetails.SESSIONDETAILS, "detail2Track", new TableField[] { Sessiondetails.SESSIONDETAILS.TRACKID }, true);
-        public static final ForeignKey<SessionendstatusRecord, SessionbasicsRecord> ENDSTATUS2SESSIONID = Internal.createForeignKey(Keys.KEY_SESSIONBASICS_PRIMARY, Sessionendstatus.SESSIONENDSTATUS, "endStatus2sessionId", new TableField[] { Sessionendstatus.SESSIONENDSTATUS.SESSIONID }, true);
-        public static final ForeignKey<SessionperformanceRecord, SessionbasicsRecord> PERFORM2SESSIONID = Internal.createForeignKey(Keys.KEY_SESSIONBASICS_PRIMARY, Sessionperformance.SESSIONPERFORMANCE, "perform2sessionId", new TableField[] { Sessionperformance.SESSIONPERFORMANCE.SENSSIONID }, true);
-        public static final ForeignKey<SessionstatisticsRecord, SessionbasicsRecord> STATISTICS2SESSIONID = Internal.createForeignKey(Keys.KEY_SESSIONBASICS_PRIMARY, Sessionstatistics.SESSIONSTATISTICS, "statistics2sessionId", new TableField[] { Sessionstatistics.SESSIONSTATISTICS.SESSIONID }, true);
     }
 }

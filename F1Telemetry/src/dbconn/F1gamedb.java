@@ -4,15 +4,16 @@
 package dbconn;
 
 
+import dbconn.tables.Carstatusdata;
+import dbconn.tables.Cartelemetry;
 import dbconn.tables.Drivers;
-import dbconn.tables.Employees;
+import dbconn.tables.Extractedlapdata;
+import dbconn.tables.Heatmapdata;
+import dbconn.tables.Instantlapdata;
+import dbconn.tables.Motiondata;
 import dbconn.tables.Nationalities;
 import dbconn.tables.Players;
-import dbconn.tables.Sessionbasics;
-import dbconn.tables.Sessiondetails;
-import dbconn.tables.Sessionendstatus;
-import dbconn.tables.Sessionperformance;
-import dbconn.tables.Sessionstatistics;
+import dbconn.tables.Sessioninfos;
 import dbconn.tables.Teams;
 import dbconn.tables.Tracks;
 
@@ -30,7 +31,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F1gamedb extends SchemaImpl {
 
-    private static final long serialVersionUID = 923692680;
+    private static final long serialVersionUID = -866693587;
 
     /**
      * The reference instance of <code>F1GameDB</code>
@@ -38,14 +39,39 @@ public class F1gamedb extends SchemaImpl {
     public static final F1gamedb F1GAMEDB = new F1gamedb();
 
     /**
+     * Necessary informaiton from CarStatus packet. Not needed to update quickly, 1Hz should be good enough. 
+     */
+    public final Carstatusdata CARSTATUSDATA = Carstatusdata.CARSTATUSDATA;
+
+    /**
+     * From packet telmetry, should be updated as fast as possible
+     */
+    public final Cartelemetry CARTELEMETRY = Cartelemetry.CARTELEMETRY;
+
+    /**
      * Store names of all drivers specified by F1 2018.
      */
     public final Drivers DRIVERS = Drivers.DRIVERS;
 
     /**
-     * The table <code>F1GameDB.employees</code>.
+     * Lap data not updated frequently, i.e. extracted from several packets. 
      */
-    public final Employees EMPLOYEES = Employees.EMPLOYEES;
+    public final Extractedlapdata EXTRACTEDLAPDATA = Extractedlapdata.EXTRACTEDLAPDATA;
+
+    /**
+     * Data needed to generate a heat map of the car. Update ratio 1Hz is good enough. 
+     */
+    public final Heatmapdata HEATMAPDATA = Heatmapdata.HEATMAPDATA;
+
+    /**
+     *  Lap Data that should be saved instantaneously. 
+     */
+    public final Instantlapdata INSTANTLAPDATA = Instantlapdata.INSTANTLAPDATA;
+
+    /**
+     * This table includes necessary entries in Motion packet and some entries from other packet that requires instataneous update. The frequency should be as fast as possible. 
+     */
+    public final Motiondata MOTIONDATA = Motiondata.MOTIONDATA;
 
     /**
      * Information of natinalities specified by F1 2018.
@@ -58,29 +84,9 @@ public class F1gamedb extends SchemaImpl {
     public final Players PLAYERS = Players.PLAYERS;
 
     /**
-     * Basic information of the game session: link player to driver, team, car used in this session. 
+     * General information for this session
      */
-    public final Sessionbasics SESSIONBASICS = Sessionbasics.SESSIONBASICS;
-
-    /**
-     * Detailed informations about the track settings. 
-     */
-    public final Sessiondetails SESSIONDETAILS = Sessiondetails.SESSIONDETAILS;
-
-    /**
-     * Car status at the end of the session: damages fuel remainings etc. 
-     */
-    public final Sessionendstatus SESSIONENDSTATUS = Sessionendstatus.SESSIONENDSTATUS;
-
-    /**
-     * Information related to the performance during a session: max speed, lap time, etc. 
-     */
-    public final Sessionperformance SESSIONPERFORMANCE = Sessionperformance.SESSIONPERFORMANCE;
-
-    /**
-     * Statistic information about how the player controllers the game, such as what buttons are pressed, temperature, etc. 
-     */
-    public final Sessionstatistics SESSIONSTATISTICS = Sessionstatistics.SESSIONSTATISTICS;
+    public final Sessioninfos SESSIONINFOS = Sessioninfos.SESSIONINFOS;
 
     /**
      * Store information of all teams specified by F1 2018.
@@ -108,15 +114,16 @@ public class F1gamedb extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
+            Carstatusdata.CARSTATUSDATA,
+            Cartelemetry.CARTELEMETRY,
             Drivers.DRIVERS,
-            Employees.EMPLOYEES,
+            Extractedlapdata.EXTRACTEDLAPDATA,
+            Heatmapdata.HEATMAPDATA,
+            Instantlapdata.INSTANTLAPDATA,
+            Motiondata.MOTIONDATA,
             Nationalities.NATIONALITIES,
             Players.PLAYERS,
-            Sessionbasics.SESSIONBASICS,
-            Sessiondetails.SESSIONDETAILS,
-            Sessionendstatus.SESSIONENDSTATUS,
-            Sessionperformance.SESSIONPERFORMANCE,
-            Sessionstatistics.SESSIONSTATISTICS,
+            Sessioninfos.SESSIONINFOS,
             Teams.TEAMS,
             Tracks.TRACKS);
     }
