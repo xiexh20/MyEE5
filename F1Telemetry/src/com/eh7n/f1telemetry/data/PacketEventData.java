@@ -39,7 +39,7 @@ public class PacketEventData extends Packet {
 
         LocalDateTime dateTime = LocalDateTime.now();
         setTimestamp(dateTime);
-        System.out.println("Time:" + dateTime + toJSON());
+//        System.out.println("Time:" + dateTime + toJSON());
         
         Sessioninfos si = Tables.SESSIONINFOS;
         // check if the UID exist
@@ -64,7 +64,7 @@ public class PacketEventData extends Packet {
 
             // add to history list
             PacketList newList[] = addToHistLists(histPacketLists);
-            System.out.println("New list size:" + newList[getHeader().getPacketId()].getPackets().size());
+//            System.out.println("New list size:" + newList[getHeader().getPacketId()].getPackets().size());
             return newList;
         } else {
             // session end: try to update an entry in table SessionInfos

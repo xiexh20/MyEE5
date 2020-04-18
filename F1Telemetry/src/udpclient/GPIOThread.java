@@ -46,6 +46,11 @@ public class GPIOThread extends Thread {
 
     private int blinkPeriod;    // the LED blinking period
 
+    private static final int MAXSPEED = 300;
+    private static final int MINSPEED = 0;
+    private static final int MAXPERIOD = 255;
+    private static final int MINPERIOD = 15;
+
     // some constant
     // constant for UDP client configuration
     static final String SERVER_IP = "192.168.1.10";
@@ -95,12 +100,15 @@ public class GPIOThread extends Thread {
         return isForward;
     }
 
-    public void updateBlinkPeriod() throws InterruptedException, SocketException, I2CFactory.UnsupportedBusNumberException, IOException {
-
+    /**
+     * use speed to calculate blink period max speed: 300 km/h --blink period =
+     * 15 min speed: 0 km/h -- blink period = 255
+     */
+    public void updateBlinkPeriod() {
+        blinkPeriod = (int) (MAXPERIOD - 1.0 * (MAXPERIOD - MINPERIOD) * speed / (MAXSPEED - MINSPEED));
     }
-    
-    public int getBlinkPeriod()
-    {
+
+    public int getBlinkPeriod() {
         return blinkPeriod;
     }
 
@@ -114,15 +122,10 @@ public class GPIOThread extends Thread {
             InetSocketAddress address = new InetSocketAddress(SERVER_IP, SERVER_PORT);
             InetAddress ip = address.getAddress();
             System.out.println("Server socket: " + ip.toString() + ":" + address.getPort());
-            byte buf[] = null;
 
             // create Pi4J console wrapper/helper
             // (This is a utility class to abstract some of the boilerplate code)
             final Console console = new Console();
-
-            // print program title/header
-//            console.title("<-- The Pi4J Project -->", "I2C Example");
-
             // allow for user to exit program using CTRL-C
             console.promptForExit();
 
@@ -152,25 +155,24 @@ public class GPIOThread extends Thread {
             I2CBus i2c = null;
             try {
                 i2c = I2CFactory.getInstance(I2CBus.BUS_1);
-                
+
             } catch (I2CFactory.UnsupportedBusNumberException ex) {
                 Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            
             I2CDevice device = null;
             try {
                 device = i2c.getDevice(PICADDR);
             } catch (IOException ex) {
                 Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             int[] recvBuf = new int[FRAME_LEN];
             byte[] sendBuf = new byte[FRAME_LEN];
-            sendBuf[0] = 0b00001010;
-            sendBuf[1] = 0b00000001;
+            sendBuf[SPEEDidx] = 0b00001010;
+            sendBuf[BACKidx] = 0b00000001;
             sendBuf[2] = 0b00000001;
 
             int count = 0;
@@ -184,25 +186,14 @@ public class GPIOThread extends Thread {
                         Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-//                console.println("ADC result=" + String.format("0x%02x", recvBuf[0]));
-//                // print in binary format
-//                console.println("PORTA=" + String.format("%8s", Integer.toBinaryString(recvBuf[1] & 0xFF)).replace(' ', '0'));
-//                console.println("PORTB=" + String.format("%8s", Integer.toBinaryString(recvBuf[2] & 0xFF)).replace(' ', '0'));
-
                 // prepare data to be sent
-                count++;
-                if (count == 50) {
-                    count = 0;
-                    sendBuf[SPEEDidx]--;
-                    if (sendBuf[SPEEDidx] == 1) {
-                        sendBuf[SPEEDidx] = 20;
-                    }
-                }
-                if ((recvBuf[PORTBidx] & BITctrl) == BITctrl) {
-                    sendBuf[BACKidx] = 1;
-                } else {
+                sendBuf[0] = (byte) blinkPeriod;
+                if (isForward) {
                     sendBuf[BACKidx] = 0;
+                } else {
+                    sendBuf[BACKidx] = 1;
                 }
+                sendBuf[2] = 0;
 
 //             send a frame data
                 for (int i = 0; i < FRAME_LEN; i++) {
@@ -211,27 +202,21 @@ public class GPIOThread extends Thread {
                     } catch (IOException ex) {
                         Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
                 }
-//                console.println("-----------------");
-//                console.println("blinkPeriod=" + sendBuf[0]);
-//                console.println("Back LED=" + sendBuf[1]);
 
-//                try {
-//                    // send UDP packet
-////            buf = command.getBytes();
-////            DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT);
-////            ds.send(DpSend); 
-////            System.out.println("UDP Data sent: "+command);
-////            String UDPData = "ADRSH:"+recvBuf[0]+":"+"PORTA:"+recvBuf[1]+":";
-////            buf = UDPData.getBytes();
-////            DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT);
-////            ds.send(DpSend); 
-////            System.out.println("UDP Data sent: "+UDPData);
-//                    Thread.sleep(100);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+                try {
+                    // send UDP packet
+                    String UDPData = "ADRSH:" + recvBuf[0] + ":" + "PORTA:" + recvBuf[1] + ":" + "PORTB:" + recvBuf[2] + ":";
+                    byte[] buf = UDPData.getBytes();
+                    DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT);
+                    ds.send(DpSend);
+//                    System.out.println("UDP Data sent: " + UDPData);
+                    Thread.sleep(5);        // poll frequency: 200Hz
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {            
+                    Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         } catch (SocketException ex) {

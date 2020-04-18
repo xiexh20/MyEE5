@@ -13,7 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.eh7n.f1telemetry.data.Packet;
+import com.eh7n.f1telemetry.data.PacketCarTelemetryData;
 import com.eh7n.f1telemetry.data.PacketList;
+import com.eh7n.f1telemetry.data.elements.CarTelemetryData;
 import com.eh7n.f1telemetry.data.elements.PacketType;
 import com.eh7n.f1telemetry.util.PacketDeserializer;
 import java.sql.Connection;
@@ -132,7 +134,7 @@ public class F12018TelemetryUDPServer {
             ByteBuffer buf = ByteBuffer.allocate(MAX_PACKET_SIZE);
             buf.order(ByteOrder.LITTLE_ENDIAN);
 
-            Thread gpioThread = new GPIOThread();
+            GPIOThread gpioThread = new GPIOThread();
             gpioThread.start();
             
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -152,6 +154,20 @@ public class F12018TelemetryUDPServer {
                 final Packet packet = PacketDeserializer.read(buf.array());
 //                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
                 histPacketLists = packet.saveToDB(histPacketLists, dbContext); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
+                
+                // update output data to PIC
+                if(packet instanceof PacketCarTelemetryData){
+                    CarTelemetryData tData = ((PacketCarTelemetryData) packet).
+                            getCarTelemetryData().get(packet.getHeader().getPlayerCarIndex());
+                    gpioThread.setSpeed(tData.getSpeed());
+                    gpioThread.updateBlinkPeriod();
+                    if(tData.getGear()==-1){
+                        gpioThread.setForwardStatus(false);
+                    }
+                    else{
+                        gpioThread.setForwardStatus(true);
+                    }
+                }
                         // one thread, so there is no need to use multithread to handle packets
                         //                                executor.submit(() -> {
                         //					packetConsumer.accept(packet);
