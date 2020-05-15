@@ -9,6 +9,7 @@ import com.eh7n.f1telemetry.data.elements.SessionType;
 import com.eh7n.f1telemetry.data.elements.Weather;
 import dbconn.Tables;
 import dbconn.tables.Sessioninfos;
+import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -197,7 +198,7 @@ public class PacketSessionData extends Packet {
      * update an entry in SessionInfos using session UID do not update history
      * packet list
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
         PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
         int histPacketsCount = newLists[getHeader().getPacketId()].size();
         if (histPacketsCount == UPDATEPERIOD) {

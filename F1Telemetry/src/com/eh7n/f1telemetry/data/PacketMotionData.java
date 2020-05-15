@@ -6,7 +6,9 @@ import com.eh7n.f1telemetry.data.elements.CarMotionData;
 import com.eh7n.f1telemetry.data.elements.WheelData;
 import dbconn.Tables;
 import dbconn.tables.Motiondata;
+import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 
 public class PacketMotionData extends Packet {
 
@@ -162,7 +164,7 @@ public class PacketMotionData extends Packet {
     /**
      * all instantaneous data, just save to database
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //        System.out.println("Not implemented yet for Motion Pakcet.");
         int playerIndex = getHeader().getPlayerCarIndex();

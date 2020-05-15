@@ -5,8 +5,11 @@
  */
 package ndbconn;
 
+import com.sun.security.auth.NTDomainPrincipal;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.List;
 import ndbconn.tables.Datanames;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
@@ -36,21 +39,64 @@ public class NDBMain {
             Int8data T8 = ndbconn.Tables.INT8DATA;
             
             
-            dbContext.insertInto(TN, TN.NAME)
-                    .values("Test name")
-                    .execute();
+//            dbContext.insertInto(TN, TN.NAME)
+//                    .values("Test name")
+//                    .execute();
+//            
+//            Result<Record> result = dbContext.select()
+//                    .from(TN)
+//                    .where(TN.NAME.eq("Test name"))
+//                    .fetch();
+//            for(Record r:result){
+//                int id = r.getValue(TN.IDNAME);
+//                String name = r.getValue(TN.NAME);
+//                System.out.println("Name: "+name+" id="+id);
+//            }
             
-            Result<Record> result = dbContext.select()
-                    .from(TN)
-                    .where(TN.NAME.eq("Test name"))
-                    .fetch();
-            for(Record r:result){
-                int id = r.getValue(TN.IDNAME);
-                String name = r.getValue(TN.NAME);
-                System.out.println("Name: "+name+" id="+id);
+            // insert all necessary data names into database 
+            List<String> dataNames = new ArrayList();
+            
+            // int8 data names add here
+//            dataNames.add("steer");
+//            dataNames.add("brake");
+//            dataNames.add("throttle");
+//            dataNames.add("drs");
+//            dataNames.add("penalties");
+//            
+//            // int 16 data names add here
+//            dataNames.add("speed");
+//            
+//            // int 32 data names
+//            dataNames.add("buttonStatus");
+//            
+//            // float data names
+//            dataNames.add("gForceLateral");
+//            dataNames.add("gForceLongitudinal");
+//            dataNames.add("gForceVertical");
+//            // from lapdata packet
+//            dataNames.add("lastLapTime");
+//            dataNames.add("currentLapTime");
+//            dataNames.add("bestLapTime");
+//            dataNames.add("lapDistance");
+//            dataNames.add("totalDistance");
+//            dataNames.add("currentLapNum");
+//            
+//            // insert them into database
+//            for(String name:dataNames){
+//                dbContext.insertInto(TN, TN.NAME)
+//                        .values(name)
+//                        .execute();
+//            }
+            
+            // check if insert correctly
+            Result<DatanamesRecord> result = dbContext.selectFrom(TN).fetch();
+            for(DatanamesRecord r: result){
+                
+                System.out.println("id="+r.getIdname() + ", name="+r.getValue(TN.NAME));
             }
             
             
+                    
 
             
             

@@ -24,7 +24,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
@@ -140,7 +142,7 @@ public class F12018TelemetryUDPServer {
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
             Settings settings = new Settings().withExecuteLogging(false); // turn off debug log output
             DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL, settings);
-            
+            Result<DatanamesRecord> names = dbContext.selectFrom(ndbconn.Tables.DATANAMES).fetch();
 
             // create and initialize history packets
             @SuppressWarnings("MismatchedReadAndWriteOfArray")
@@ -153,7 +155,7 @@ public class F12018TelemetryUDPServer {
                 channel.receive(buf);
                 final Packet packet = PacketDeserializer.read(buf.array());
 //                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
-                histPacketLists = packet.saveToDB(histPacketLists, dbContext); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
+                histPacketLists = packet.saveToDB(histPacketLists, dbContext, names); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
                 
                 // update output data to PIC
                 if(packet instanceof PacketCarTelemetryData){

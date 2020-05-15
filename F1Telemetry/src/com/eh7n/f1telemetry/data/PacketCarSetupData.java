@@ -3,7 +3,9 @@ package com.eh7n.f1telemetry.data;
 import java.util.List;
 
 import com.eh7n.f1telemetry.data.elements.CarSetupData;
+import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 
 public class PacketCarSetupData extends Packet {
 
@@ -21,7 +23,7 @@ public class PacketCarSetupData extends Packet {
     }
 
     @Override
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //        System.out.println("Not implemented yet for CarSetupData.");
         return histPacketLists;
