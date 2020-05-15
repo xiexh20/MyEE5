@@ -51,9 +51,9 @@ public class GPIOThread extends Thread {
     private static final int MAXPERIOD = 255;
     private static final int MINPERIOD = 15;
 
-    // some constant
+    // some constant cccccccccccccc
     // constant for UDP client configuration
-    static final String SERVER_IP = "192.168.1.10";
+    static final String SERVER_IP = "192.168.1.4";
     static final int SERVER_PORT = 5200;
 
     private static final byte PICADDR = 0x18;       // address of the PIC

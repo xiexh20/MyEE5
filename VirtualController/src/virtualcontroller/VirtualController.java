@@ -27,7 +27,7 @@ import java.awt.event.KeyEvent;
  */
 public class VirtualController {
 
-    static final String LOCAL_IP = "192.168.1.10";
+    static final String LOCAL_IP = "192.168.1.4";
     static final int LOCAL_PORT = 5200;
     // index in the sliced string array
     static final int ADCidx = 1;
@@ -45,7 +45,7 @@ public class VirtualController {
     private static final char BITred = 0x80;        // RA7, button with R
     private static final char BITSPACE = 0x40;        // RA6, space button function
     
-    private static final int UNLOCK = 100;  // unlock period, set to 1 second
+    private static final int UNLOCK = 50;  // unlock period, set to 1 second
 
     /**
      * @param args the command line arguments

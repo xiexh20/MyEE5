@@ -35,7 +35,7 @@ public class PacketSessionData extends Packet {
     private SafetyCarStatus safetyCarStatus;
     private boolean networkGame;
 
-    private static final int UPDATEPERIOD = 10;
+    private static final int UPDATEPERIOD = 4;
 
     public PacketSessionData() {
     }
