@@ -24,7 +24,7 @@ public class PacketCarSetupData extends Packet {
     }
 
     @Override
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //        System.out.println("Not implemented yet for CarSetupData.");
         return histPacketLists;

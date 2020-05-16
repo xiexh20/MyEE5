@@ -50,7 +50,7 @@ public abstract class Packet {
      * @param dNameList: the data name list, include id and name from database
      * @return
      */
-    public abstract PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap);
+    public abstract PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db);
     
     
 

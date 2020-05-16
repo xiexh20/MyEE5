@@ -50,7 +50,7 @@ public class F12018TelemetryUDPServer {
 
     private static final String USER = "xiexh";
     private static final String PASSWORD = "123456";
-    private static final String URL = "jdbc:mysql://localhost:3306/F1GameDB";
+    private static final String URL = "jdbc:mysql://localhost:3306/NewF1DB";
 
     private static final String DEFAULT_BIND_ADDRESS = "0.0.0.0";
     private static final int DEFAULT_PORT = 20777;
@@ -137,11 +137,11 @@ public class F12018TelemetryUDPServer {
             ByteBuffer buf = ByteBuffer.allocate(MAX_PACKET_SIZE);
             buf.order(ByteOrder.LITTLE_ENDIAN);
 
-            GPIOThread gpioThread = new GPIOThread();
-            gpioThread.start();
+//            GPIOThread gpioThread = new GPIOThread();
+//            gpioThread.start();
             
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            Settings settings = new Settings().withExecuteLogging(false); // turn off debug log output
+            Settings settings = new Settings().withExecuteLogging(true); // turn off debug log output
             DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL, settings);
             Result<DatanamesRecord> names = dbContext.selectFrom(ndbconn.Tables.DATANAMES).fetch();
             HashMap<String, Short> nameIdMap = listToMap(names);
@@ -157,20 +157,20 @@ public class F12018TelemetryUDPServer {
                 channel.receive(buf);
                 final Packet packet = PacketDeserializer.read(buf.array());
 //                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
-                histPacketLists = packet.saveToDB(histPacketLists, dbContext, nameIdMap); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
+                histPacketLists = packet.saveToDB(histPacketLists, dbContext); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
                 
                 // update output data to PIC
                 if(packet instanceof PacketCarTelemetryData){
                     CarTelemetryData tData = ((PacketCarTelemetryData) packet).
                             getCarTelemetryData().get(packet.getHeader().getPlayerCarIndex());
-                    gpioThread.setSpeed(tData.getSpeed());
-                    gpioThread.updateBlinkPeriod();
-                    if(tData.getGear()==-1){
-                        gpioThread.setForwardStatus(false);
-                    }
-                    else{
-                        gpioThread.setForwardStatus(true);
-                    }
+//                    gpioThread.setSpeed(tData.getSpeed());
+//                    gpioThread.updateBlinkPeriod();
+//                    if(tData.getGear()==-1){
+//                        gpioThread.setForwardStatus(false);
+//                    }
+//                    else{
+//                        gpioThread.setForwardStatus(true);
+//                    }
                 }
                         // one thread, so there is no need to use multithread to handle packets
                         //                                executor.submit(() -> {

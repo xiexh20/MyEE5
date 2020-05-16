@@ -4,10 +4,14 @@ import java.util.List;
 
 import com.eh7n.f1telemetry.data.elements.ButtonStatus;
 import com.eh7n.f1telemetry.data.elements.CarTelemetryData;
+import com.eh7n.f1telemetry.data.elements.TableDataType;
 import dbconn.Tables;
 import dbconn.tables.Cartelemetry;
 import dbconn.tables.Heatmapdata;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import ndbconn.DBConst;
+import ndbconn.routines.Savelist;
 import ndbconn.tables.Int16data;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
@@ -43,60 +47,36 @@ public class PacketCarTelemetryData extends Packet {
     /**
      * part instant part delayed
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db) {
 
-        PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
-//        Cartelemetry CT = Tables.CARTELEMETRY;
-//        CarTelemetryData tData = carTelemetryData.get(getHeader().getPlayerCarIndex());
-//        byte drs = 0;
-//        if (tData.isDrs()) {
-//            drs = 1;
-//        }
-//
-//        dbContext.insertInto(CT, CT.SESSIONID, CT.SESSIONTIME, CT.SPEED,
-//                CT.THROTTLE, CT.STEER, CT.BRAKE, CT.GEAR, CT.DRS)
-//                .values(getHeader().getSessionUID().longValue(),
-//                        (double) getHeader().getSessionTime(),
-//                        tData.getSpeed(),
-//                        (short) tData.getThrottle(),
-//                        (short) tData.getSteer(),
-//                        (short) tData.getBrake(),
-//                        (byte) tData.getGear(),
-//                        drs)
-//                .execute();
-//
-//        int histPacketsCount = newLists[getHeader().getPacketId()].size();
-//        if (histPacketsCount == UPDATEPERIOD) {
-//            // get the last element(curret packet) and save to database
-//            Heatmapdata HT = Tables.HEATMAPDATA;
-//            dbContext.insertInto(HT, HT.SESSIONID, HT.SESSIONTIME, HT.ENGINE,
-//                    HT.BRAKERL, HT.BRAKERR, HT.BRAKEFL, HT.BRAKEFR,
-//                    HT.TYRERLSURFACE, HT.TYRERRSURFACE, HT.TYREFLSURFACE, HT.TYREFRSURFACE,
-//                    HT.TYRERLINNER, HT.TYRERRINNER, HT.TYREFLINNER, HT.TYREFRINNER)
-//                    .values(getHeader().getSessionUID().longValue(),
-//                            (double) getHeader().getSessionTime(),
-//                            tData.getEngineTemperature(),
-//                            tData.getBrakeTemperature().getRearLeft(),
-//                            tData.getBrakeTemperature().getRearRight(),
-//                            tData.getBrakeTemperature().getFrontLeft(),
-//                            tData.getBrakeTemperature().getFrontRight(),
-//                            tData.getTireSurfaceTemperature().getRearLeft(),
-//                            tData.getTireSurfaceTemperature().getRearRight(),
-//                            tData.getTireSurfaceTemperature().getFrontLeft(),
-//                            tData.getTireSurfaceTemperature().getFrontRight(),
-//                            tData.getTireInnerTemperature().getRearLeft(),
-//                            tData.getTireInnerTemperature().getRearRight(),
-//                            tData.getTireInnerTemperature().getFrontLeft(),
-//                            tData.getTireInnerTemperature().getFrontRight())
-//                    .execute();
-//            // empty the lap list buffer
-//            newLists[getHeader().getPacketId()].clear();
-//        }
+        CarTelemetryData tData = carTelemetryData.get(getHeader().getPlayerCarIndex());
+        Savelist proc = new Savelist();
+        proc.setDtype(TableDataType.INT8);
+        StringBuilder dataList = new StringBuilder();
+        StringBuilder nameList = new StringBuilder();
         
-        Int8data T8 = ndbconn.Tables.INT8DATA;
-        Int16data T16 = ndbconn.Tables.INT16DATA;
+        nameList.append("brake").append(DBConst.COMMA);
+        dataList.append(tData.getBrake()).append(DBConst.COMMA);
+        nameList.append("drs").append(DBConst.COMMA);
+        dataList.append(tData.isDrs()? 1:0).append(DBConst.COMMA);
+        nameList.append("steer").append(DBConst.COMMA);
+        dataList.append(tData.getSteer()).append(DBConst.COMMA);
+        nameList.append("throttle");
+        dataList.append(tData.getThrottle());
         
-
+        proc.setDatalist(dataList.toString());
+        proc.setNamelist(nameList.toString());
+        proc.setArrivetime(LocalDateTime.now());
+        proc.setSessionuid(getHeader().getSessionUID().longValue());
+        proc.setSessiontime((double)getHeader().getSessionTime());
+        proc.execute(db.configuration());
+        
+        proc.setDtype(DBConst.INT16);
+        proc.setDatalist(tData.getSpeed()+"");
+        proc.setNamelist("speed");
+        proc.execute(db.configuration());
+        
+        
         return histPacketLists;
     }
 

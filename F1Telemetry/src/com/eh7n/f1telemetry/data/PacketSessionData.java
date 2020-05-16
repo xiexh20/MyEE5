@@ -199,38 +199,38 @@ public class PacketSessionData extends Packet {
      * update an entry in SessionInfos using session UID do not update history
      * packet list
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
-        PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
-        int histPacketsCount = newLists[getHeader().getPacketId()].size();
-        if (histPacketsCount == UPDATEPERIOD) {
-            Sessioninfos si = Tables.SESSIONINFOS;  // abrv for table SessionInfos
-            Result<Record> result = dbContext.select()
-                    .from(si)
-                    .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
-                    .fetch();
-            if (result.size() > 0) {
-                // only update existing entry 
-                dbContext.update(si)
-                        .set(si.TRACKID, (short) getTrackId())
-                        .set(si.PITSPEEDLIMIT, getPitSpeedLimit())
-                        .set(si.DURATION, getSessionDuration())
-                        .set(si.TOTALLAPS, (short) getTotalLaps())
-                        .set(si.TRACKLENGTH, getTrackLength())
-                        .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
-                        .execute();
-            } else {
-                // insert a new entry
-                dbContext.insertInto(si, si.SESSIONUID, si.TRACKID, si.PITSPEEDLIMIT, si.DURATION, si.TOTALLAPS, si.TRACKLENGTH)
-                        .values(getHeader().getSessionUID().longValue(),
-                                (short) getTrackId(), getPitSpeedLimit(),
-                                getSessionDuration(), (short) getTotalLaps(),
-                                getTrackLength())
-                        .execute();
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db) {
+//        PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
+//        int histPacketsCount = newLists[getHeader().getPacketId()].size();
+//        if (histPacketsCount == UPDATEPERIOD) {
+//            Sessioninfos si = Tables.SESSIONINFOS;  // abrv for table SessionInfos
+//            Result<Record> result = db.select()
+//                    .from(si)
+//                    .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
+//                    .fetch();
+//            if (result.size() > 0) {
+//                // only update existing entry 
+//                db.update(si)
+//                        .set(si.TRACKID, (short) getTrackId())
+//                        .set(si.PITSPEEDLIMIT, getPitSpeedLimit())
+//                        .set(si.DURATION, getSessionDuration())
+//                        .set(si.TOTALLAPS, (short) getTotalLaps())
+//                        .set(si.TRACKLENGTH, getTrackLength())
+//                        .where(si.SESSIONUID.eq(getHeader().getSessionUID().longValue()))
+//                        .execute();
+//            } else {
+//                // insert a new entry
+//                db.insertInto(si, si.SESSIONUID, si.TRACKID, si.PITSPEEDLIMIT, si.DURATION, si.TOTALLAPS, si.TRACKLENGTH)
+//                        .values(getHeader().getSessionUID().longValue(),
+//                                (short) getTrackId(), getPitSpeedLimit(),
+//                                getSessionDuration(), (short) getTotalLaps(),
+//                                getTrackLength())
+//                        .execute();
+//
+//            }
+//        }
 
-            }
-        }
-
-        return newLists;
+        return histPacketLists;
     }
 
 }

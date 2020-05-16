@@ -50,7 +50,7 @@ public class PacketParticipantsData extends Packet {
         }
 
     @Override
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db) {
 //        throw new UnsupportedperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //        System.out.println("No operation for participant packet!");
         return histPacketLists;

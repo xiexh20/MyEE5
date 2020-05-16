@@ -18,11 +18,13 @@ import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
+import org.jooq.types.UByte;
 
 /**
  *
@@ -44,6 +46,12 @@ public class NDBMain {
             Int8data T8 = ndbconn.Tables.INT8DATA;
             
             
+//            dbContext.insertInto(T8, T8.DATA)
+//                    .values(UByte.valueOf(10))
+//                    .execute();
+            
+            
+
 //            dbContext.insertInto(TN, TN.NAME)
 //                    .values("Test name")
 //                    .execute();
@@ -59,7 +67,7 @@ public class NDBMain {
 //            }
             
             // insert all necessary data names into database 
-            List<String> dataNames = new ArrayList();
+//            List<String> dataNames = new ArrayList();
             
             // int8 data names add here
 //            dataNames.add("steer");
@@ -101,16 +109,16 @@ public class NDBMain {
 //            }
 
             // test procedure
-            Configuration configuration = new DefaultConfiguration();
-            configuration.set(SQLDialect.MYSQL);
-            configuration.set(conn);
+//            Configuration configuration = new DefaultConfiguration();
+//            configuration.set(SQLDialect.MYSQL);
+//            configuration.set(conn);
             
             Savelist savelistProc = new Savelist();
             
             StringBuilder dataList = new StringBuilder();
             StringBuilder nameList = new StringBuilder();
             for(int i=0;i<10;i++){
-                dataList.append(i).append(",");
+                dataList.append(i*3).append(",");
                 nameList.append("test").append(",");
             }
             dataList.append(11);
@@ -123,8 +131,8 @@ public class NDBMain {
             savelistProc.setSessiontime(520.520);
             savelistProc.setSessionuid((long)123456);
             savelistProc.setDtype((byte)0);
-            savelistProc.execute(configuration);
-            
+            savelistProc.execute(dbContext.configuration());
+//            
             
             
 
