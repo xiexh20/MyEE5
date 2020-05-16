@@ -26,7 +26,6 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.UByte;
 
 
 /**
@@ -35,7 +34,7 @@ import org.jooq.types.UByte;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Int8data extends TableImpl<Int8dataRecord> {
 
-    private static final long serialVersionUID = -835321074;
+    private static final long serialVersionUID = -435746737;
 
     /**
      * The reference instance of <code>NewF1DB.Int8Data</code>
@@ -58,12 +57,12 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     /**
      * The column <code>NewF1DB.Int8Data.data</code>.
      */
-    public final TableField<Int8dataRecord, UByte> DATA = createField(DSL.name("data"), org.jooq.impl.SQLDataType.TINYINTUNSIGNED.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.TINYINTUNSIGNED)), this, "");
+    public final TableField<Int8dataRecord, Byte> DATA = createField(DSL.name("data"), org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
-     * The column <code>NewF1DB.Int8Data.dataName</code>.
+     * The column <code>NewF1DB.Int8Data.sessionId</code>.
      */
-    public final TableField<Int8dataRecord, Short> DATANAME = createField(DSL.name("dataName"), org.jooq.impl.SQLDataType.SMALLINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<Int8dataRecord, Integer> SESSIONID = createField(DSL.name("sessionId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>NewF1DB.Int8Data.packetId</code>.
@@ -71,9 +70,9 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     public final TableField<Int8dataRecord, Integer> PACKETID = createField(DSL.name("packetId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>NewF1DB.Int8Data.sessionId</code>.
+     * The column <code>NewF1DB.Int8Data.dataName</code>.
      */
-    public final TableField<Int8dataRecord, Integer> SESSIONID = createField(DSL.name("sessionId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<Int8dataRecord, Short> DATANAME = createField(DSL.name("dataName"), org.jooq.impl.SQLDataType.SMALLINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * Create a <code>NewF1DB.Int8Data</code> table reference
@@ -135,19 +134,19 @@ public class Int8data extends TableImpl<Int8dataRecord> {
 
     @Override
     public List<ForeignKey<Int8dataRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<Int8dataRecord, ?>>asList(Keys.INT8TONAME, Keys.INT8TOPACKET, Keys.INT8TOSESSION);
+        return Arrays.<ForeignKey<Int8dataRecord, ?>>asList(Keys.INT8TOSESSION, Keys.INT8TOPACKET, Keys.INT8TONAME);
     }
 
-    public Datanames datanames() {
-        return new Datanames(this, Keys.INT8TONAME);
+    public Sessions sessions() {
+        return new Sessions(this, Keys.INT8TOSESSION);
     }
 
     public Packets packets() {
         return new Packets(this, Keys.INT8TOPACKET);
     }
 
-    public Sessions sessions() {
-        return new Sessions(this, Keys.INT8TOSESSION);
+    public Datanames datanames() {
+        return new Datanames(this, Keys.INT8TONAME);
     }
 
     @Override
@@ -181,7 +180,7 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, UByte, Short, Integer, Integer> fieldsRow() {
+    public Row5<Integer, Byte, Integer, Integer, Short> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 }

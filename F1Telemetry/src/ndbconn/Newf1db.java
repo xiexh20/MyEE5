@@ -14,6 +14,10 @@ import ndbconn.tables.Int32data;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.Packets;
 import ndbconn.tables.Sessions;
+import ndbconn.tables.Strdata;
+import ndbconn.tables.Uint16data;
+import ndbconn.tables.Uint32data;
+import ndbconn.tables.Uint8data;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -26,7 +30,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Newf1db extends SchemaImpl {
 
-    private static final long serialVersionUID = -396041283;
+    private static final long serialVersionUID = 1975993425;
 
     /**
      * The reference instance of <code>NewF1DB</code>
@@ -69,6 +73,26 @@ public class Newf1db extends SchemaImpl {
     public final Sessions SESSIONS = Sessions.SESSIONS;
 
     /**
+     * The table <code>NewF1DB.StrData</code>.
+     */
+    public final Strdata STRDATA = Strdata.STRDATA;
+
+    /**
+     * The table <code>NewF1DB.UInt16Data</code>.
+     */
+    public final Uint16data UINT16DATA = Uint16data.UINT16DATA;
+
+    /**
+     * The table <code>NewF1DB.UInt32Data</code>.
+     */
+    public final Uint32data UINT32DATA = Uint32data.UINT32DATA;
+
+    /**
+     * The table <code>NewF1DB.UInt8Data</code>.
+     */
+    public final Uint8data UINT8DATA = Uint8data.UINT8DATA;
+
+    /**
      * No further instances allowed
      */
     private Newf1db() {
@@ -90,6 +114,10 @@ public class Newf1db extends SchemaImpl {
             Int32data.INT32DATA,
             Int8data.INT8DATA,
             Packets.PACKETS,
-            Sessions.SESSIONS);
+            Sessions.SESSIONS,
+            Strdata.STRDATA,
+            Uint16data.UINT16DATA,
+            Uint32data.UINT32DATA,
+            Uint8data.UINT8DATA);
     }
 }

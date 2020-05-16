@@ -41,7 +41,8 @@ public class PacketLapData extends Packet {
         // get the data for the player car
         LapData lapData = lapDataList.get(getHeader().getPlayerCarIndex());
         
-        
+        Savelist proc = new Savelist();
+        proc.setDtype(DBConst.FLOAT);
         StringBuilder dataList = new StringBuilder();
         StringBuilder nameList = new StringBuilder();
         
@@ -52,8 +53,6 @@ public class PacketLapData extends Packet {
         nameList.append("currentLapTime");
         dataList.append(lapData.getCurrentLapTime());
 
-        Savelist proc = new Savelist();
-        proc.setDtype(DBConst.FLOAT);
         proc.setDatalist(dataList.toString());
         proc.setNamelist(nameList.toString());
         proc.setArrivetime(LocalDateTime.now());
@@ -80,7 +79,7 @@ public class PacketLapData extends Packet {
             proc.execute(db.configuration());
             
             // save int8 data
-            proc.setDtype(DBConst.INT8);
+            proc.setDtype(DBConst.UINT8);
             proc.setNamelist("currentLapNum"+DBConst.COMMA+"penalties");
             proc.setDatalist(lapData.getCurrentLapNum()+DBConst.COMMA+lapData.getPenalties());
             proc.execute(db.configuration());

@@ -11,6 +11,10 @@ import ndbconn.tables.Int32data;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.Packets;
 import ndbconn.tables.Sessions;
+import ndbconn.tables.Strdata;
+import ndbconn.tables.Uint16data;
+import ndbconn.tables.Uint32data;
+import ndbconn.tables.Uint8data;
 
 
 /**
@@ -53,4 +57,24 @@ public class Tables {
      * Store session UID, to avoid duplicate values in table Packets. The user can join this table with the data table to filter data by sessions. 
      */
     public static final Sessions SESSIONS = Sessions.SESSIONS;
+
+    /**
+     * The table <code>NewF1DB.StrData</code>.
+     */
+    public static final Strdata STRDATA = Strdata.STRDATA;
+
+    /**
+     * The table <code>NewF1DB.UInt16Data</code>.
+     */
+    public static final Uint16data UINT16DATA = Uint16data.UINT16DATA;
+
+    /**
+     * The table <code>NewF1DB.UInt32Data</code>.
+     */
+    public static final Uint32data UINT32DATA = Uint32data.UINT32DATA;
+
+    /**
+     * The table <code>NewF1DB.UInt8Data</code>.
+     */
+    public static final Uint8data UINT8DATA = Uint8data.UINT8DATA;
 }

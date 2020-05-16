@@ -8,6 +8,10 @@ import ndbconn.tables.Floatdata;
 import ndbconn.tables.Int16data;
 import ndbconn.tables.Int32data;
 import ndbconn.tables.Int8data;
+import ndbconn.tables.Strdata;
+import ndbconn.tables.Uint16data;
+import ndbconn.tables.Uint32data;
+import ndbconn.tables.Uint8data;
 
 import org.jooq.Index;
 import org.jooq.OrderField;
@@ -36,6 +40,18 @@ public class Indexes {
     public static final Index INT8DATA_INT8TONAME_IDX = Indexes0.INT8DATA_INT8TONAME_IDX;
     public static final Index INT8DATA_INT8TOPACKET_IDX = Indexes0.INT8DATA_INT8TOPACKET_IDX;
     public static final Index INT8DATA_INT8TOSESSION_IDX = Indexes0.INT8DATA_INT8TOSESSION_IDX;
+    public static final Index STRDATA_STRTONAME_IDX = Indexes0.STRDATA_STRTONAME_IDX;
+    public static final Index STRDATA_STRTOPACKET_IDX = Indexes0.STRDATA_STRTOPACKET_IDX;
+    public static final Index STRDATA_STRTOSESSION_IDX = Indexes0.STRDATA_STRTOSESSION_IDX;
+    public static final Index UINT16DATA_UINT16TONAME_IDX = Indexes0.UINT16DATA_UINT16TONAME_IDX;
+    public static final Index UINT16DATA_UINT16TOPACKET_IDX = Indexes0.UINT16DATA_UINT16TOPACKET_IDX;
+    public static final Index UINT16DATA_UINT16TOSESSION_IDX = Indexes0.UINT16DATA_UINT16TOSESSION_IDX;
+    public static final Index UINT32DATA_UINT32TONAME_IDX = Indexes0.UINT32DATA_UINT32TONAME_IDX;
+    public static final Index UINT32DATA_UINT32TOPACKET_IDX = Indexes0.UINT32DATA_UINT32TOPACKET_IDX;
+    public static final Index UINT32DATA_UINT32TOSESSION_IDX = Indexes0.UINT32DATA_UINT32TOSESSION_IDX;
+    public static final Index UINT8DATA_INT8TONAME_IDX = Indexes0.UINT8DATA_INT8TONAME_IDX;
+    public static final Index UINT8DATA_INT8TOPACKET_IDX = Indexes0.UINT8DATA_INT8TOPACKET_IDX;
+    public static final Index UINT8DATA_INT8TOSESSION_IDX = Indexes0.UINT8DATA_INT8TOSESSION_IDX;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -54,5 +70,17 @@ public class Indexes {
         public static Index INT8DATA_INT8TONAME_IDX = Internal.createIndex("int8ToName_idx", Int8data.INT8DATA, new OrderField[] { Int8data.INT8DATA.DATANAME }, false);
         public static Index INT8DATA_INT8TOPACKET_IDX = Internal.createIndex("int8ToPacket_idx", Int8data.INT8DATA, new OrderField[] { Int8data.INT8DATA.PACKETID }, false);
         public static Index INT8DATA_INT8TOSESSION_IDX = Internal.createIndex("int8ToSession_idx", Int8data.INT8DATA, new OrderField[] { Int8data.INT8DATA.SESSIONID }, false);
+        public static Index STRDATA_STRTONAME_IDX = Internal.createIndex("strToName_idx", Strdata.STRDATA, new OrderField[] { Strdata.STRDATA.DATANAME }, false);
+        public static Index STRDATA_STRTOPACKET_IDX = Internal.createIndex("strToPacket_idx", Strdata.STRDATA, new OrderField[] { Strdata.STRDATA.PACKETID }, false);
+        public static Index STRDATA_STRTOSESSION_IDX = Internal.createIndex("strToSession_idx", Strdata.STRDATA, new OrderField[] { Strdata.STRDATA.SESSIONID }, false);
+        public static Index UINT16DATA_UINT16TONAME_IDX = Internal.createIndex("uint16ToName_idx", Uint16data.UINT16DATA, new OrderField[] { Uint16data.UINT16DATA.DATANAME }, false);
+        public static Index UINT16DATA_UINT16TOPACKET_IDX = Internal.createIndex("uint16ToPacket_idx", Uint16data.UINT16DATA, new OrderField[] { Uint16data.UINT16DATA.PACKETID }, false);
+        public static Index UINT16DATA_UINT16TOSESSION_IDX = Internal.createIndex("uint16ToSession_idx", Uint16data.UINT16DATA, new OrderField[] { Uint16data.UINT16DATA.SESSIONID }, false);
+        public static Index UINT32DATA_UINT32TONAME_IDX = Internal.createIndex("uint32ToName_idx", Uint32data.UINT32DATA, new OrderField[] { Uint32data.UINT32DATA.DATANAME }, false);
+        public static Index UINT32DATA_UINT32TOPACKET_IDX = Internal.createIndex("uint32ToPacket_idx", Uint32data.UINT32DATA, new OrderField[] { Uint32data.UINT32DATA.PACKETID }, false);
+        public static Index UINT32DATA_UINT32TOSESSION_IDX = Internal.createIndex("uint32ToSession_idx", Uint32data.UINT32DATA, new OrderField[] { Uint32data.UINT32DATA.SESSIONID }, false);
+        public static Index UINT8DATA_INT8TONAME_IDX = Internal.createIndex("int8ToName_idx", Uint8data.UINT8DATA, new OrderField[] { Uint8data.UINT8DATA.DATANAME }, false);
+        public static Index UINT8DATA_INT8TOPACKET_IDX = Internal.createIndex("int8ToPacket_idx", Uint8data.UINT8DATA, new OrderField[] { Uint8data.UINT8DATA.PACKETID }, false);
+        public static Index UINT8DATA_INT8TOSESSION_IDX = Internal.createIndex("int8ToSession_idx", Uint8data.UINT8DATA, new OrderField[] { Uint8data.UINT8DATA.SESSIONID }, false);
     }
 }

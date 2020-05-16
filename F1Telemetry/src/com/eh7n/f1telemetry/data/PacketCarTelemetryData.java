@@ -51,31 +51,35 @@ public class PacketCarTelemetryData extends Packet {
 
         CarTelemetryData tData = carTelemetryData.get(getHeader().getPlayerCarIndex());
         Savelist proc = new Savelist();
-        proc.setDtype(TableDataType.INT8);
-        StringBuilder dataList = new StringBuilder();
-        StringBuilder nameList = new StringBuilder();
         
-        nameList.append("brake").append(DBConst.COMMA);
-        dataList.append(tData.getBrake()).append(DBConst.COMMA);
-        nameList.append("drs").append(DBConst.COMMA);
-        dataList.append(tData.isDrs()? 1:0).append(DBConst.COMMA);
-        nameList.append("steer").append(DBConst.COMMA);
-        dataList.append(tData.getSteer()).append(DBConst.COMMA);
-        nameList.append("throttle");
-        dataList.append(tData.getThrottle());
-        
-        proc.setDatalist(dataList.toString());
-        proc.setNamelist(nameList.toString());
+        // save int8 data
+        proc.setDtype(DBConst.INT8);
+        proc.setNamelist("gear"+DBConst.COMMA+"steer");
+        proc.setDatalist(tData.getGear()+DBConst.COMMA+tData.getSteer());
         proc.setArrivetime(LocalDateTime.now());
         proc.setSessionuid(getHeader().getSessionUID().longValue());
         proc.setSessiontime((double)getHeader().getSessionTime());
         proc.execute(db.configuration());
         
-        proc.setDtype(DBConst.INT16);
+        // save uint8 data
+        StringBuilder dataList = new StringBuilder();
+        StringBuilder nameList = new StringBuilder();
+        proc.setDtype(DBConst.UINT8);
+        nameList.append("brake").append(DBConst.COMMA);
+        dataList.append(tData.getBrake()).append(DBConst.COMMA);
+        nameList.append("drs").append(DBConst.COMMA);
+        dataList.append(tData.isDrs()? 1:0).append(DBConst.COMMA);
+        nameList.append("throttle");
+        dataList.append(tData.getThrottle());
+        proc.setDatalist(dataList.toString());
+        proc.setNamelist(nameList.toString());
+        proc.execute(db.configuration());
+        
+        // save uint16 data
+        proc.setDtype(DBConst.UINT16);
         proc.setDatalist(tData.getSpeed()+"");
         proc.setNamelist("speed");
         proc.execute(db.configuration());
-        
         
         return histPacketLists;
     }
