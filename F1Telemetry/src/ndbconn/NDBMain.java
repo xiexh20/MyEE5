@@ -8,16 +8,20 @@ package ndbconn;
 import com.sun.security.auth.NTDomainPrincipal;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import ndbconn.routines.Saveint8;
 import ndbconn.tables.Datanames;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConfiguration;
 
 /**
  *
@@ -27,7 +31,7 @@ public class NDBMain {
     
     private static final String USER = "xiexh";
     private static final String PASSWORD = "123456";
-    private static final String URL = "jdbc:mysql://localhost:3306/NewF1DB";
+    private static final String URL = "jdbc:mysql://localhost:3306/NewF1DB?noAccessToProcedureBodies=true";
     
     public static void main(String[] args)
     {
@@ -89,11 +93,28 @@ public class NDBMain {
 //            }
             
             // check if insert correctly
-            Result<DatanamesRecord> result = dbContext.selectFrom(TN).fetch();
-            for(DatanamesRecord r: result){
-                
-                System.out.println("id="+r.getIdname() + ", name="+r.getValue(TN.NAME));
+//            Result<DatanamesRecord> result = dbContext.selectFrom(TN).fetch();
+//            for(DatanamesRecord r: result){
+//                
+//                System.out.println("id="+r.getIdname() + ", name="+r.getValue(TN.NAME));
+//            }
+
+            // test procedure
+            Configuration configuration = new DefaultConfiguration();
+            
+            configuration.set(SQLDialect.MYSQL);
+            configuration.set(conn);
+            Saveint8 procedure = new Saveint8();
+            for(int i=0;i<10;i++){
+//                procedure.setArrivetime(LocalDateTime.now());
+                procedure.setDatain((byte)(52+i));
+//                procedure.setDname("test");
+//                procedure.setSessiontime(5.20 + i);
+//                procedure.setSessionuid((long)(520520520+i));
+                procedure.execute(configuration);
             }
+            
+            
             
             
                     

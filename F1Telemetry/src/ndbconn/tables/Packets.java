@@ -17,7 +17,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Packets extends TableImpl<PacketsRecord> {
 
-    private static final long serialVersionUID = -1645204623;
+    private static final long serialVersionUID = -1364237949;
 
     /**
      * The reference instance of <code>NewF1DB.Packets</code>
@@ -54,16 +54,6 @@ public class Packets extends TableImpl<PacketsRecord> {
      * The column <code>NewF1DB.Packets.idPacket</code>.
      */
     public final TableField<PacketsRecord, Integer> IDPACKET = createField(DSL.name("idPacket"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
-
-    /**
-     * The column <code>NewF1DB.Packets.sessionUID</code>.
-     */
-    public final TableField<PacketsRecord, Long> SESSIONUID = createField(DSL.name("sessionUID"), org.jooq.impl.SQLDataType.BIGINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.BIGINT)), this, "");
-
-    /**
-     * The column <code>NewF1DB.Packets.packetType</code>.
-     */
-    public final TableField<PacketsRecord, Byte> PACKETTYPE = createField(DSL.name("packetType"), org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
      * The column <code>NewF1DB.Packets.arriveTime</code>.
@@ -155,11 +145,11 @@ public class Packets extends TableImpl<PacketsRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row3 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Long, Byte, LocalDateTime, Double> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row3<Integer, LocalDateTime, Double> fieldsRow() {
+        return (Row3) super.fieldsRow();
     }
 }

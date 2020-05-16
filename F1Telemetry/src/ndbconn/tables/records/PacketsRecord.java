@@ -10,8 +10,8 @@ import ndbconn.tables.Packets;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record5;
-import org.jooq.Row5;
+import org.jooq.Record3;
+import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -21,9 +21,9 @@ import org.jooq.impl.UpdatableRecordImpl;
  * a complete session. 
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements Record5<Integer, Long, Byte, LocalDateTime, Double> {
+public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements Record3<Integer, LocalDateTime, Double> {
 
-    private static final long serialVersionUID = -613150847;
+    private static final long serialVersionUID = -1612841761;
 
     /**
      * Setter for <code>NewF1DB.Packets.idPacket</code>.
@@ -40,59 +40,31 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     }
 
     /**
-     * Setter for <code>NewF1DB.Packets.sessionUID</code>.
-     */
-    public void setSessionuid(Long value) {
-        set(1, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.Packets.sessionUID</code>.
-     */
-    public Long getSessionuid() {
-        return (Long) get(1);
-    }
-
-    /**
-     * Setter for <code>NewF1DB.Packets.packetType</code>.
-     */
-    public void setPackettype(Byte value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.Packets.packetType</code>.
-     */
-    public Byte getPackettype() {
-        return (Byte) get(2);
-    }
-
-    /**
      * Setter for <code>NewF1DB.Packets.arriveTime</code>.
      */
     public void setArrivetime(LocalDateTime value) {
-        set(3, value);
+        set(1, value);
     }
 
     /**
      * Getter for <code>NewF1DB.Packets.arriveTime</code>.
      */
     public LocalDateTime getArrivetime() {
-        return (LocalDateTime) get(3);
+        return (LocalDateTime) get(1);
     }
 
     /**
      * Setter for <code>NewF1DB.Packets.sessionTime</code>.
      */
     public void setSessiontime(Double value) {
-        set(4, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>NewF1DB.Packets.sessionTime</code>.
      */
     public Double getSessiontime() {
-        return (Double) get(4);
+        return (Double) get(2);
     }
 
     // -------------------------------------------------------------------------
@@ -105,17 +77,17 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     }
 
     // -------------------------------------------------------------------------
-    // Record5 type implementation
+    // Record3 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Long, Byte, LocalDateTime, Double> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row3<Integer, LocalDateTime, Double> fieldsRow() {
+        return (Row3) super.fieldsRow();
     }
 
     @Override
-    public Row5<Integer, Long, Byte, LocalDateTime, Double> valuesRow() {
-        return (Row5) super.valuesRow();
+    public Row3<Integer, LocalDateTime, Double> valuesRow() {
+        return (Row3) super.valuesRow();
     }
 
     @Override
@@ -124,22 +96,12 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     }
 
     @Override
-    public Field<Long> field2() {
-        return Packets.PACKETS.SESSIONUID;
-    }
-
-    @Override
-    public Field<Byte> field3() {
-        return Packets.PACKETS.PACKETTYPE;
-    }
-
-    @Override
-    public Field<LocalDateTime> field4() {
+    public Field<LocalDateTime> field2() {
         return Packets.PACKETS.ARRIVETIME;
     }
 
     @Override
-    public Field<Double> field5() {
+    public Field<Double> field3() {
         return Packets.PACKETS.SESSIONTIME;
     }
 
@@ -149,22 +111,12 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     }
 
     @Override
-    public Long component2() {
-        return getSessionuid();
-    }
-
-    @Override
-    public Byte component3() {
-        return getPackettype();
-    }
-
-    @Override
-    public LocalDateTime component4() {
+    public LocalDateTime component2() {
         return getArrivetime();
     }
 
     @Override
-    public Double component5() {
+    public Double component3() {
         return getSessiontime();
     }
 
@@ -174,22 +126,12 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     }
 
     @Override
-    public Long value2() {
-        return getSessionuid();
-    }
-
-    @Override
-    public Byte value3() {
-        return getPackettype();
-    }
-
-    @Override
-    public LocalDateTime value4() {
+    public LocalDateTime value2() {
         return getArrivetime();
     }
 
     @Override
-    public Double value5() {
+    public Double value3() {
         return getSessiontime();
     }
 
@@ -200,36 +142,22 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     }
 
     @Override
-    public PacketsRecord value2(Long value) {
-        setSessionuid(value);
-        return this;
-    }
-
-    @Override
-    public PacketsRecord value3(Byte value) {
-        setPackettype(value);
-        return this;
-    }
-
-    @Override
-    public PacketsRecord value4(LocalDateTime value) {
+    public PacketsRecord value2(LocalDateTime value) {
         setArrivetime(value);
         return this;
     }
 
     @Override
-    public PacketsRecord value5(Double value) {
+    public PacketsRecord value3(Double value) {
         setSessiontime(value);
         return this;
     }
 
     @Override
-    public PacketsRecord values(Integer value1, Long value2, Byte value3, LocalDateTime value4, Double value5) {
+    public PacketsRecord values(Integer value1, LocalDateTime value2, Double value3) {
         value1(value1);
         value2(value2);
         value3(value3);
-        value4(value4);
-        value5(value5);
         return this;
     }
 
@@ -247,13 +175,11 @@ public class PacketsRecord extends UpdatableRecordImpl<PacketsRecord> implements
     /**
      * Create a detached, initialised PacketsRecord
      */
-    public PacketsRecord(Integer idpacket, Long sessionuid, Byte packettype, LocalDateTime arrivetime, Double sessiontime) {
+    public PacketsRecord(Integer idpacket, LocalDateTime arrivetime, Double sessiontime) {
         super(Packets.PACKETS);
 
         set(0, idpacket);
-        set(1, sessionuid);
-        set(2, packettype);
-        set(3, arrivetime);
-        set(4, sessiontime);
+        set(1, arrivetime);
+        set(2, sessiontime);
     }
 }

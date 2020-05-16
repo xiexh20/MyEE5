@@ -72,6 +72,7 @@ public abstract class Packet {
     
     /**
      * get the session id in database for this session UID
+     * step 1: query the database to see if 
      * @param dbconn: the database connection context
      * @return the id of the session UID in table Sessions
      */
