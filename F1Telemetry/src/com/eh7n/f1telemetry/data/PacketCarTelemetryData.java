@@ -7,6 +7,7 @@ import com.eh7n.f1telemetry.data.elements.CarTelemetryData;
 import dbconn.Tables;
 import dbconn.tables.Cartelemetry;
 import dbconn.tables.Heatmapdata;
+import java.util.HashMap;
 import ndbconn.tables.Int16data;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
@@ -42,7 +43,7 @@ public class PacketCarTelemetryData extends Packet {
     /**
      * part instant part delayed
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
 
         PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
 //        Cartelemetry CT = Tables.CARTELEMETRY;

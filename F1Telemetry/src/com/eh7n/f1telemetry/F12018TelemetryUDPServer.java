@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import ndbconn.tables.records.DatanamesRecord;
@@ -143,6 +144,7 @@ public class F12018TelemetryUDPServer {
             Settings settings = new Settings().withExecuteLogging(false); // turn off debug log output
             DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL, settings);
             Result<DatanamesRecord> names = dbContext.selectFrom(ndbconn.Tables.DATANAMES).fetch();
+            HashMap<String, Short> nameIdMap = listToMap(names);
 
             // create and initialize history packets
             @SuppressWarnings("MismatchedReadAndWriteOfArray")
@@ -155,7 +157,7 @@ public class F12018TelemetryUDPServer {
                 channel.receive(buf);
                 final Packet packet = PacketDeserializer.read(buf.array());
 //                                System.out.println(packet.toJSON());        // same effect as placed in consumedWith();
-                histPacketLists = packet.saveToDB(histPacketLists, dbContext, names); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
+                histPacketLists = packet.saveToDB(histPacketLists, dbContext, nameIdMap); // the executor may use multithread to consume packet, but in my Raspeberry pi, there is only
                 
                 // update output data to PIC
                 if(packet instanceof PacketCarTelemetryData){
@@ -182,6 +184,20 @@ public class F12018TelemetryUDPServer {
         } finally {
             executor.shutdown();
         }
+    }
+    
+    /**
+     * convert a list of name record into a hash map-->>improve search efficiency
+     * @param dNameList
+     * @return 
+     */
+    public HashMap<String, Short> listToMap(Result<DatanamesRecord> records)
+    {
+        HashMap<String, Short> recordMap = new HashMap<>(records.size());
+        for(DatanamesRecord r:records){
+            recordMap.put(r.getName(), r.getIdname());
+        }
+        return recordMap;
     }
 
     /**

@@ -4,14 +4,12 @@
 package ndbconn.tables.records;
 
 
-import java.time.LocalDateTime;
-
 import ndbconn.tables.Floatdata;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record6;
-import org.jooq.Row6;
+import org.jooq.Record5;
+import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -19,9 +17,9 @@ import org.jooq.impl.UpdatableRecordImpl;
  * A table to store data from UDP packets that have float type.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implements Record6<Integer, Short, Long, Double, LocalDateTime, Double> {
+public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implements Record5<Integer, Short, Double, Integer, Integer> {
 
-    private static final long serialVersionUID = 1064507082;
+    private static final long serialVersionUID = 1267325806;
 
     /**
      * Setter for <code>NewF1DB.FloatData.idData</code>.
@@ -52,59 +50,45 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     }
 
     /**
-     * Setter for <code>NewF1DB.FloatData.sessionUID</code>.
-     */
-    public void setSessionuid(Long value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.FloatData.sessionUID</code>.
-     */
-    public Long getSessionuid() {
-        return (Long) get(2);
-    }
-
-    /**
-     * Setter for <code>NewF1DB.FloatData.sessionTime</code>.
-     */
-    public void setSessiontime(Double value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.FloatData.sessionTime</code>.
-     */
-    public Double getSessiontime() {
-        return (Double) get(3);
-    }
-
-    /**
-     * Setter for <code>NewF1DB.FloatData.arriveTime</code>.
-     */
-    public void setArrivetime(LocalDateTime value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.FloatData.arriveTime</code>.
-     */
-    public LocalDateTime getArrivetime() {
-        return (LocalDateTime) get(4);
-    }
-
-    /**
      * Setter for <code>NewF1DB.FloatData.data</code>.
      */
     public void setData(Double value) {
-        set(5, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>NewF1DB.FloatData.data</code>.
      */
     public Double getData() {
-        return (Double) get(5);
+        return (Double) get(2);
+    }
+
+    /**
+     * Setter for <code>NewF1DB.FloatData.packetId</code>.
+     */
+    public void setPacketid(Integer value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>NewF1DB.FloatData.packetId</code>.
+     */
+    public Integer getPacketid() {
+        return (Integer) get(3);
+    }
+
+    /**
+     * Setter for <code>NewF1DB.FloatData.sessionId</code>.
+     */
+    public void setSessionid(Integer value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>NewF1DB.FloatData.sessionId</code>.
+     */
+    public Integer getSessionid() {
+        return (Integer) get(4);
     }
 
     // -------------------------------------------------------------------------
@@ -117,17 +101,17 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     }
 
     // -------------------------------------------------------------------------
-    // Record6 type implementation
+    // Record5 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Short, Long, Double, LocalDateTime, Double> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row5<Integer, Short, Double, Integer, Integer> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 
     @Override
-    public Row6<Integer, Short, Long, Double, LocalDateTime, Double> valuesRow() {
-        return (Row6) super.valuesRow();
+    public Row5<Integer, Short, Double, Integer, Integer> valuesRow() {
+        return (Row5) super.valuesRow();
     }
 
     @Override
@@ -141,23 +125,18 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     }
 
     @Override
-    public Field<Long> field3() {
-        return Floatdata.FLOATDATA.SESSIONUID;
-    }
-
-    @Override
-    public Field<Double> field4() {
-        return Floatdata.FLOATDATA.SESSIONTIME;
-    }
-
-    @Override
-    public Field<LocalDateTime> field5() {
-        return Floatdata.FLOATDATA.ARRIVETIME;
-    }
-
-    @Override
-    public Field<Double> field6() {
+    public Field<Double> field3() {
         return Floatdata.FLOATDATA.DATA;
+    }
+
+    @Override
+    public Field<Integer> field4() {
+        return Floatdata.FLOATDATA.PACKETID;
+    }
+
+    @Override
+    public Field<Integer> field5() {
+        return Floatdata.FLOATDATA.SESSIONID;
     }
 
     @Override
@@ -171,23 +150,18 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     }
 
     @Override
-    public Long component3() {
-        return getSessionuid();
-    }
-
-    @Override
-    public Double component4() {
-        return getSessiontime();
-    }
-
-    @Override
-    public LocalDateTime component5() {
-        return getArrivetime();
-    }
-
-    @Override
-    public Double component6() {
+    public Double component3() {
         return getData();
+    }
+
+    @Override
+    public Integer component4() {
+        return getPacketid();
+    }
+
+    @Override
+    public Integer component5() {
+        return getSessionid();
     }
 
     @Override
@@ -201,23 +175,18 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     }
 
     @Override
-    public Long value3() {
-        return getSessionuid();
-    }
-
-    @Override
-    public Double value4() {
-        return getSessiontime();
-    }
-
-    @Override
-    public LocalDateTime value5() {
-        return getArrivetime();
-    }
-
-    @Override
-    public Double value6() {
+    public Double value3() {
         return getData();
+    }
+
+    @Override
+    public Integer value4() {
+        return getPacketid();
+    }
+
+    @Override
+    public Integer value5() {
+        return getSessionid();
     }
 
     @Override
@@ -233,37 +202,30 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     }
 
     @Override
-    public FloatdataRecord value3(Long value) {
-        setSessionuid(value);
-        return this;
-    }
-
-    @Override
-    public FloatdataRecord value4(Double value) {
-        setSessiontime(value);
-        return this;
-    }
-
-    @Override
-    public FloatdataRecord value5(LocalDateTime value) {
-        setArrivetime(value);
-        return this;
-    }
-
-    @Override
-    public FloatdataRecord value6(Double value) {
+    public FloatdataRecord value3(Double value) {
         setData(value);
         return this;
     }
 
     @Override
-    public FloatdataRecord values(Integer value1, Short value2, Long value3, Double value4, LocalDateTime value5, Double value6) {
+    public FloatdataRecord value4(Integer value) {
+        setPacketid(value);
+        return this;
+    }
+
+    @Override
+    public FloatdataRecord value5(Integer value) {
+        setSessionid(value);
+        return this;
+    }
+
+    @Override
+    public FloatdataRecord values(Integer value1, Short value2, Double value3, Integer value4, Integer value5) {
         value1(value1);
         value2(value2);
         value3(value3);
         value4(value4);
         value5(value5);
-        value6(value6);
         return this;
     }
 
@@ -281,14 +243,13 @@ public class FloatdataRecord extends UpdatableRecordImpl<FloatdataRecord> implem
     /**
      * Create a detached, initialised FloatdataRecord
      */
-    public FloatdataRecord(Integer iddata, Short dataname, Long sessionuid, Double sessiontime, LocalDateTime arrivetime, Double data) {
+    public FloatdataRecord(Integer iddata, Short dataname, Double data, Integer packetid, Integer sessionid) {
         super(Floatdata.FLOATDATA);
 
         set(0, iddata);
         set(1, dataname);
-        set(2, sessionuid);
-        set(3, sessiontime);
-        set(4, arrivetime);
-        set(5, data);
+        set(2, data);
+        set(3, packetid);
+        set(4, sessionid);
     }
 }

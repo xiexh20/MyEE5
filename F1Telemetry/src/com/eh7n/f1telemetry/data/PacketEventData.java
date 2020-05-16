@@ -4,6 +4,7 @@ import dbconn.Tables;
 import dbconn.tables.Sessioninfos;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -33,7 +34,7 @@ public class PacketEventData extends Packet {
      * first extract data, and then save to history if session start: add an
      * entry to table SessionInfos set the endTime when an end event received
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
         // bug: if you restart the session the session UID will not change. 
         //UID for start event is the UID of previous session, 0 means no previous session. 
         //The SEND packet UID is the real UID for this session. 

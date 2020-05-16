@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Datanames extends TableImpl<DatanamesRecord> {
 
-    private static final long serialVersionUID = 1619002014;
+    private static final long serialVersionUID = 178977980;
 
     /**
      * The reference instance of <code>NewF1DB.DataNames</code>
@@ -107,7 +107,7 @@ public class Datanames extends TableImpl<DatanamesRecord> {
 
     @Override
     public List<UniqueKey<DatanamesRecord>> getKeys() {
-        return Arrays.<UniqueKey<DatanamesRecord>>asList(Keys.KEY_DATANAMES_PRIMARY);
+        return Arrays.<UniqueKey<DatanamesRecord>>asList(Keys.KEY_DATANAMES_PRIMARY, Keys.KEY_DATANAMES_NAME_UNIQUE);
     }
 
     @Override

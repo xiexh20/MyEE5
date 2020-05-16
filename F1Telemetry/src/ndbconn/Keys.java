@@ -9,11 +9,15 @@ import ndbconn.tables.Floatdata;
 import ndbconn.tables.Int16data;
 import ndbconn.tables.Int32data;
 import ndbconn.tables.Int8data;
+import ndbconn.tables.Packets;
+import ndbconn.tables.Sessions;
 import ndbconn.tables.records.DatanamesRecord;
 import ndbconn.tables.records.FloatdataRecord;
 import ndbconn.tables.records.Int16dataRecord;
 import ndbconn.tables.records.Int32dataRecord;
 import ndbconn.tables.records.Int8dataRecord;
+import ndbconn.tables.records.PacketsRecord;
+import ndbconn.tables.records.SessionsRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -37,25 +41,39 @@ public class Keys {
     public static final Identity<FloatdataRecord, Integer> IDENTITY_FLOATDATA = Identities0.IDENTITY_FLOATDATA;
     public static final Identity<Int16dataRecord, Integer> IDENTITY_INT16DATA = Identities0.IDENTITY_INT16DATA;
     public static final Identity<Int32dataRecord, Integer> IDENTITY_INT32DATA = Identities0.IDENTITY_INT32DATA;
+    public static final Identity<Int8dataRecord, Integer> IDENTITY_INT8DATA = Identities0.IDENTITY_INT8DATA;
+    public static final Identity<PacketsRecord, Integer> IDENTITY_PACKETS = Identities0.IDENTITY_PACKETS;
+    public static final Identity<SessionsRecord, Integer> IDENTITY_SESSIONS = Identities0.IDENTITY_SESSIONS;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<DatanamesRecord> KEY_DATANAMES_PRIMARY = UniqueKeys0.KEY_DATANAMES_PRIMARY;
+    public static final UniqueKey<DatanamesRecord> KEY_DATANAMES_NAME_UNIQUE = UniqueKeys0.KEY_DATANAMES_NAME_UNIQUE;
     public static final UniqueKey<FloatdataRecord> KEY_FLOATDATA_PRIMARY = UniqueKeys0.KEY_FLOATDATA_PRIMARY;
     public static final UniqueKey<Int16dataRecord> KEY_INT16DATA_PRIMARY = UniqueKeys0.KEY_INT16DATA_PRIMARY;
     public static final UniqueKey<Int32dataRecord> KEY_INT32DATA_PRIMARY = UniqueKeys0.KEY_INT32DATA_PRIMARY;
     public static final UniqueKey<Int8dataRecord> KEY_INT8DATA_PRIMARY = UniqueKeys0.KEY_INT8DATA_PRIMARY;
+    public static final UniqueKey<PacketsRecord> KEY_PACKETS_PRIMARY = UniqueKeys0.KEY_PACKETS_PRIMARY;
+    public static final UniqueKey<SessionsRecord> KEY_SESSIONS_PRIMARY = UniqueKeys0.KEY_SESSIONS_PRIMARY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<FloatdataRecord, DatanamesRecord> FLOATTONAME = ForeignKeys0.FLOATTONAME;
+    public static final ForeignKey<FloatdataRecord, PacketsRecord> FLOATTOPACKET = ForeignKeys0.FLOATTOPACKET;
+    public static final ForeignKey<FloatdataRecord, SessionsRecord> FLOATTOSESSION = ForeignKeys0.FLOATTOSESSION;
     public static final ForeignKey<Int16dataRecord, DatanamesRecord> INT16TONAME = ForeignKeys0.INT16TONAME;
+    public static final ForeignKey<Int16dataRecord, PacketsRecord> INT16TOPACKET = ForeignKeys0.INT16TOPACKET;
+    public static final ForeignKey<Int16dataRecord, SessionsRecord> INT16TOSESSION = ForeignKeys0.INT16TOSESSION;
     public static final ForeignKey<Int32dataRecord, DatanamesRecord> INT32TONAME = ForeignKeys0.INT32TONAME;
+    public static final ForeignKey<Int32dataRecord, PacketsRecord> INT32TOPACKET = ForeignKeys0.INT32TOPACKET;
+    public static final ForeignKey<Int32dataRecord, SessionsRecord> INT32TOSESSION = ForeignKeys0.INT32TOSESSION;
     public static final ForeignKey<Int8dataRecord, DatanamesRecord> INT8TONAME = ForeignKeys0.INT8TONAME;
+    public static final ForeignKey<Int8dataRecord, PacketsRecord> INT8TOPACKET = ForeignKeys0.INT8TOPACKET;
+    public static final ForeignKey<Int8dataRecord, SessionsRecord> INT8TOSESSION = ForeignKeys0.INT8TOSESSION;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -66,20 +84,34 @@ public class Keys {
         public static Identity<FloatdataRecord, Integer> IDENTITY_FLOATDATA = Internal.createIdentity(Floatdata.FLOATDATA, Floatdata.FLOATDATA.IDDATA);
         public static Identity<Int16dataRecord, Integer> IDENTITY_INT16DATA = Internal.createIdentity(Int16data.INT16DATA, Int16data.INT16DATA.IDDATA);
         public static Identity<Int32dataRecord, Integer> IDENTITY_INT32DATA = Internal.createIdentity(Int32data.INT32DATA, Int32data.INT32DATA.IDDATA);
+        public static Identity<Int8dataRecord, Integer> IDENTITY_INT8DATA = Internal.createIdentity(Int8data.INT8DATA, Int8data.INT8DATA.IDDATA);
+        public static Identity<PacketsRecord, Integer> IDENTITY_PACKETS = Internal.createIdentity(Packets.PACKETS, Packets.PACKETS.IDPACKET);
+        public static Identity<SessionsRecord, Integer> IDENTITY_SESSIONS = Internal.createIdentity(Sessions.SESSIONS, Sessions.SESSIONS.IDSESSION);
     }
 
     private static class UniqueKeys0 {
         public static final UniqueKey<DatanamesRecord> KEY_DATANAMES_PRIMARY = Internal.createUniqueKey(Datanames.DATANAMES, "KEY_DataNames_PRIMARY", new TableField[] { Datanames.DATANAMES.IDNAME }, true);
+        public static final UniqueKey<DatanamesRecord> KEY_DATANAMES_NAME_UNIQUE = Internal.createUniqueKey(Datanames.DATANAMES, "KEY_DataNames_name_UNIQUE", new TableField[] { Datanames.DATANAMES.NAME }, true);
         public static final UniqueKey<FloatdataRecord> KEY_FLOATDATA_PRIMARY = Internal.createUniqueKey(Floatdata.FLOATDATA, "KEY_FloatData_PRIMARY", new TableField[] { Floatdata.FLOATDATA.IDDATA }, true);
         public static final UniqueKey<Int16dataRecord> KEY_INT16DATA_PRIMARY = Internal.createUniqueKey(Int16data.INT16DATA, "KEY_Int16Data_PRIMARY", new TableField[] { Int16data.INT16DATA.IDDATA }, true);
         public static final UniqueKey<Int32dataRecord> KEY_INT32DATA_PRIMARY = Internal.createUniqueKey(Int32data.INT32DATA, "KEY_Int32Data_PRIMARY", new TableField[] { Int32data.INT32DATA.IDDATA }, true);
         public static final UniqueKey<Int8dataRecord> KEY_INT8DATA_PRIMARY = Internal.createUniqueKey(Int8data.INT8DATA, "KEY_Int8Data_PRIMARY", new TableField[] { Int8data.INT8DATA.IDDATA }, true);
+        public static final UniqueKey<PacketsRecord> KEY_PACKETS_PRIMARY = Internal.createUniqueKey(Packets.PACKETS, "KEY_Packets_PRIMARY", new TableField[] { Packets.PACKETS.IDPACKET }, true);
+        public static final UniqueKey<SessionsRecord> KEY_SESSIONS_PRIMARY = Internal.createUniqueKey(Sessions.SESSIONS, "KEY_Sessions_PRIMARY", new TableField[] { Sessions.SESSIONS.IDSESSION }, true);
     }
 
     private static class ForeignKeys0 {
         public static final ForeignKey<FloatdataRecord, DatanamesRecord> FLOATTONAME = Internal.createForeignKey(Keys.KEY_DATANAMES_PRIMARY, Floatdata.FLOATDATA, "floatToName", new TableField[] { Floatdata.FLOATDATA.DATANAME }, true);
+        public static final ForeignKey<FloatdataRecord, PacketsRecord> FLOATTOPACKET = Internal.createForeignKey(Keys.KEY_PACKETS_PRIMARY, Floatdata.FLOATDATA, "floatToPacket", new TableField[] { Floatdata.FLOATDATA.PACKETID }, true);
+        public static final ForeignKey<FloatdataRecord, SessionsRecord> FLOATTOSESSION = Internal.createForeignKey(Keys.KEY_SESSIONS_PRIMARY, Floatdata.FLOATDATA, "floatToSession", new TableField[] { Floatdata.FLOATDATA.SESSIONID }, true);
         public static final ForeignKey<Int16dataRecord, DatanamesRecord> INT16TONAME = Internal.createForeignKey(Keys.KEY_DATANAMES_PRIMARY, Int16data.INT16DATA, "int16ToName", new TableField[] { Int16data.INT16DATA.DATANAME }, true);
+        public static final ForeignKey<Int16dataRecord, PacketsRecord> INT16TOPACKET = Internal.createForeignKey(Keys.KEY_PACKETS_PRIMARY, Int16data.INT16DATA, "int16ToPacket", new TableField[] { Int16data.INT16DATA.PACKETID }, true);
+        public static final ForeignKey<Int16dataRecord, SessionsRecord> INT16TOSESSION = Internal.createForeignKey(Keys.KEY_SESSIONS_PRIMARY, Int16data.INT16DATA, "int16ToSession", new TableField[] { Int16data.INT16DATA.SESSIONID }, true);
         public static final ForeignKey<Int32dataRecord, DatanamesRecord> INT32TONAME = Internal.createForeignKey(Keys.KEY_DATANAMES_PRIMARY, Int32data.INT32DATA, "int32ToName", new TableField[] { Int32data.INT32DATA.DATANAME }, true);
+        public static final ForeignKey<Int32dataRecord, PacketsRecord> INT32TOPACKET = Internal.createForeignKey(Keys.KEY_PACKETS_PRIMARY, Int32data.INT32DATA, "int32ToPacket", new TableField[] { Int32data.INT32DATA.PACKETID }, true);
+        public static final ForeignKey<Int32dataRecord, SessionsRecord> INT32TOSESSION = Internal.createForeignKey(Keys.KEY_SESSIONS_PRIMARY, Int32data.INT32DATA, "int32ToSession", new TableField[] { Int32data.INT32DATA.SESSIONID }, true);
         public static final ForeignKey<Int8dataRecord, DatanamesRecord> INT8TONAME = Internal.createForeignKey(Keys.KEY_DATANAMES_PRIMARY, Int8data.INT8DATA, "int8ToName", new TableField[] { Int8data.INT8DATA.DATANAME }, true);
+        public static final ForeignKey<Int8dataRecord, PacketsRecord> INT8TOPACKET = Internal.createForeignKey(Keys.KEY_PACKETS_PRIMARY, Int8data.INT8DATA, "int8ToPacket", new TableField[] { Int8data.INT8DATA.PACKETID }, true);
+        public static final ForeignKey<Int8dataRecord, SessionsRecord> INT8TOSESSION = Internal.createForeignKey(Keys.KEY_SESSIONS_PRIMARY, Int8data.INT8DATA, "int8ToSession", new TableField[] { Int8data.INT8DATA.SESSIONID }, true);
     }
 }

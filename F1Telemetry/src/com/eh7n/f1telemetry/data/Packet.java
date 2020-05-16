@@ -3,6 +3,7 @@ package com.eh7n.f1telemetry.data;
 import com.eh7n.f1telemetry.data.elements.Header;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
@@ -49,7 +50,9 @@ public abstract class Packet {
      * @param dNameList: the data name list, include id and name from database
      * @return
      */
-    public abstract PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList);
+    public abstract PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap);
+    
+    
 
     /**
      * save this packet to different list based on packet type

@@ -9,6 +9,8 @@ import ndbconn.tables.Floatdata;
 import ndbconn.tables.Int16data;
 import ndbconn.tables.Int32data;
 import ndbconn.tables.Int8data;
+import ndbconn.tables.Packets;
+import ndbconn.tables.Sessions;
 
 
 /**
@@ -41,4 +43,14 @@ public class Tables {
      * The table <code>NewF1DB.Int8Data</code>.
      */
     public static final Int8data INT8DATA = Int8data.INT8DATA;
+
+    /**
+     * A table to store common packet information, to avoid reductancy in data table. This table provides timestamp information for the user to reconstruct a complete session. 
+     */
+    public static final Packets PACKETS = Packets.PACKETS;
+
+    /**
+     * Store session UID, to avoid duplicate values in table Packets. The user can join this table with the data table to filter data by sessions. 
+     */
+    public static final Sessions SESSIONS = Sessions.SESSIONS;
 }

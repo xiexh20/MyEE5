@@ -4,7 +4,6 @@
 package ndbconn.tables;
 
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,10 +14,11 @@ import ndbconn.tables.records.Int8dataRecord;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Int8data extends TableImpl<Int8dataRecord> {
 
-    private static final long serialVersionUID = 832520977;
+    private static final long serialVersionUID = -966626939;
 
     /**
      * The reference instance of <code>NewF1DB.Int8Data</code>
@@ -52,7 +52,7 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     /**
      * The column <code>NewF1DB.Int8Data.idData</code>.
      */
-    public final TableField<Int8dataRecord, Integer> IDDATA = createField(DSL.name("idData"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Int8dataRecord, Integer> IDDATA = createField(DSL.name("idData"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>NewF1DB.Int8Data.data</code>.
@@ -60,24 +60,19 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     public final TableField<Int8dataRecord, Byte> DATA = createField(DSL.name("data"), org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
-     * The column <code>NewF1DB.Int8Data.sessionUID</code>.
-     */
-    public final TableField<Int8dataRecord, Long> SESSIONUID = createField(DSL.name("sessionUID"), org.jooq.impl.SQLDataType.BIGINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.BIGINT)), this, "");
-
-    /**
-     * The column <code>NewF1DB.Int8Data.sessionTime</code>.
-     */
-    public final TableField<Int8dataRecord, Double> SESSIONTIME = createField(DSL.name("sessionTime"), org.jooq.impl.SQLDataType.FLOAT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.FLOAT)), this, "");
-
-    /**
-     * The column <code>NewF1DB.Int8Data.arriveTime</code>.
-     */
-    public final TableField<Int8dataRecord, LocalDateTime> ARRIVETIME = createField(DSL.name("arriveTime"), org.jooq.impl.SQLDataType.LOCALDATETIME.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
-
-    /**
      * The column <code>NewF1DB.Int8Data.dataName</code>.
      */
     public final TableField<Int8dataRecord, Short> DATANAME = createField(DSL.name("dataName"), org.jooq.impl.SQLDataType.SMALLINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+
+    /**
+     * The column <code>NewF1DB.Int8Data.packetId</code>.
+     */
+    public final TableField<Int8dataRecord, Integer> PACKETID = createField(DSL.name("packetId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>NewF1DB.Int8Data.sessionId</code>.
+     */
+    public final TableField<Int8dataRecord, Integer> SESSIONID = createField(DSL.name("sessionId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * Create a <code>NewF1DB.Int8Data</code> table reference
@@ -119,7 +114,12 @@ public class Int8data extends TableImpl<Int8dataRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.INT8DATA_INT8TONAME_IDX);
+        return Arrays.<Index>asList(Indexes.INT8DATA_INT8TONAME_IDX, Indexes.INT8DATA_INT8TOPACKET_IDX, Indexes.INT8DATA_INT8TOSESSION_IDX);
+    }
+
+    @Override
+    public Identity<Int8dataRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_INT8DATA;
     }
 
     @Override
@@ -134,11 +134,19 @@ public class Int8data extends TableImpl<Int8dataRecord> {
 
     @Override
     public List<ForeignKey<Int8dataRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<Int8dataRecord, ?>>asList(Keys.INT8TONAME);
+        return Arrays.<ForeignKey<Int8dataRecord, ?>>asList(Keys.INT8TONAME, Keys.INT8TOPACKET, Keys.INT8TOSESSION);
     }
 
     public Datanames datanames() {
         return new Datanames(this, Keys.INT8TONAME);
+    }
+
+    public Packets packets() {
+        return new Packets(this, Keys.INT8TOPACKET);
+    }
+
+    public Sessions sessions() {
+        return new Sessions(this, Keys.INT8TOSESSION);
     }
 
     @Override
@@ -168,11 +176,11 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Byte, Long, Double, LocalDateTime, Short> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row5<Integer, Byte, Short, Integer, Integer> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

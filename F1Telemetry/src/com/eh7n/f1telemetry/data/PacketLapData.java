@@ -6,6 +6,7 @@ import com.eh7n.f1telemetry.data.elements.LapData;
 import dbconn.Tables;
 import dbconn.tables.Extractedlapdata;
 import dbconn.tables.Instantlapdata;
+import java.util.HashMap;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -30,8 +31,9 @@ public class PacketLapData extends Packet {
     /**
      * part instantaneous part delayed data
      */
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
 
+        
         // save instant data into database
         Instantlapdata IT = Tables.INSTANTLAPDATA;   // abreviate for Table InstantLapData
         LapData lapData = lapDataList.get(getHeader().getPlayerCarIndex());

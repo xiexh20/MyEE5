@@ -25,9 +25,17 @@ public class Indexes {
     // -------------------------------------------------------------------------
 
     public static final Index FLOATDATA_FLOATTONAME_IDX = Indexes0.FLOATDATA_FLOATTONAME_IDX;
+    public static final Index FLOATDATA_FLOATTOPACKET_IDX = Indexes0.FLOATDATA_FLOATTOPACKET_IDX;
+    public static final Index FLOATDATA_FLOATTOSESSION_IDX = Indexes0.FLOATDATA_FLOATTOSESSION_IDX;
     public static final Index INT16DATA_INT16TONAME_IDX = Indexes0.INT16DATA_INT16TONAME_IDX;
+    public static final Index INT16DATA_INT16TOPACKET_IDX = Indexes0.INT16DATA_INT16TOPACKET_IDX;
+    public static final Index INT16DATA_INT16TOSESSION_IDX = Indexes0.INT16DATA_INT16TOSESSION_IDX;
     public static final Index INT32DATA_INT32TONAME_IDX = Indexes0.INT32DATA_INT32TONAME_IDX;
+    public static final Index INT32DATA_INT32TOPACKET_IDX = Indexes0.INT32DATA_INT32TOPACKET_IDX;
+    public static final Index INT32DATA_INT32TOSESSION_IDX = Indexes0.INT32DATA_INT32TOSESSION_IDX;
     public static final Index INT8DATA_INT8TONAME_IDX = Indexes0.INT8DATA_INT8TONAME_IDX;
+    public static final Index INT8DATA_INT8TOPACKET_IDX = Indexes0.INT8DATA_INT8TOPACKET_IDX;
+    public static final Index INT8DATA_INT8TOSESSION_IDX = Indexes0.INT8DATA_INT8TOSESSION_IDX;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -35,8 +43,16 @@ public class Indexes {
 
     private static class Indexes0 {
         public static Index FLOATDATA_FLOATTONAME_IDX = Internal.createIndex("floatToName_idx", Floatdata.FLOATDATA, new OrderField[] { Floatdata.FLOATDATA.DATANAME }, false);
+        public static Index FLOATDATA_FLOATTOPACKET_IDX = Internal.createIndex("floatToPacket_idx", Floatdata.FLOATDATA, new OrderField[] { Floatdata.FLOATDATA.PACKETID }, false);
+        public static Index FLOATDATA_FLOATTOSESSION_IDX = Internal.createIndex("floatToSession_idx", Floatdata.FLOATDATA, new OrderField[] { Floatdata.FLOATDATA.SESSIONID }, false);
         public static Index INT16DATA_INT16TONAME_IDX = Internal.createIndex("int16ToName_idx", Int16data.INT16DATA, new OrderField[] { Int16data.INT16DATA.DATANAME }, false);
+        public static Index INT16DATA_INT16TOPACKET_IDX = Internal.createIndex("int16ToPacket_idx", Int16data.INT16DATA, new OrderField[] { Int16data.INT16DATA.PACKETID }, false);
+        public static Index INT16DATA_INT16TOSESSION_IDX = Internal.createIndex("int16ToSession_idx", Int16data.INT16DATA, new OrderField[] { Int16data.INT16DATA.SESSIONID }, false);
         public static Index INT32DATA_INT32TONAME_IDX = Internal.createIndex("int32ToName_idx", Int32data.INT32DATA, new OrderField[] { Int32data.INT32DATA.DATANAME }, false);
+        public static Index INT32DATA_INT32TOPACKET_IDX = Internal.createIndex("int32ToPacket_idx", Int32data.INT32DATA, new OrderField[] { Int32data.INT32DATA.PACKETID }, false);
+        public static Index INT32DATA_INT32TOSESSION_IDX = Internal.createIndex("int32ToSession_idx", Int32data.INT32DATA, new OrderField[] { Int32data.INT32DATA.SESSIONID }, false);
         public static Index INT8DATA_INT8TONAME_IDX = Internal.createIndex("int8ToName_idx", Int8data.INT8DATA, new OrderField[] { Int8data.INT8DATA.DATANAME }, false);
+        public static Index INT8DATA_INT8TOPACKET_IDX = Internal.createIndex("int8ToPacket_idx", Int8data.INT8DATA, new OrderField[] { Int8data.INT8DATA.PACKETID }, false);
+        public static Index INT8DATA_INT8TOSESSION_IDX = Internal.createIndex("int8ToSession_idx", Int8data.INT8DATA, new OrderField[] { Int8data.INT8DATA.SESSIONID }, false);
     }
 }

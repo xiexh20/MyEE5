@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eh7n.f1telemetry.data.elements.ParticipantData;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -49,7 +50,7 @@ public class PacketParticipantsData extends Packet {
         }
 
     @Override
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
 //        throw new UnsupportedperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //        System.out.println("No operation for participant packet!");
         return histPacketLists;

@@ -5,6 +5,7 @@ import java.util.List;
 import com.eh7n.f1telemetry.data.elements.CarStatusData;
 import dbconn.Tables;
 import dbconn.tables.Carstatusdata;
+import java.util.HashMap;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -27,7 +28,7 @@ public class PacketCarStatusData extends Packet {
     }
 
     @Override
-    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, Result<DatanamesRecord> dNameList) {
+    public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext dbContext, HashMap<String, Short> nameIdMap) {
 
         PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
         int histPacketsCount = newLists[getHeader().getPacketId()].size();

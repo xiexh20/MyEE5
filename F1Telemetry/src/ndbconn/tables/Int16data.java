@@ -4,7 +4,6 @@
 package ndbconn.tables;
 
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -35,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Int16data extends TableImpl<Int16dataRecord> {
 
-    private static final long serialVersionUID = 1927201618;
+    private static final long serialVersionUID = -1686952753;
 
     /**
      * The reference instance of <code>NewF1DB.Int16Data</code>
@@ -66,19 +65,14 @@ public class Int16data extends TableImpl<Int16dataRecord> {
     public final TableField<Int16dataRecord, Short> DATA = createField(DSL.name("data"), org.jooq.impl.SQLDataType.SMALLINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
-     * The column <code>NewF1DB.Int16Data.sessionUID</code>.
+     * The column <code>NewF1DB.Int16Data.packetId</code>.
      */
-    public final TableField<Int16dataRecord, Long> SESSIONUID = createField(DSL.name("sessionUID"), org.jooq.impl.SQLDataType.BIGINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<Int16dataRecord, Integer> PACKETID = createField(DSL.name("packetId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>NewF1DB.Int16Data.sessionTime</code>.
+     * The column <code>NewF1DB.Int16Data.sessionId</code>.
      */
-    public final TableField<Int16dataRecord, Double> SESSIONTIME = createField(DSL.name("sessionTime"), org.jooq.impl.SQLDataType.FLOAT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.FLOAT)), this, "");
-
-    /**
-     * The column <code>NewF1DB.Int16Data.arriveTime</code>.
-     */
-    public final TableField<Int16dataRecord, LocalDateTime> ARRIVETIME = createField(DSL.name("arriveTime"), org.jooq.impl.SQLDataType.LOCALDATETIME.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<Int16dataRecord, Integer> SESSIONID = createField(DSL.name("sessionId"), org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * Create a <code>NewF1DB.Int16Data</code> table reference
@@ -120,7 +114,7 @@ public class Int16data extends TableImpl<Int16dataRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.INT16DATA_INT16TONAME_IDX);
+        return Arrays.<Index>asList(Indexes.INT16DATA_INT16TONAME_IDX, Indexes.INT16DATA_INT16TOPACKET_IDX, Indexes.INT16DATA_INT16TOSESSION_IDX);
     }
 
     @Override
@@ -140,11 +134,19 @@ public class Int16data extends TableImpl<Int16dataRecord> {
 
     @Override
     public List<ForeignKey<Int16dataRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<Int16dataRecord, ?>>asList(Keys.INT16TONAME);
+        return Arrays.<ForeignKey<Int16dataRecord, ?>>asList(Keys.INT16TONAME, Keys.INT16TOPACKET, Keys.INT16TOSESSION);
     }
 
     public Datanames datanames() {
         return new Datanames(this, Keys.INT16TONAME);
+    }
+
+    public Packets packets() {
+        return new Packets(this, Keys.INT16TOPACKET);
+    }
+
+    public Sessions sessions() {
+        return new Sessions(this, Keys.INT16TOSESSION);
     }
 
     @Override
@@ -174,11 +176,11 @@ public class Int16data extends TableImpl<Int16dataRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Short, Short, Long, Double, LocalDateTime> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row5<Integer, Short, Short, Integer, Integer> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

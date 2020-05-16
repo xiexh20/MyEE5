@@ -4,14 +4,12 @@
 package ndbconn.tables.records;
 
 
-import java.time.LocalDateTime;
-
 import ndbconn.tables.Int32data;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record6;
-import org.jooq.Row6;
+import org.jooq.Record5;
+import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -19,9 +17,9 @@ import org.jooq.impl.UpdatableRecordImpl;
  * A table to store data from UDP packets that have int32 type.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implements Record6<Integer, Short, Long, Double, LocalDateTime, Integer> {
+public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implements Record5<Integer, Short, Integer, Integer, Integer> {
 
-    private static final long serialVersionUID = -2084412532;
+    private static final long serialVersionUID = -1607143956;
 
     /**
      * Setter for <code>NewF1DB.Int32Data.idData</code>.
@@ -52,59 +50,45 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     }
 
     /**
-     * Setter for <code>NewF1DB.Int32Data.senssionUID</code>.
-     */
-    public void setSenssionuid(Long value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.Int32Data.senssionUID</code>.
-     */
-    public Long getSenssionuid() {
-        return (Long) get(2);
-    }
-
-    /**
-     * Setter for <code>NewF1DB.Int32Data.sessionTime</code>.
-     */
-    public void setSessiontime(Double value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.Int32Data.sessionTime</code>.
-     */
-    public Double getSessiontime() {
-        return (Double) get(3);
-    }
-
-    /**
-     * Setter for <code>NewF1DB.Int32Data.arriveTime</code>.
-     */
-    public void setArrivetime(LocalDateTime value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>NewF1DB.Int32Data.arriveTime</code>.
-     */
-    public LocalDateTime getArrivetime() {
-        return (LocalDateTime) get(4);
-    }
-
-    /**
      * Setter for <code>NewF1DB.Int32Data.data</code>.
      */
     public void setData(Integer value) {
-        set(5, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>NewF1DB.Int32Data.data</code>.
      */
     public Integer getData() {
-        return (Integer) get(5);
+        return (Integer) get(2);
+    }
+
+    /**
+     * Setter for <code>NewF1DB.Int32Data.packetId</code>.
+     */
+    public void setPacketid(Integer value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>NewF1DB.Int32Data.packetId</code>.
+     */
+    public Integer getPacketid() {
+        return (Integer) get(3);
+    }
+
+    /**
+     * Setter for <code>NewF1DB.Int32Data.sessionId</code>.
+     */
+    public void setSessionid(Integer value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>NewF1DB.Int32Data.sessionId</code>.
+     */
+    public Integer getSessionid() {
+        return (Integer) get(4);
     }
 
     // -------------------------------------------------------------------------
@@ -117,17 +101,17 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     }
 
     // -------------------------------------------------------------------------
-    // Record6 type implementation
+    // Record5 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Short, Long, Double, LocalDateTime, Integer> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row5<Integer, Short, Integer, Integer, Integer> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 
     @Override
-    public Row6<Integer, Short, Long, Double, LocalDateTime, Integer> valuesRow() {
-        return (Row6) super.valuesRow();
+    public Row5<Integer, Short, Integer, Integer, Integer> valuesRow() {
+        return (Row5) super.valuesRow();
     }
 
     @Override
@@ -141,23 +125,18 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     }
 
     @Override
-    public Field<Long> field3() {
-        return Int32data.INT32DATA.SENSSIONUID;
-    }
-
-    @Override
-    public Field<Double> field4() {
-        return Int32data.INT32DATA.SESSIONTIME;
-    }
-
-    @Override
-    public Field<LocalDateTime> field5() {
-        return Int32data.INT32DATA.ARRIVETIME;
-    }
-
-    @Override
-    public Field<Integer> field6() {
+    public Field<Integer> field3() {
         return Int32data.INT32DATA.DATA;
+    }
+
+    @Override
+    public Field<Integer> field4() {
+        return Int32data.INT32DATA.PACKETID;
+    }
+
+    @Override
+    public Field<Integer> field5() {
+        return Int32data.INT32DATA.SESSIONID;
     }
 
     @Override
@@ -171,23 +150,18 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     }
 
     @Override
-    public Long component3() {
-        return getSenssionuid();
-    }
-
-    @Override
-    public Double component4() {
-        return getSessiontime();
-    }
-
-    @Override
-    public LocalDateTime component5() {
-        return getArrivetime();
-    }
-
-    @Override
-    public Integer component6() {
+    public Integer component3() {
         return getData();
+    }
+
+    @Override
+    public Integer component4() {
+        return getPacketid();
+    }
+
+    @Override
+    public Integer component5() {
+        return getSessionid();
     }
 
     @Override
@@ -201,23 +175,18 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     }
 
     @Override
-    public Long value3() {
-        return getSenssionuid();
-    }
-
-    @Override
-    public Double value4() {
-        return getSessiontime();
-    }
-
-    @Override
-    public LocalDateTime value5() {
-        return getArrivetime();
-    }
-
-    @Override
-    public Integer value6() {
+    public Integer value3() {
         return getData();
+    }
+
+    @Override
+    public Integer value4() {
+        return getPacketid();
+    }
+
+    @Override
+    public Integer value5() {
+        return getSessionid();
     }
 
     @Override
@@ -233,37 +202,30 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     }
 
     @Override
-    public Int32dataRecord value3(Long value) {
-        setSenssionuid(value);
-        return this;
-    }
-
-    @Override
-    public Int32dataRecord value4(Double value) {
-        setSessiontime(value);
-        return this;
-    }
-
-    @Override
-    public Int32dataRecord value5(LocalDateTime value) {
-        setArrivetime(value);
-        return this;
-    }
-
-    @Override
-    public Int32dataRecord value6(Integer value) {
+    public Int32dataRecord value3(Integer value) {
         setData(value);
         return this;
     }
 
     @Override
-    public Int32dataRecord values(Integer value1, Short value2, Long value3, Double value4, LocalDateTime value5, Integer value6) {
+    public Int32dataRecord value4(Integer value) {
+        setPacketid(value);
+        return this;
+    }
+
+    @Override
+    public Int32dataRecord value5(Integer value) {
+        setSessionid(value);
+        return this;
+    }
+
+    @Override
+    public Int32dataRecord values(Integer value1, Short value2, Integer value3, Integer value4, Integer value5) {
         value1(value1);
         value2(value2);
         value3(value3);
         value4(value4);
         value5(value5);
-        value6(value6);
         return this;
     }
 
@@ -281,14 +243,13 @@ public class Int32dataRecord extends UpdatableRecordImpl<Int32dataRecord> implem
     /**
      * Create a detached, initialised Int32dataRecord
      */
-    public Int32dataRecord(Integer iddata, Short dataname, Long senssionuid, Double sessiontime, LocalDateTime arrivetime, Integer data) {
+    public Int32dataRecord(Integer iddata, Short dataname, Integer data, Integer packetid, Integer sessionid) {
         super(Int32data.INT32DATA);
 
         set(0, iddata);
         set(1, dataname);
-        set(2, senssionuid);
-        set(3, sessiontime);
-        set(4, arrivetime);
-        set(5, data);
+        set(2, data);
+        set(3, packetid);
+        set(4, sessionid);
     }
 }
