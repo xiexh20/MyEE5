@@ -26,6 +26,7 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
+import org.jooq.types.UByte;
 
 
 /**
@@ -34,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Int8data extends TableImpl<Int8dataRecord> {
 
-    private static final long serialVersionUID = -966626939;
+    private static final long serialVersionUID = -835321074;
 
     /**
      * The reference instance of <code>NewF1DB.Int8Data</code>
@@ -57,7 +58,7 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     /**
      * The column <code>NewF1DB.Int8Data.data</code>.
      */
-    public final TableField<Int8dataRecord, Byte> DATA = createField(DSL.name("data"), org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+    public final TableField<Int8dataRecord, UByte> DATA = createField(DSL.name("data"), org.jooq.impl.SQLDataType.TINYINTUNSIGNED.defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.TINYINTUNSIGNED)), this, "");
 
     /**
      * The column <code>NewF1DB.Int8Data.dataName</code>.
@@ -180,7 +181,7 @@ public class Int8data extends TableImpl<Int8dataRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Byte, Short, Integer, Integer> fieldsRow() {
+    public Row5<Integer, UByte, Short, Integer, Integer> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 }

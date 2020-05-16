@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ndbconn.routines.Saveint8;
+import ndbconn.routines.Savelist;
 import ndbconn.tables.Datanames;
 import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
@@ -101,24 +102,28 @@ public class NDBMain {
 
             // test procedure
             Configuration configuration = new DefaultConfiguration();
-            
             configuration.set(SQLDialect.MYSQL);
             configuration.set(conn);
-            Saveint8 procedure = new Saveint8();
+            
+            Savelist savelistProc = new Savelist();
+            
+            StringBuilder dataList = new StringBuilder();
+            StringBuilder nameList = new StringBuilder();
             for(int i=0;i<10;i++){
-//                procedure.setArrivetime(LocalDateTime.now());
-                procedure.setDatain((byte)(52+i));
-//                procedure.setDname("test");
-//                procedure.setSessiontime(5.20 + i);
-//                procedure.setSessionuid((long)(520520520+i));
-                procedure.execute(configuration);
+                dataList.append(i).append(",");
+                nameList.append("test").append(",");
             }
+            dataList.append(11);
+            nameList.append("test");
             
-            
-            
-            
-                    
-
+            // save the data list to db
+            savelistProc.setArrivetime(LocalDateTime.now());
+            savelistProc.setDatalist(dataList.toString());
+            savelistProc.setNamelist(nameList.toString());
+            savelistProc.setSessiontime(520.520);
+            savelistProc.setSessionuid((long)123456);
+            savelistProc.setDtype((byte)0);
+            savelistProc.execute(configuration);
             
             
             
