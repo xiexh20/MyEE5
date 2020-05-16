@@ -55,8 +55,12 @@ public abstract class Packet {
     
 
     /**
-     * save this packet to different list based on packet type
-     *
+     * save this packet to different list based on packet type, data table is linked with Packets, Names and Sessions table, 
+     * to keep reference integrity, the following steps show be followed
+     * 1. Get the session id in table Sessions
+     * 2. Get the packet id in table Packets
+     * 3. Get the name if from the name HashMap
+     * 4. Insert data into the db
      * @param histPacketLists
      * @return
      */
@@ -65,5 +69,28 @@ public abstract class Packet {
         histPacketLists[packetId].add(this);
         return histPacketLists;
     }
+    
+    /**
+     * get the session id in database for this session UID
+     * @param dbconn: the database connection context
+     * @return the id of the session UID in table Sessions
+     */
+    public int getSessionID(DSLContext dbconn)
+    {
+        
+        return -1;
+        
+    }
+    
+    /**
+     * get the packet id in table Packets
+     * @param dbconn
+     * @return 
+     */
+    public int getPacketID(DSLContext dbconn)
+    {
+        return -1;
+    }
+            
 
 }
