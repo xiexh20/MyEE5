@@ -10,6 +10,12 @@ import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 
+/**
+ * 
+ * @author Eric, source: https://github.com/eh7n/f1-2018_telemetry.git
+ * adapted by Xianghui Xie, May, 2020.
+ */
+
 public class PacketCarStatusData extends Packet {
 
     private List<CarStatusData> carStatuses;
@@ -28,38 +34,11 @@ public class PacketCarStatusData extends Packet {
     }
 
     @Override
+    /**
+     * currently no data in this packet is saved to the database
+     */
     public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db) {
 
-//        PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
-//        int histPacketsCount = newLists[getHeader().getPacketId()].size();
-//        if (histPacketsCount == UPDATEPERIOD) {
-//            Carstatusdata CST = Tables.CARSTATUSDATA;   // abriviate for table CarStatusData
-//            CarStatusData csData = carStatuses.get(getHeader().getPlayerCarIndex());
-//
-//            db.insertInto(CST, CST.SESSIONID, CST.SESSIONTIME, CST.FUELINTANK,
-//                    CST.FRONTLEFTWINGDAMAGE, CST.FRONTRIGHTWINGDAMAGE, CST.REARWINGDAMAGE,
-//                    CST.ENGINEDAMAGE, CST.GEARBOXDAMAGE, CST.EXHAUSTDAMAGE,
-//                    CST.TYRERLDAMAGE, CST.TYRERRDAMAGE, CST.TYREFLDAMAGE, CST.TYREFRDAMAGE)
-//                    .values(getHeader().getSessionUID().longValue(),
-//                            (double) getHeader().getSessionTime(),
-//                            (double) csData.getFuelInTank(),
-//                            (short) csData.getFrontLeftWingDamage(),
-//                            (short) csData.getFrontRightWingDamage(),
-//                            (short) csData.getRearWingDamage(),
-//                            (short) csData.getEngineDamage(),
-//                            (short) csData.getGearBoxDamage(),
-//                            (short) csData.getExhaustDamage(),
-//                            (short) csData.getTiresDamage().getRearLeft().intValue(),
-//                            (short) csData.getTiresDamage().getRearRight().intValue(),
-//                            (short) csData.getTiresDamage().getFrontLeft().intValue(),
-//                            (short) csData.getTiresDamage().getFrontRight().intValue()
-//                    )
-//                    .execute();
-//            // empty the lap list buffer
-//            newLists[getHeader().getPacketId()].clear();
-//
-//        }
-//        return newLists;
         return histPacketLists;
                 
     }

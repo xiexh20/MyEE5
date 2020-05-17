@@ -3,7 +3,6 @@ package com.eh7n.f1telemetry.data;
 import java.util.List;
 
 import com.eh7n.f1telemetry.data.elements.LapData;
-import com.eh7n.f1telemetry.data.elements.TableDataType;
 import dbconn.Tables;
 import dbconn.tables.Extractedlapdata;
 import dbconn.tables.Instantlapdata;
@@ -15,7 +14,11 @@ import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Result;
-
+/**
+ * 
+ * @author Eric, source: https://github.com/eh7n/f1-2018_telemetry.git
+ * adapted by Xianghui Xie, May, 2020.
+ */
 public class PacketLapData extends Packet {
 
     private static final int UPDATEPERIOD = 10;
@@ -61,12 +64,13 @@ public class PacketLapData extends Packet {
         proc.execute(db.configuration());
 
         PacketList[] newLists = addToHistLists(histPacketLists);        // add to history buffer
-//        
+
         int histPacketsCount = newLists[getHeader().getPacketId()].size();
         if (histPacketsCount == UPDATEPERIOD) {
             // get the last element(curret packet) and save to database
             
             // save float data list
+            proc.setDtype(DBConst.FLOAT);
             nameList = new StringBuilder();
             dataList = new StringBuilder();
             

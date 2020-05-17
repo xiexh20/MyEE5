@@ -27,14 +27,14 @@ import org.jooq.impl.DefaultConfiguration;
 import org.jooq.types.UByte;
 
 /**
- *
+ * a test class to test the connection with database
  * @author 25691
  */
 public class NDBMain {
     
     private static final String USER = "xiexh";
     private static final String PASSWORD = "123456";
-    private static final String URL = "jdbc:mysql://localhost:3306/NewF1DB?noAccessToProcedureBodies=true";
+    private static final String URL = "jdbc:mysql://localhost:3306/NewF1DB";
     
     public static void main(String[] args)
     {

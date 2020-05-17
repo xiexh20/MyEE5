@@ -8,8 +8,8 @@ package com.eh7n.f1telemetry.data;
 import java.util.ArrayList;
 
 /**
- * this class stores a list of packet
- * @author 25691
+ * this class stores a list of packets
+ * @author 25691, April, 2020
  */
 public class PacketList{
     private ArrayList<Packet> packetList;

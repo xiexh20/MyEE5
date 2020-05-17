@@ -42,6 +42,7 @@ import udpclient.GPIOThread;
  * Also exposes a main method for starting up a default server
  *
  * @author eh7n
+ * adapted by Xianghui Xie, May, 2020. https://github.com/eh7n/f1-2018_telemetry.git
  *
  */
 public class F12018TelemetryUDPServer {
@@ -136,7 +137,8 @@ public class F12018TelemetryUDPServer {
             log.info("Listening on " + bindAddress + ":" + port + "...");
             ByteBuffer buf = ByteBuffer.allocate(MAX_PACKET_SIZE);
             buf.order(ByteOrder.LITTLE_ENDIAN);
-
+            
+            // the thread for GPIO
 //            GPIOThread gpioThread = new GPIOThread();
 //            gpioThread.start();
             
@@ -172,11 +174,7 @@ public class F12018TelemetryUDPServer {
 //                        gpioThread.setForwardStatus(true);
 //                    }
                 }
-                        // one thread, so there is no need to use multithread to handle packets
-                        //                                executor.submit(() -> {
-                        //					packetConsumer.accept(packet);
-                        ////                                        System.out.println(packet.toJSON());
-                        //				});
+                        
                 buf.clear();
             }
         } catch (SQLException ex) {
@@ -210,8 +208,6 @@ public class F12018TelemetryUDPServer {
      */
     public static void main(String[] args) throws IOException {
 
-//            Thread gpioThread = new GPIOThread();
-//            gpioThread.start();
         F12018TelemetryUDPServer.create()
                 .bindTo("0.0.0.0")
                 .onPort(20777)

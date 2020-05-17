@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.eh7n.f1telemetry.data.elements.ButtonStatus;
 import com.eh7n.f1telemetry.data.elements.CarTelemetryData;
-import com.eh7n.f1telemetry.data.elements.TableDataType;
 import dbconn.Tables;
 import dbconn.tables.Cartelemetry;
 import dbconn.tables.Heatmapdata;
@@ -17,6 +16,12 @@ import ndbconn.tables.Int8data;
 import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
+
+/**
+ * 
+ * @author Eric, source: https://github.com/eh7n/f1-2018_telemetry.git
+ * adapted by Xianghui Xie, May, 2020.
+ */
 
 public class PacketCarTelemetryData extends Packet {
 

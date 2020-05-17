@@ -9,6 +9,12 @@ import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 
+/**
+ * 
+ * @author Eric, source: https://github.com/eh7n/f1-2018_telemetry.git
+ * adapted by Xianghui Xie, May, 2020.
+ */
+
 public abstract class Packet {
 
     private Header header;
@@ -44,7 +50,13 @@ public abstract class Packet {
     /**
      * analyze packet, extract useful information and save to database, must be
      * override by subclasses
-     *
+     * * save this packet to different list based on packet type, data table is linked with Packets, Names and Sessions table, 
+     * to keep reference integrity, the following steps show be followed
+     * 1. Get the session id in table Sessions
+     * 2. Get the packet id in table Packets
+     * 3. Get the name if from the name HashMap
+     * 4. Insert data into the db
+     * the steps are implemented as a mysql procedure in database, so inside this method, we only need to call the procedure. 
      * @param histPacketLists
      * @param dbContext
      * @param dNameList: the data name list, include id and name from database
@@ -55,12 +67,7 @@ public abstract class Packet {
     
 
     /**
-     * save this packet to different list based on packet type, data table is linked with Packets, Names and Sessions table, 
-     * to keep reference integrity, the following steps show be followed
-     * 1. Get the session id in table Sessions
-     * 2. Get the packet id in table Packets
-     * 3. Get the name if from the name HashMap
-     * 4. Insert data into the db
+     * add the packet to the historical packet list
      * @param histPacketLists
      * @return
      */
@@ -69,29 +76,4 @@ public abstract class Packet {
         histPacketLists[packetId].add(this);
         return histPacketLists;
     }
-    
-    /**
-     * get the session id in database for this session UID
-     * step 1: query the database to see if 
-     * @param dbconn: the database connection context
-     * @return the id of the session UID in table Sessions
-     */
-    public int getSessionID(DSLContext dbconn)
-    {
-        
-        return -1;
-        
-    }
-    
-    /**
-     * get the packet id in table Packets
-     * @param dbconn
-     * @return 
-     */
-    public int getPacketID(DSLContext dbconn)
-    {
-        return -1;
-    }
-            
-
 }

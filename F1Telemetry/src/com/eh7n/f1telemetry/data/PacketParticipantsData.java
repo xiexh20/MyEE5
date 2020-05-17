@@ -9,6 +9,12 @@ import ndbconn.tables.records.DatanamesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 
+/**
+ * 
+ * @author Eric, source: https://github.com/eh7n/f1-2018_telemetry.git
+ * adapted by Xianghui Xie, May, 2020.
+ */
+
 public class PacketParticipantsData extends Packet {
 	
 	private int numCars;
@@ -50,9 +56,10 @@ public class PacketParticipantsData extends Packet {
         }
 
     @Override
+    /**
+     * currently no data in this packet is stored in database
+     */
     public PacketList[] saveToDB(PacketList[] histPacketLists, DSLContext db) {
-//        throw new UnsupportedperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        System.out.println("No operation for participant packet!");
         return histPacketLists;
     }
         

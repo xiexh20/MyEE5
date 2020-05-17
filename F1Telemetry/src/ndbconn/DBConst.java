@@ -6,7 +6,7 @@
 package ndbconn;
 
 /**
- * define some database constants
+ * define some database constants, called by UDP packet processing unit
  * @author 25691
  */
 public class DBConst {
