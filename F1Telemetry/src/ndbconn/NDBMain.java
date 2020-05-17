@@ -67,7 +67,11 @@ public class NDBMain {
 //            }
             
             // insert all necessary data names into database 
-//            List<String> dataNames = new ArrayList();
+            List<String> dataNames = new ArrayList();
+            
+            // packet: CarTelemetry
+            dataNames.add("engineTemperature");
+            dataNames.add("engineRPM");
             
             // int8 data names add here
 //            dataNames.add("steer");
@@ -95,43 +99,43 @@ public class NDBMain {
 //            dataNames.add("currentLapNum");
 //            
 //            // insert them into database
-//            for(String name:dataNames){
-//                dbContext.insertInto(TN, TN.NAME)
-//                        .values(name)
-//                        .execute();
-//            }
+            for(String name:dataNames){
+                dbContext.insertInto(TN, TN.NAME)
+                        .values(name)
+                        .execute();
+            }
             
             // check if insert correctly
-//            Result<DatanamesRecord> result = dbContext.selectFrom(TN).fetch();
-//            for(DatanamesRecord r: result){
-//                
-//                System.out.println("id="+r.getIdname() + ", name="+r.getValue(TN.NAME));
-//            }
+            Result<DatanamesRecord> result = dbContext.selectFrom(TN).fetch();
+            for(DatanamesRecord r: result){
+                
+                System.out.println("id="+r.getIdname() + ", name="+r.getValue(TN.NAME));
+            }
 
             // test procedure
 //            Configuration configuration = new DefaultConfiguration();
 //            configuration.set(SQLDialect.MYSQL);
 //            configuration.set(conn);
             
-            Savelist savelistProc = new Savelist();
-            
-            StringBuilder dataList = new StringBuilder();
-            StringBuilder nameList = new StringBuilder();
-            for(int i=0;i<10;i++){
-                dataList.append(i*3).append(",");
-                nameList.append("test").append(",");
-            }
-            dataList.append(11);
-            nameList.append("test");
-            
-            // save the data list to db
-            savelistProc.setArrivetime(LocalDateTime.now());
-            savelistProc.setDatalist(dataList.toString());
-            savelistProc.setNamelist(nameList.toString());
-            savelistProc.setSessiontime(520.520);
-            savelistProc.setSessionuid((long)123456);
-            savelistProc.setDtype((byte)0);
-            savelistProc.execute(dbContext.configuration());
+//            Savelist savelistProc = new Savelist();
+//            
+//            StringBuilder dataList = new StringBuilder();
+//            StringBuilder nameList = new StringBuilder();
+//            for(int i=0;i<10;i++){
+//                dataList.append(i*3).append(",");
+//                nameList.append("test").append(",");
+//            }
+//            dataList.append(11);
+//            nameList.append("test");
+//            
+//            // save the data list to db
+//            savelistProc.setArrivetime(LocalDateTime.now());
+//            savelistProc.setDatalist(dataList.toString());
+//            savelistProc.setNamelist(nameList.toString());
+//            savelistProc.setSessiontime(520.520);
+//            savelistProc.setSessionuid((long)123456);
+//            savelistProc.setDtype((byte)0);
+//            savelistProc.execute(dbContext.configuration());
 //            
             
             

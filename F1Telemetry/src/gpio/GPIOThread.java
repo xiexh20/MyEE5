@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package udpclient;
+package gpio;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -30,6 +30,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 /**
@@ -43,9 +44,16 @@ public class GPIOThread extends Thread {
     // raw data from Telemetry Packet
     private boolean isForward;  // driving status, is driving forward or backward
     private int speed;      // speed of the car
+    private int brake;      // amount of brake applied
+    // change it to brake? 
+    private int engineRpm;
 
-    private int blinkPeriod;    // the LED blinking period
+    private int blinkPeriod;    // the LED blinking period, calculated based on car speed. 
 
+    private static final int RPM_THRES = 4300;                                                                                                                                                                                                                                                                                                   
+    private static final int BRAKE_THRES = 50;      // the threshold to turn on the brake light
+    private static final int READ_PERIOD = 4;   // read period is 5 ms
+    private static final int WRITE_PERIOD = 100;    // write period is 100 ms
     private static final int MAXSPEED = 300;
     private static final int MINSPEED = 0;
     private static final int MAXPERIOD = 255;
@@ -53,7 +61,7 @@ public class GPIOThread extends Thread {
 
     // some constant cccccccccccccc
     // constant for UDP client configuration
-    static final String SERVER_IP = "192.168.1.4";
+    static final String SERVER_IP = "192.168.101.81";
     static final int SERVER_PORT = 5200;
 
     private static final byte PICADDR = 0x18;       // address of the PIC
@@ -66,22 +74,29 @@ public class GPIOThread extends Thread {
 
     // index definition for data to be transmitted
     private static final int SPEEDidx = 0;
-    private static final int BACKidx = 1;   // back light
+    private static final int RPMidx = 1;   // engine RPM light
 
-    // bit definition for different input buttons
+    // bit definition for different input                  buttons
     private static final char BITctrl = 0x80;   // RB7 is ctrl pin
     private static final char BIT120 = 0x40;     // RB6, button with an emergency car, undefined function
 
     private static final char BITtruck = 0x04;        // RA2, button with a truck pattern, undefined function
     private static final char BITear = 0x08;        //RA3, button with an ear pattern, undefined function
-    private static final char BITgreen = 0x10;      // RA4, unstable input, button with G
-    private static final char BITyellow = 0x20;     // RA5, button with Y
-    private static final char BITred = 0x80;        // RA7, button with R
+    private static final char BITgreen = 0x10;      // RA4, unstable input, button with letter G
+    private static final char BITyellow = 0x20;     // RA5, button with letter Y
+    private static final char BITred = 0x80;        // RA7, button with letter R
     private static final char BITSPACE = 0x40;        // RA6, space button function
 
     public GPIOThread() {
         isForward = true;       // by default, set to forward
         speed = 0;      // default speed is zero
+        brake = 0;
+        engineRpm = 0;
+    }
+    
+    public void setRPM(int rpm)
+    {
+        engineRpm = rpm;
     }
 
     public int getSpeed() {
@@ -98,6 +113,15 @@ public class GPIOThread extends Thread {
 
     public boolean isForward() {
         return isForward;
+    }
+
+    public int getBrake() {
+        return brake;
+    }
+
+    public void setBrake(int brake) {
+        this.brake = brake;
+
     }
 
     /**
@@ -172,54 +196,67 @@ public class GPIOThread extends Thread {
             int[] recvBuf = new int[FRAME_LEN];
             byte[] sendBuf = new byte[FRAME_LEN];
             sendBuf[SPEEDidx] = 0b00001010;
-            sendBuf[BACKidx] = 0b00000001;
+            sendBuf[RPMidx] = 0b00000001;
             sendBuf[2] = 0b00000001;
 
             int count = 0;
             while (true) {
                 // read a frame of data from microcontroller
-//                console.println("##################");
-                for (int i = 0; i < FRAME_LEN; i++) {
-                    try {
-                        recvBuf[i] = device.read();
-                    } catch (IOException ex) {
-                        Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+                if ((count % READ_PERIOD) == 0) {
+                    // read a frame every 5 ms
+                    for (int i = 0; i < FRAME_LEN; i++) {
+                        try {
+                            recvBuf[i] = device.read();
+                        } catch (IOException ex) {
+                            Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                }
-                // prepare data to be sent
-                sendBuf[0] = (byte) blinkPeriod;
-                if (isForward) {
-                    sendBuf[BACKidx] = 0;
-                } else {
-                    sendBuf[BACKidx] = 1;
-                }
-                sendBuf[2] = 0;
-
-//             send a frame data
-                for (int i = 0; i < FRAME_LEN; i++) {
-                    try {
-                        device.write(sendBuf[i]);
-                    } catch (IOException ex) {
-                        Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                try {
                     // send UDP packet
                     String UDPData = "ADRSH:" + recvBuf[0] + ":" + "PORTA:" + recvBuf[1] + ":" + "PORTB:" + recvBuf[2] + ":";
                     byte[] buf = UDPData.getBytes();
                     DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, SERVER_PORT);
                     ds.send(DpSend);
-//                    System.out.println("UDP Data sent: " + UDPData);
-                    Thread.sleep(5);        // poll frequency: 200Hz
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {            
-                    Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+//                    System.out.println("******Read a frame of data done"+ ", Time: " + LocalTime.now());
                 }
+
+                if ((count % WRITE_PERIOD) == 0) {
+                    // send a frame every 100 ms
+                    // prepare data to be sent
+                    sendBuf[0] = (byte) blinkPeriod;
+                    if (engineRpm > RPM_THRES) {
+                        sendBuf[RPMidx] = 1;
+//                        System.out.println("#######Warning: RPM very fast RPM=" + engineRpm + ", Time: " + LocalTime.now());
+                    } else {
+                        sendBuf[RPMidx] = 0;
+                    }
+                    sendBuf[2] = 0;
+
+//             send a frame data
+//                    System.out.println("#####Send a frame of data done"+ ", Time: " + LocalTime.now());
+                    for (int i = 0; i < FRAME_LEN; i++) {
+                        try {
+                            device.write(sendBuf[i]);
+                        } catch (IOException ex) {
+                            Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                }
+
+                count++;
+                if (count == 1000) {
+                    // print out every 2 seconds
+                    System.out.println("Blinking period: " + blinkPeriod + " Time: " + LocalTime.now());
+                    count = 0;
+                }
+                Thread.sleep(1);
             }
 
         } catch (SocketException ex) {
+            Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(GPIOThread.class.getName()).log(Level.SEVERE, null, ex);
         }
 

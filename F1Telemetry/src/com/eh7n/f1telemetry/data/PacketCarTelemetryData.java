@@ -82,8 +82,8 @@ public class PacketCarTelemetryData extends Packet {
         
         // save uint16 data
         proc.setDtype(DBConst.UINT16);
-        proc.setDatalist(tData.getSpeed()+"");
-        proc.setNamelist("speed");
+        proc.setDatalist(tData.getSpeed()+DBConst.COMMA+tData.getEngineRpm()+DBConst.COMMA+tData.getEngineTemperature());
+        proc.setNamelist("speed"+DBConst.COMMA+"engineRPM"+DBConst.COMMA+"engineTemperature");
         proc.execute(db.configuration());
         
         return histPacketLists;

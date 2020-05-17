@@ -27,7 +27,7 @@ import java.awt.event.KeyEvent;
  */
 public class VirtualController {
 
-    static final String LOCAL_IP = "192.168.1.4";
+    static final String LOCAL_IP = "192.168.101.81";
     static final int LOCAL_PORT = 5200;
     // index in the sliced string array
     static final int ADCidx = 1;
@@ -40,12 +40,12 @@ public class VirtualController {
 
     private static final char BITtruck = 0x04;        // RA2, button with a truck pattern, undefined function
     private static final char BITC = 0x08;        //RA3, button with an ear pattern, undefined function
-    private static final char BITgreen = 0x10;      // RA4, unstable input, button with G
+    private static final char BITgreen = 0x10;      // RA4, unstable input, button witcccccccccccch G
     private static final char BITW = 0x20;    // RA5, button with Y--W, activate DRS
     private static final char BITred = 0x80;        // RA7, button with R
     private static final char BITSPACE = 0x40;        // RA6, space button function
     
-    private static final int UNLOCK = 50;  // unlock period, set to 1 second
+    private static final int UNLOCK = 100;  // unlock period, set to 1 second
 
     /**
      * @param args the command line arguments
@@ -75,6 +75,7 @@ public class VirtualController {
             int WlockCount = 0;
             int ESClockCount = 0;   // lock counter for some buttons
             
+            System.out.println("Virtual controller address: " + LOCAL_IP + ", start listening on port: "+LOCAL_PORT);
             while (true) {
 
                 DpReceive = new DatagramPacket(receive, receive.length);
@@ -96,7 +97,7 @@ public class VirtualController {
                 int portA = Integer.parseInt(strSlices[PORTAidx]);
                 int portB = Integer.parseInt(strSlices[PORTBidx]);
 
-                System.out.println("ADC=" + ADCresult + " PORTA=" + portA);
+//                System.out.println("ADC=" + ADCresult + " PORTA=" + portA);
 
                 if (ADCresult < 110) {
                     virtualRobot.keyPress(KeyEvent.VK_LEFT);

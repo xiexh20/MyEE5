@@ -31,7 +31,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
-import udpclient.GPIOThread;
+import gpio.GPIOThread;
 
 /**
  * The base class for the F1 2018 Telemetry app. Starts up a non-blocking I/O
@@ -139,11 +139,11 @@ public class F12018TelemetryUDPServer {
             buf.order(ByteOrder.LITTLE_ENDIAN);
             
             // the thread for GPIO
-//            GPIOThread gpioThread = new GPIOThread();
-//            gpioThread.start();
+            GPIOThread gpioThread = new GPIOThread();
+            gpioThread.start();
             
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            Settings settings = new Settings().withExecuteLogging(true); // turn off debug log output
+            Settings settings = new Settings().withExecuteLogging(false); // turn off debug log output
             DSLContext dbContext = DSL.using(conn, SQLDialect.MYSQL, settings);
             Result<DatanamesRecord> names = dbContext.selectFrom(ndbconn.Tables.DATANAMES).fetch();
             HashMap<String, Short> nameIdMap = listToMap(names);
@@ -165,14 +165,10 @@ public class F12018TelemetryUDPServer {
                 if(packet instanceof PacketCarTelemetryData){
                     CarTelemetryData tData = ((PacketCarTelemetryData) packet).
                             getCarTelemetryData().get(packet.getHeader().getPlayerCarIndex());
-//                    gpioThread.setSpeed(tData.getSpeed());
-//                    gpioThread.updateBlinkPeriod();
-//                    if(tData.getGear()==-1){
-//                        gpioThread.setForwardStatus(false);
-//                    }
-//                    else{
-//                        gpioThread.setForwardStatus(true);
-//                    }
+                    gpioThread.setSpeed(tData.getSpeed());
+                    gpioThread.updateBlinkPeriod();
+                    gpioThread.setRPM(tData.getEngineRpm());
+
                 }
                         
                 buf.clear();
